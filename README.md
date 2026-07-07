@@ -17,6 +17,7 @@ A functional MVP of a document similarity checker. Compare two documents (pasted
 - Client-side validation for file type and size (max 2MB).
 - Side-by-side comparison with match strength highlighting.
 - Mobile-responsive layout.
+- **Rate Limiting:** Anonymous users are limited to 3 comparisons per day based on their IP address (hashed for privacy).
 
 ## Getting Started
 
@@ -50,6 +51,31 @@ A functional MVP of a document similarity checker. Compare two documents (pasted
    npm run dev
    ```
    The frontend will run on `http://localhost:3000`.
+
+### Rate Limiting Setup (Supabase)
+
+This project uses Supabase for tracking daily usage.
+
+1. **Create a Supabase Project:** Go to [supabase.com](https://supabase.com) and create a new project.
+2. **Database Schema:** Run the following SQL in the Supabase SQL Editor to create the `usage_log` table:
+   ```sql
+   create table usage_log (
+     id uuid primary key default gen_random_uuid(),
+     identifier text not null,
+     usage_date date not null,
+     count integer not null default 0,
+     created_at timestamp with time zone default now(),
+     unique (identifier, usage_date)
+   );
+   ```
+3. **Environment Variables:**
+   - In `api/.env` (for the Python backend):
+     ```
+     SUPABASE_URL=your_supabase_project_url
+     SUPABASE_SERVICE_KEY=your_supabase_service_role_key
+     IP_HASH_SALT=your_random_secret_salt
+     ```
+   - In Vercel, add these same variables to your project settings.
 
 ### Deployment on Vercel
 
