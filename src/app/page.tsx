@@ -13,6 +13,7 @@ interface Sentence {
 
 interface ComparisonResult {
   overall_similarity: number;
+  method: 'blended' | 'tfidf_only';
   sentences_a: Sentence[];
   sentences_b: Sentence[];
   remaining?: number;
@@ -150,6 +151,7 @@ export default function Home() {
         {result && (
           <Results
             score={result.overall_similarity}
+            method={result.method}
             sentencesA={result.sentences_a}
             sentencesB={result.sentences_b}
           />
