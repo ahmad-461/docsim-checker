@@ -34,7 +34,7 @@ export default function Home() {
 
   const handleCompare = async () => {
     if (!docA || !docB || (!docA.content && !docB.content)) {
-      setError("Please provide content for both documents.");
+      setError({ message: "Please provide content for both documents." });
       return;
     }
 
