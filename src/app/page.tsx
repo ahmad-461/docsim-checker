@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import DocumentInput from './components/DocumentInput';
 import Results from './components/Results';
 import CountdownTimer from './components/CountdownTimer';
+import ErrorMessage from './components/ErrorMessage';
 
 interface Sentence {
   text: string;
@@ -126,25 +127,16 @@ export default function Home() {
           </button>
 
           {error && (
-            <div className={`mt-6 p-6 rounded-md border ${
-              isRateLimited
-                ? 'bg-orange-50 border-orange-200 text-orange-800'
-                : 'bg-red-50 border-red-200 text-red-800'
-            } max-w-md w-full text-center`}>
-              {isRateLimited ? (
+            <ErrorMessage
+              message={isRateLimited ? "You've used your 3 free comparisons today. Pro coming soon — check back later or wait for reset." : error.message}
+              type={error.type as any}
+            >
+              {isRateLimited && (
                 <>
-                  <h3 className="font-bold text-lg mb-2">Daily Limit Reached</h3>
-                  <p className="mb-4 text-sm">
-                    You've used your 3 free comparisons today. Pro coming soon — check back later or wait for reset.
-                  </p>
-                  <div className="text-sm font-mono bg-white bg-opacity-50 py-2 px-4 rounded">
-                    Next free use available in: <CountdownTimer resetAt={error.resetAt!} onFinish={() => setError(null)} />
-                  </div>
+                  Next free use available in: <CountdownTimer resetAt={error.resetAt!} onFinish={() => setError(null)} />
                 </>
-              ) : (
-                <p className="text-sm font-medium">{error.message}</p>
               )}
-            </div>
+            </ErrorMessage>
           )}
         </div>
 

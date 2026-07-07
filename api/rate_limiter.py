@@ -58,6 +58,7 @@ class RateLimiter:
                 return False, 0, self.get_reset_time()
 
             # Increment and Upsert
+            # Note: user_tier column exists in schema (default 'free') for future Pro-tier gating
             new_count = current_count + 1
             self.supabase.table("usage_log").upsert({
                 "identifier": hashed_ip,
