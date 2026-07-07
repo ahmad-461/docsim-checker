@@ -2,8 +2,15 @@ import re
 import io
 import json
 import base64
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+from rate_limiter import RateLimiter
 import pdfplumber
 from docx import Document
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -12,6 +19,8 @@ import numpy as np
 
 app = Flask(__name__)
 CORS(app)
+
+limiter = RateLimiter()
 
 def extract_text(file_content, filename):
     """Extracts text from different file types."""
@@ -43,6 +52,23 @@ def normalize_text(text):
 
 @app.route('/api/compare', methods=['POST'])
 def compare_documents():
+    # Rate Limiting
+    forwarded = request.headers.get('x-forwarded-for')
+    if forwarded:
+        client_ip = forwarded.split(',')[0].strip()
+    else:
+        client_ip = request.remote_addr or "unknown"
+
+    allowed, remaining, reset_at = limiter.check_and_increment(client_ip)
+
+    if not allowed:
+        return jsonify({
+            "error": "rate_limit_exceeded",
+            "message": "You've used all your free comparisons for today.",
+            "reset_at": reset_at,
+            "remaining": 0
+        }), 429
+
     data = request.json
     if not data:
         return jsonify({"error": "No data provided"}), 400
@@ -134,7 +160,8 @@ def compare_documents():
         return jsonify({
             "overall_similarity": round(float(overall_similarity), 2),
             "sentences_a": res_sentences_a,
-            "sentences_b": res_sentences_b
+            "sentences_b": res_sentences_b,
+            "remaining": remaining
         })
 
     except Exception as e:
