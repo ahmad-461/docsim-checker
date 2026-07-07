@@ -16,6 +16,7 @@ A functional MVP of a document similarity checker. Compare two documents (pasted
 - Direct text paste support.
 - Client-side validation for file type and size (max 2MB).
 - Side-by-side comparison with match strength highlighting.
+- **Downloadable PDF Reports:** Generate detailed similarity reports including highlights and overall scores.
 - Mobile-responsive layout.
 - **Rate Limiting:** Anonymous users are limited to 3 comparisons per day based on their IP address (hashed for privacy).
 
@@ -64,10 +65,16 @@ This project uses Supabase for tracking daily usage.
      identifier text not null,
      usage_date date not null,
      count integer not null default 0,
+    user_tier text not null default 'free',
      created_at timestamp with time zone default now(),
      unique (identifier, usage_date)
    );
    ```
+
+  **Phase 4A Update:** If you already have the table, run:
+  ```sql
+  alter table usage_log add column user_tier text not null default 'free';
+  ```
 3. **Environment Variables:**
    - In `api/.env` (for the Python backend):
      ```
