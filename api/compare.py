@@ -103,14 +103,20 @@ def compare_documents():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-    if not text_a or not text_b:
-        return jsonify({"error": "Both documents must have content"}), 400
+    if not text_a.strip() or not text_b.strip():
+        return jsonify({
+            "error": "extraction_failed",
+            "message": "Couldn't extract any text from this file. It may be a scanned image or contain no readable text — try a different file or paste the text directly."
+        }), 400
 
     sentences_a_raw = split_sentences(text_a)
     sentences_b_raw = split_sentences(text_b)
 
     if not sentences_a_raw or not sentences_b_raw:
-        return jsonify({"error": "Could not identify sentences in one or both documents"}), 400
+        return jsonify({
+            "error": "extraction_failed",
+            "message": "Couldn't extract any text from this file. It may be a scanned image or contain no readable text — try a different file or paste the text directly."
+        }), 400
 
     # Normalize for vectorization
     sentences_a_norm = [normalize_text(s) for s in sentences_a_raw]

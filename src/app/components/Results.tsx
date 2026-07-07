@@ -87,13 +87,11 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
 
   const getHighlightColor = (score: number) => {
     // 0% = white, 100% = deep orange
-    // rgb(255, 255, 255) to rgb(255, 127, 0)
     const intensity = score;
-    if (intensity < 0.1) return 'transparent';
+    if (intensity < 0.05) return 'transparent';
 
-    // We can use tailwind classes for common intensities or inline styles for precise mapping
-    // Let's use inline style for match strength
-    const alpha = intensity * 0.8; // Max 0.8 alpha for readability
+    // Cap alpha at 0.8 to ensure black text remains readable even at 100% match
+    const alpha = Math.min(intensity, 0.8);
     return `rgba(255, 165, 0, ${alpha})`;
   };
 
@@ -139,7 +137,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
           <h3 className="text-md font-semibold text-gray-700 border-b pb-2">Document A</h3>
-          <div id="doc-a-container" className="bg-white p-4 border rounded-lg h-[500px] overflow-y-auto leading-relaxed">
+          <div id="doc-a-container" className="bg-white p-4 border rounded-lg h-[300px] md:h-[500px] overflow-y-auto leading-relaxed">
             {sentencesA.map((s, i) => (
               <span
                 key={i}
@@ -154,7 +152,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
         </div>
         <div className="space-y-4">
           <h3 className="text-md font-semibold text-gray-700 border-b pb-2">Document B</h3>
-          <div id="doc-b-container" className="bg-white p-4 border rounded-lg h-[500px] overflow-y-auto leading-relaxed">
+          <div id="doc-b-container" className="bg-white p-4 border rounded-lg h-[300px] md:h-[500px] overflow-y-auto leading-relaxed">
             {sentencesB.map((s, i) => (
               <span
                 key={i}

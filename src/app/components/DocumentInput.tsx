@@ -51,11 +51,14 @@ const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, e
     onContentChange({ type: 'text', content: text });
   };
 
+  const textareaId = `textarea-${label.replace(/\s+/g, '-').toLowerCase()}`;
+
   return (
     <div className="flex flex-col space-y-2">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
+      <label htmlFor={textareaId} className="text-sm font-medium text-gray-700">{label}</label>
       <div className="relative">
         <textarea
+          id={textareaId}
           className={`w-full h-64 p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none ${
             file ? 'bg-gray-100 text-gray-500 italic' : 'bg-white'
           }`}
