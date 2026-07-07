@@ -74,6 +74,10 @@ This project uses Supabase for tracking daily usage.
      SUPABASE_URL=your_supabase_project_url
      SUPABASE_SERVICE_KEY=your_supabase_service_role_key
      IP_HASH_SALT=your_random_secret_salt
+     GEMINI_API_KEY=your_gemini_api_key
+     ENABLE_SEMANTIC_SIMILARITY=true
+     TFIDF_WEIGHT=0.4
+     SEMANTIC_WEIGHT=0.6
      ```
    - In Vercel, add these same variables to your project settings.
 
@@ -87,7 +91,9 @@ This project uses Supabase for tracking daily usage.
 ## Implementation Details
 - **Sentence Splitting:** Uses a regex-based split on punctuation (`.`, `!`, `?`).
 - **Similarity Formula:** Computes a weighted average of the best-match scores for every sentence in both documents. Weights are determined by sentence length.
-- **Normalization:** Text is normalized by stripping excess whitespace and lowercasing before comparison.
+- **Blended Scoring:** Combines TF-IDF and Gemini semantic embeddings (using `text-embedding-004`).
+- **Graceful Fallback:** If the Gemini API is unavailable or disabled, the system automatically falls back to TF-IDF-only matching.
+- **Normalization:** Text is normalized (lowercase, stripped whitespace) for TF-IDF, while raw sentences are used for Gemini embeddings to preserve semantic context.
 
 ## Known Limitations
 - Sentence splitting does not handle abbreviations (e.g., "Mr.", "Dr.").

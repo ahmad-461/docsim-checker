@@ -16,6 +16,7 @@ from docx import Document
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from semantic_similarity import get_semantic_similarity_scores
 
 app = Flask(__name__)
 CORS(app)
@@ -115,7 +116,13 @@ def compare_documents():
     sentences_a_norm = [normalize_text(s) for s in sentences_a_raw]
     sentences_b_norm = [normalize_text(s) for s in sentences_b_raw]
 
-    # Vectorize
+    # Weights and feature flags
+    enable_semantic = os.getenv('ENABLE_SEMANTIC_SIMILARITY', 'true').lower() == 'true'
+    gemini_api_key = os.getenv('GEMINI_API_KEY')
+    tfidf_weight = float(os.getenv('TFIDF_WEIGHT', 0.4))
+    semantic_weight = float(os.getenv('SEMANTIC_WEIGHT', 0.6))
+
+    # Vectorize (TF-IDF)
     vectorizer = TfidfVectorizer()
     try:
         all_sentences = sentences_a_norm + sentences_b_norm
@@ -124,13 +131,32 @@ def compare_documents():
         matrix_a = tfidf_matrix[:len(sentences_a_norm)]
         matrix_b = tfidf_matrix[len(sentences_a_norm):]
 
-        # Cosine similarity between all A and all B
-        sim_matrix = cosine_similarity(matrix_a, matrix_b)
+        # Cosine similarity (TF-IDF)
+        sim_matrix_tfidf = cosine_similarity(matrix_a, matrix_b)
+        best_matches_a_tfidf = np.max(sim_matrix_tfidf, axis=1)
+        best_matches_b_tfidf = np.max(sim_matrix_tfidf, axis=0)
 
-        # For each sentence in A, find best match in B
-        best_matches_a = np.max(sim_matrix, axis=1)
-        # For each sentence in B, find best match in A
-        best_matches_b = np.max(sim_matrix, axis=0)
+        method = "tfidf_only"
+        best_matches_a = best_matches_a_tfidf
+        best_matches_b = best_matches_b_tfidf
+
+        # Try Semantic Similarity (Gemini)
+        if enable_semantic and gemini_api_key:
+            try:
+                best_matches_a_semantic, best_matches_b_semantic = get_semantic_similarity_scores(
+                    sentences_a_raw,
+                    sentences_b_raw,
+                    gemini_api_key
+                )
+
+                # Blend scores
+                # Formula: blended_score = (tfidf_weight * tfidf_score) + (semantic_weight * semantic_score)
+                best_matches_a = (tfidf_weight * best_matches_a_tfidf) + (semantic_weight * best_matches_a_semantic)
+                best_matches_b = (tfidf_weight * best_matches_b_tfidf) + (semantic_weight * best_matches_b_semantic)
+                method = "blended"
+            except Exception as semantic_err:
+                print(f"Fallback to TF-IDF only: Gemini failed - {semantic_err}")
+                method = "tfidf_only"
 
         # Response construction
         res_sentences_a = []
@@ -159,6 +185,7 @@ def compare_documents():
 
         return jsonify({
             "overall_similarity": round(float(overall_similarity), 2),
+            "method": method,
             "sentences_a": res_sentences_a,
             "sentences_b": res_sentences_b,
             "remaining": remaining

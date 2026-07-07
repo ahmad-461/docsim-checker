@@ -7,11 +7,12 @@ interface Sentence {
 
 interface ResultsProps {
   score: number;
+  method: 'blended' | 'tfidf_only';
   sentencesA: Sentence[];
   sentencesB: Sentence[];
 }
 
-const Results: React.FC<ResultsProps> = ({ score, sentencesA, sentencesB }) => {
+const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB }) => {
   const getHighlightColor = (score: number) => {
     // 0% = white, 100% = deep orange
     // rgb(255, 255, 255) to rgb(255, 127, 0)
@@ -28,8 +29,13 @@ const Results: React.FC<ResultsProps> = ({ score, sentencesA, sentencesB }) => {
     <div className="mt-12 space-y-8 animate-in fade-in duration-700">
       <div className="text-center">
         <h2 className="text-lg font-medium text-gray-900">Overall Similarity</h2>
-        <div className="mt-2 inline-flex items-baseline">
+        <div className="mt-2 inline-flex flex-col items-center">
           <span className="text-6xl font-extrabold text-orange-600">{score}%</span>
+          {method === 'tfidf_only' && (
+            <p className="mt-2 text-sm text-gray-500 italic">
+              Using basic similarity matching (semantic matching temporarily unavailable)
+            </p>
+          )}
         </div>
       </div>
 
