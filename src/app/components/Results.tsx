@@ -96,7 +96,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
   };
 
   return (
-    <div className="mt-12 space-y-8 animate-in fade-in duration-700">
+    <div className="mt-12 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex justify-center">
         <button
           onClick={handleDownloadPDF}

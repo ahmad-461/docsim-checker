@@ -12,9 +12,19 @@ const tools = [
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [theme, setTheme] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  // Handle scroll for header elevation
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Initialize theme
   useEffect(() => {
@@ -59,7 +69,13 @@ const Header = () => {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-gray-200 dark:border-stone-800">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-gray-200 dark:border-stone-800 shadow-sm'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
@@ -77,25 +93,27 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-10">
             <Link
               href="/how-it-works"
-              className="text-sm font-medium text-gray-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
+              className="group relative text-sm font-semibold text-gray-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors py-2"
             >
               How it works
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-600 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="/pricing"
-              className="text-sm font-medium text-gray-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
+              className="group relative text-sm font-semibold text-gray-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors py-2"
             >
               Pricing
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-600 transition-all duration-300 group-hover:w-full"></span>
             </Link>
 
             {/* More Tools Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center text-sm font-medium text-gray-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors focus:outline-none"
+                className="flex items-center text-sm font-semibold text-gray-600 dark:text-stone-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors focus:outline-none py-2"
               >
                 More Tools
                 <svg

@@ -54,15 +54,17 @@ const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, e
   const textareaId = `textarea-${label.replace(/\s+/g, '-').toLowerCase()}`;
 
   return (
-    <div className="flex flex-col space-y-2">
-      <label htmlFor={textareaId} className="text-sm font-medium text-gray-700 dark:text-stone-300">{label}</label>
+    <div className="flex flex-col space-y-3 bg-card dark:bg-stone-800/50 p-6 rounded-2xl border border-card-border shadow-sm hover:shadow-md transition-shadow">
+      <label htmlFor={textareaId} className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-stone-400">
+        {label}
+      </label>
       <div className="relative">
         <textarea
           id={textareaId}
-          className={`w-full h-64 p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none transition-colors duration-200 ${
+          className={`w-full h-64 p-4 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none transition-all duration-200 ${
             file
-              ? 'bg-gray-100 dark:bg-stone-800 text-gray-500 dark:text-stone-500 italic border-card-border'
-              : 'bg-card text-foreground border-card-border'
+              ? 'bg-gray-50 dark:bg-stone-900/50 text-gray-400 dark:text-stone-500 italic border-card-border'
+              : 'bg-white dark:bg-stone-900 text-foreground border-card-border'
           }`}
           placeholder={file ? "Using uploaded file..." : "Paste document text here..."}
           value={file ? "" : text}
