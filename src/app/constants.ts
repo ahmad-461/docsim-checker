@@ -1,0 +1,9 @@
+/**
+ * TODO: REPLACE WITH ACTUAL CONTACT EMAIL BEFORE LAUNCH
+ */
+export const CONTACT_EMAIL = "docsimchecker@gmail.com";
+
+/**
+ * TODO: UPDATE THE LAST UPDATED DATE BEFORE LAUNCH
+ */
+export const POLICY_DATE = "July 8, 2026";

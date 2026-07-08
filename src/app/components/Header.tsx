@@ -21,13 +21,13 @@ const Header = () => {
           </div>
           <nav className="flex space-x-6 sm:space-x-8">
             <Link
-              href="#how-it-works"
+              href="/#how-it-works"
               className="text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors"
             >
               How it works
             </Link>
             <Link
-              href="#pricing"
+              href="/#pricing"
               className="text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors"
             >
               Pricing
