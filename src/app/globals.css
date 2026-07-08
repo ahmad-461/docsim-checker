@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-orange: #EA580C;
+  --color-brand-orange-hover: #C2410C;
+}
+
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb; /* gray-200 */
+}
+
+.dark {
+  --background: #1C1917;
+  --foreground: #f5f5f4; /* stone-100 */
+  --card-bg: #292524; /* stone-800 */
+  --card-border: #44403c; /* stone-700 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card-bg);
+  --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Base styles for standard elements in dark mode */
+.dark body {
+  background-color: #1C1917;
 }

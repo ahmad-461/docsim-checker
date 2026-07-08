@@ -10,12 +10,12 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, type = 'error', ch
   const getStyles = () => {
     switch (type) {
       case 'rate_limit':
-        return 'bg-orange-50 border-orange-200 text-orange-800';
+        return 'bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-900/30 text-orange-800 dark:text-orange-300';
       case 'fallback':
-        return 'bg-blue-50 border-blue-200 text-blue-800';
+        return 'bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900/30 text-blue-800 dark:text-blue-300';
       case 'error':
       default:
-        return 'bg-red-50 border-red-200 text-red-800';
+        return 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900/30 text-red-800 dark:text-red-300';
     }
   };
 
@@ -32,13 +32,13 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, type = 'error', ch
   };
 
   return (
-    <div className={`mt-6 p-6 rounded-md border ${getStyles()} max-w-md w-full text-center mx-auto`}>
+    <div className={`mt-6 p-6 rounded-md border ${getStyles()} max-w-md w-full text-center mx-auto transition-colors duration-200`}>
       <h3 className="font-bold text-lg mb-2">{getTitle()}</h3>
       <p className={children ? 'mb-4 text-sm' : 'text-sm font-medium'}>
         {message}
       </p>
       {children && (
-        <div className="text-sm font-mono bg-white bg-opacity-50 py-2 px-4 rounded">
+        <div className="text-sm font-mono bg-white dark:bg-stone-900 bg-opacity-50 dark:bg-opacity-50 py-2 px-4 rounded">
           {children}
         </div>
       )}
