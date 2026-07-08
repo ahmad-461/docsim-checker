@@ -90,8 +90,8 @@ export default function Home() {
   const isRateLimited = error?.type === 'rate_limit';
 
   return (
-    <div className="bg-background pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-20">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-extrabold text-foreground tracking-tight sm:text-6xl mb-6">
@@ -125,61 +125,195 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <DocumentInput
-            label="Document A"
-            onContentChange={(content) => setDocA(content)}
-          />
-          <DocumentInput
-            label="Document B"
-            onContentChange={(content) => setDocB(content)}
-          />
-        </div>
+        <div id="tool" className="scroll-mt-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <DocumentInput
+              label="Document A"
+              onContentChange={(content) => setDocA(content)}
+            />
+            <DocumentInput
+              label="Document B"
+              onContentChange={(content) => setDocB(content)}
+            />
+          </div>
 
-        <div className="mt-12 flex flex-col items-center">
-          {remaining !== null && (
-            <p className="mb-4 text-sm font-medium text-gray-600 dark:text-stone-400">
-              {remaining} free comparison{remaining !== 1 ? 's' : ''} left today
-            </p>
-          )}
-
-          <button
-            onClick={handleCompare}
-            disabled={loading || isRateLimited}
-            className={`flex items-center justify-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-full font-bold text-xl shadow-xl hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-orange-600/20`}
-          >
-            {loading && (
-              <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
+          <div className="mt-12 flex flex-col items-center">
+            {remaining !== null && (
+              <p className="mb-4 text-sm font-medium text-gray-600 dark:text-stone-400">
+                {remaining} free comparison{remaining !== 1 ? 's' : ''} left today
+              </p>
             )}
-            {loading ? 'Analyzing...' : 'Compare Documents'}
-          </button>
 
-          {error && (
-            <ErrorMessage
-              message={isRateLimited ? "You've used your 3 free comparisons today. Pro coming soon — check back later or wait for reset." : error.message}
-              type={error.type as any}
+            <button
+              onClick={handleCompare}
+              disabled={loading || isRateLimited}
+              className={`flex items-center justify-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-full font-bold text-xl shadow-xl hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-orange-600/20`}
             >
-              {isRateLimited && (
-                <div className="mt-2 text-orange-700 dark:text-orange-300 font-semibold">
-                  Next free use available in: <CountdownTimer resetAt={error.resetAt!} onFinish={() => setError(null)} />
-                </div>
+              {loading && (
+                <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
               )}
-            </ErrorMessage>
-          )}
-        </div>
+              {loading ? 'Analyzing...' : 'Compare Documents'}
+            </button>
 
-        {result && (
+            {error && (
+              <ErrorMessage
+                message={isRateLimited ? "You've used your 3 free comparisons today. Pro coming soon — check back later or wait for reset." : error.message}
+                type={error.type as any}
+              >
+                {isRateLimited && (
+                  <div className="mt-2 text-orange-700 dark:text-orange-300 font-semibold">
+                    Next free use available in: <CountdownTimer resetAt={error.resetAt!} onFinish={() => setError(null)} />
+                  </div>
+                )}
+              </ErrorMessage>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {result && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
           <Results
             score={result.overall_similarity}
             method={result.method}
             sentencesA={result.sentences_a}
             sentencesB={result.sentences_b}
           />
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* How It Works section */}
+      <section className="py-24 bg-gray-50 dark:bg-stone-900/40 border-y border-gray-100 dark:border-stone-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl mb-4">How It Works</h2>
+            <p className="text-lg text-gray-600 dark:text-stone-400 max-w-2xl mx-auto">
+              Compare your documents in three simple steps using our advanced analysis engine.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">1. Upload documents</h3>
+              <p className="text-gray-600 dark:text-stone-400">
+                Paste your text directly or upload .pdf, .docx, or .txt files for comparison.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">2. AI-Powered Analysis</h3>
+              <p className="text-gray-600 dark:text-stone-400">
+                We use semantic AI to catch paraphrased content that simple word-matching misses.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">3. Get Results</h3>
+              <p className="text-gray-600 dark:text-stone-400">
+                Receive a detailed similarity breakdown with highlighted matches in seconds.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why DocSim Checker section */}
+      <section className="py-24 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl mb-4">Why DocSim Checker?</h2>
+            <p className="text-lg text-gray-600 dark:text-stone-400 max-w-2xl mx-auto">
+              Built for speed, privacy, and accuracy.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-orange-600 mb-4">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold mb-2 text-foreground">Semantic Matching</h3>
+              <p className="text-sm text-gray-600 dark:text-stone-400">
+                Catches paraphrased content, not just exact word matches.
+              </p>
+            </div>
+
+            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-orange-600 mb-4">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold mb-2 text-foreground">Complete Privacy</h3>
+              <p className="text-sm text-gray-600 dark:text-stone-400">
+                Documents are never stored. Your data stays yours.
+              </p>
+            </div>
+
+            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-orange-600 mb-4">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold mb-2 text-foreground">Fast Results</h3>
+              <p className="text-sm text-gray-600 dark:text-stone-400">
+                Get your similarity score and breakdown in seconds.
+              </p>
+            </div>
+
+            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-orange-600 mb-4">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold mb-2 text-foreground">Multiple File Types</h3>
+              <p className="text-sm text-gray-600 dark:text-stone-400">
+                Supports .txt, .pdf, and .docx formats out of the box.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA section */}
+      <section className="py-20 bg-orange-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-8">
+            Ready to compare your documents?
+          </h2>
+          <a
+            href="#tool"
+            className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-orange-600 bg-white hover:bg-orange-50 transition-colors shadow-lg"
+          >
+            Try it now
+            <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
