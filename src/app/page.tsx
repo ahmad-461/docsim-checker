@@ -92,13 +92,37 @@ export default function Home() {
   return (
     <div className="bg-background pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-foreground tracking-tight sm:text-5xl">
-            Document Similarity Checker
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-extrabold text-foreground tracking-tight sm:text-6xl mb-6">
+            Compare Documents. <br className="hidden sm:block" />
+            Catch Similarities. <span className="text-orange-600">Instantly.</span>
           </h1>
-          <p className="mt-4 text-xl text-gray-500 dark:text-stone-400 max-w-2xl mx-auto">
-            Compare two documents to detect overlapping content and similarity scores using Gemini AI and TF-IDF.
+          <p className="text-lg sm:text-xl text-gray-500 dark:text-stone-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+            Free, private, and fast — paste or upload two documents and get a detailed similarity breakdown in seconds. No sign-up required.
           </p>
+
+          {/* Trust Signals */}
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-12 text-sm font-medium text-gray-600 dark:text-stone-400">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              No documents stored
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Results in seconds
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              3 free comparisons daily
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -122,7 +146,7 @@ export default function Home() {
           <button
             onClick={handleCompare}
             disabled={loading || isRateLimited}
-            className={`flex items-center justify-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-full font-bold text-xl shadow-xl hover:bg-orange-700 transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`flex items-center justify-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-full font-bold text-xl shadow-xl hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-orange-600/20`}
           >
             {loading && (
               <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
