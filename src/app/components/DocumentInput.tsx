@@ -6,16 +6,15 @@ interface DocumentInputProps {
   label: string;
   onContentChange: (content: { type: 'text' | 'file'; content: string; filename?: string }) => void;
   error?: string;
+  value?: string;
 }
 
-const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, error }) => {
-  const [text, setText] = useState('');
+const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, error, value }) => {
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
-    setText(newText);
     if (!file) {
       onContentChange({ type: 'text', content: newText });
     }
@@ -48,7 +47,7 @@ const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, e
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    onContentChange({ type: 'text', content: text });
+    onContentChange({ type: 'text', content: '' });
   };
 
   const textareaId = `textarea-${label.replace(/\s+/g, '-').toLowerCase()}`;
@@ -67,7 +66,7 @@ const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, e
               : 'bg-white dark:bg-stone-900 text-foreground border-card-border'
           }`}
           placeholder={file ? "Using uploaded file..." : "Paste document text here..."}
-          value={file ? "" : text}
+          value={file ? "" : (value || "")}
           onChange={handleTextChange}
           readOnly={!!file}
         />

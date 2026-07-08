@@ -1,23 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DocumentInput from './components/DocumentInput';
 import Results from './components/Results';
 import CountdownTimer from './components/CountdownTimer';
 import ErrorMessage from './components/ErrorMessage';
-
-interface Sentence {
-  text: string;
-  match_score: number;
-}
-
-interface ComparisonResult {
-  overall_similarity: number;
-  method: 'blended' | 'tfidf_only';
-  sentences_a: Sentence[];
-  sentences_b: Sentence[];
-  remaining?: number;
-}
+import { sampleDocA, sampleDocB, sampleResult, type ComparisonResult } from './sampleData';
 
 interface DocContent {
   type: 'text' | 'file';
@@ -26,12 +14,13 @@ interface DocContent {
 }
 
 export default function Home() {
-  const [docA, setDocA] = useState<DocContent | null>(null);
-  const [docB, setDocB] = useState<DocContent | null>(null);
+  const [docA, setDocA] = useState<DocContent>({ type: 'text', content: '' });
+  const [docB, setDocB] = useState<DocContent>({ type: 'text', content: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ message: string; type?: string; resetAt?: string } | null>(null);
   const [result, setResult] = useState<ComparisonResult | null>(null);
   const [remaining, setRemaining] = useState<number | null>(null);
+  const [isSample, setIsSample] = useState(false);
 
   const handleCompare = async () => {
     const isContentEmpty = (doc: DocContent | null) => {
@@ -87,6 +76,32 @@ export default function Home() {
     }
   };
 
+  const handleSampleCompare = () => {
+    setDocA({ type: 'text', content: sampleDocA });
+    setDocB({ type: 'text', content: sampleDocB });
+    setResult(sampleResult);
+    setIsSample(true);
+    setError(null);
+
+    // Scroll to results
+    setTimeout(() => {
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const handleDocAChange = (content: DocContent) => {
+    setDocA(content);
+    setIsSample(false);
+  };
+
+  const handleDocBChange = (content: DocContent) => {
+    setDocB(content);
+    setIsSample(false);
+  };
+
   const isRateLimited = error?.type === 'rate_limit';
 
   return (
@@ -126,14 +141,28 @@ export default function Home() {
         </div>
 
         <div id="tool" className="scroll-mt-24">
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={handleSampleCompare}
+              className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-gray-600 dark:text-stone-300 bg-white dark:bg-stone-800 border-2 border-gray-200 dark:border-stone-700 rounded-full hover:border-orange-500 dark:hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm hover:shadow-md active:scale-95"
+            >
+              Try a sample comparison
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <DocumentInput
               label="Document A"
-              onContentChange={(content) => setDocA(content)}
+              value={docA.content}
+              onContentChange={handleDocAChange}
             />
             <DocumentInput
               label="Document B"
-              onContentChange={(content) => setDocB(content)}
+              value={docB.content}
+              onContentChange={handleDocBChange}
             />
           </div>
 
@@ -175,12 +204,13 @@ export default function Home() {
       </div>
 
       {result && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div id="results-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 scroll-mt-24">
           <Results
             score={result.overall_similarity}
             method={result.method}
             sentencesA={result.sentences_a}
             sentencesB={result.sentences_b}
+            isSample={isSample}
           />
         </div>
       )}

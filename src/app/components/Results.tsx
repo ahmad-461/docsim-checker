@@ -13,9 +13,10 @@ interface ResultsProps {
   method: 'blended' | 'tfidf_only';
   sentencesA: Sentence[];
   sentencesB: Sentence[];
+  isSample?: boolean;
 }
 
-const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB }) => {
+const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB, isSample }) => {
   const reportRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPDF = async () => {
@@ -123,8 +124,15 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
 
       <div className="text-center">
         <h2 className="text-lg font-medium text-foreground">Overall Similarity</h2>
-        <div className="mt-2 inline-flex flex-col items-center w-full">
-          <span className="text-6xl font-extrabold text-orange-600">{score}%</span>
+        <div className="mt-2 inline-flex flex-col items-center w-full relative">
+          <div className="flex items-center gap-3">
+            <span className="text-6xl font-extrabold text-orange-600">{score}%</span>
+            {isSample && (
+              <span className="bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-bold px-2.5 py-1 rounded-full border border-orange-200 dark:border-orange-800/50 uppercase tracking-wider animate-pulse">
+                Sample Result
+              </span>
+            )}
+          </div>
           {method === 'tfidf_only' && (
             <ErrorMessage
               type="fallback"
