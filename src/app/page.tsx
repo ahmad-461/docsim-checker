@@ -90,13 +90,13 @@ export default function Home() {
   const isRateLimited = error?.type === 'rate_limit';
 
   return (
-    <div className="bg-gray-50 pb-20">
+    <div className="bg-background pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+          <h1 className="text-4xl font-extrabold text-foreground tracking-tight sm:text-5xl">
             Document Similarity Checker
           </h1>
-          <p className="mt-4 text-xl text-gray-500 max-w-2xl mx-auto">
+          <p className="mt-4 text-xl text-gray-500 dark:text-stone-400 max-w-2xl mx-auto">
             Compare two documents to detect overlapping content and similarity scores using Gemini AI and TF-IDF.
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function Home() {
 
         <div className="mt-12 flex flex-col items-center">
           {remaining !== null && (
-            <p className="mb-4 text-sm font-medium text-gray-600">
+            <p className="mb-4 text-sm font-medium text-gray-600 dark:text-stone-400">
               {remaining} free comparison{remaining !== 1 ? 's' : ''} left today
             </p>
           )}
@@ -139,7 +139,7 @@ export default function Home() {
               type={error.type as any}
             >
               {isRateLimited && (
-                <div className="mt-2 text-orange-700 font-semibold">
+                <div className="mt-2 text-orange-700 dark:text-orange-300 font-semibold">
                   Next free use available in: <CountdownTimer resetAt={error.resetAt!} onFinish={() => setError(null)} />
                 </div>
               )}

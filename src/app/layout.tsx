@@ -28,8 +28,29 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+                  if (!theme && supportDarkMode) theme = 'dark';
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
         <Header />
         <main className="flex-grow">
           {children}
