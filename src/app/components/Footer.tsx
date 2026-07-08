@@ -9,13 +9,14 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} DocSim Checker. All rights reserved.
         </p>
         <p className="text-gray-400 text-sm mb-4">
-          We don't store your documents.{' '}
-          <Link href="/#how-it-works" className="text-orange-600 hover:underline">
-            How it works
-          </Link>
+          We don't store your documents.
         </p>
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-gray-400">
           <Link href="/about" className="hover:text-orange-600 transition-colors">About</Link>
+          <span className="hidden sm:inline text-gray-300">·</span>
+          <Link href="/how-it-works" className="hover:text-orange-600 transition-colors">How it works</Link>
+          <span className="hidden sm:inline text-gray-300">·</span>
+          <Link href="/pricing" className="hover:text-orange-600 transition-colors">Pricing</Link>
           <span className="hidden sm:inline text-gray-300">·</span>
           <Link href="/privacy" className="hover:text-orange-600 transition-colors">Privacy Policy</Link>
           <span className="hidden sm:inline text-gray-300">·</span>
