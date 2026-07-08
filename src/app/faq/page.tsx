@@ -8,15 +8,15 @@ const AccordionItem = ({ question, children }: { question: string; children: Rea
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-gray-100 last:border-none">
+    <div className="border-b border-gray-100 dark:border-stone-800 last:border-none">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-6 flex justify-between items-center text-left focus:outline-none group"
       >
-        <span className={`text-xl font-bold transition-colors ${isOpen ? 'text-orange-600' : 'text-gray-900 group-hover:text-orange-600'}`}>
+        <span className={`text-xl font-bold transition-colors ${isOpen ? 'text-orange-600' : 'text-foreground group-hover:text-orange-600'}`}>
           {question}
         </span>
-        <span className={`ml-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180 text-orange-600' : 'text-gray-400'}`}>
+        <span className={`ml-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180 text-orange-600' : 'text-gray-400 dark:text-stone-500'}`}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
@@ -25,7 +25,7 @@ const AccordionItem = ({ question, children }: { question: string; children: Rea
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
       >
-        <div className="text-gray-600">
+        <div className="text-gray-600 dark:text-stone-400">
           {children}
         </div>
       </div>
@@ -39,7 +39,7 @@ export default function FaqPage() {
       title="Frequently Asked Questions"
       subtitle="Everything you need to know about DocSim Checker"
     >
-      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm px-8 overflow-hidden">
+      <div className="bg-card rounded-3xl border border-card-border shadow-sm px-8 overflow-hidden">
         <AccordionItem question="Is my document stored anywhere?">
           <PageP>No. Your documents are processed to generate a similarity score and immediately discarded. We never save your document content.</PageP>
         </AccordionItem>
