@@ -7,12 +7,9 @@
 - Network:       http://192.168.0.2:3000
 ✓ Ready in 550ms
 
-○ Compiling / ...
- GET / 200 in 8.8s (next.js: 7.3s, application-code: 1412ms)
- GET /about 200 in 1170ms (next.js: 1007ms, application-code: 164ms)
- GET /faq 200 in 853ms (next.js: 691ms, application-code: 162ms)
- GET /privacy 200 in 1016ms (next.js: 852ms, application-code: 164ms)
- GET / 200 in 103ms (next.js: 5ms, application-code: 97ms)
- GET / 200 in 85ms (next.js: 7ms, application-code: 78ms)
- GET /about 200 in 128ms (next.js: 3ms, application-code: 125ms)
- GET /privacy 200 in 95ms (next.js: 3ms, application-code: 92ms)
+○ Compiling /terms ...
+ GET /terms 200 in 5.9s (next.js: 4.6s, application-code: 1323ms)
+ GET /terms 200 in 98ms (next.js: 4ms, application-code: 93ms)
+ GET /pricing 200 in 702ms (next.js: 536ms, application-code: 166ms)
+ GET /tools/word-counter 200 in 702ms (next.js: 586ms, application-code: 115ms)
+ GET /tools/word-counter 200 in 90ms (next.js: 4ms, application-code: 86ms)
