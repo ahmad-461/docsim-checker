@@ -8,12 +8,21 @@ const Footer = () => {
         <p className="text-gray-500 text-sm mb-2">
           &copy; {new Date().getFullYear()} DocSim Checker. All rights reserved.
         </p>
-        <p className="text-gray-400 text-sm">
+        <p className="text-gray-400 text-sm mb-4">
           We don't store your documents.{' '}
-          <Link href="#how-it-works" className="text-orange-600 hover:underline">
+          <Link href="/#how-it-works" className="text-orange-600 hover:underline">
             How it works
           </Link>
         </p>
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-gray-400">
+          <Link href="/about" className="hover:text-orange-600 transition-colors">About</Link>
+          <span className="hidden sm:inline text-gray-300">·</span>
+          <Link href="/privacy" className="hover:text-orange-600 transition-colors">Privacy Policy</Link>
+          <span className="hidden sm:inline text-gray-300">·</span>
+          <Link href="/terms" className="hover:text-orange-600 transition-colors">Terms of Use</Link>
+          <span className="hidden sm:inline text-gray-300">·</span>
+          <Link href="/faq" className="hover:text-orange-600 transition-colors">FAQ</Link>
+        </div>
       </div>
     </footer>
   );
