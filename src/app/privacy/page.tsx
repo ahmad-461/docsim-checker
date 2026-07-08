@@ -1,43 +1,42 @@
 import React from 'react';
-import InfoPageLayout, { PageH2, PageP, PageLink, PageUl, PageLi, PageStrong } from '../components/InfoPageLayout';
-import { CONTACT_EMAIL, POLICY_DATE } from '../constants';
+import InfoPageLayout, { PageP, PageStrong, PageH2, PageUl, PageLi } from '../components/InfoPageLayout';
+import { POLICY_DATE } from '../constants';
 
 export default function PrivacyPage() {
   return (
-    <InfoPageLayout title="Privacy Policy">
-      <PageP>Last updated: {POLICY_DATE}</PageP>
+    <InfoPageLayout
+      title="Privacy Policy"
+      subtitle="How we handle (and don't store) your data"
+    >
+      <PageP>Last Updated: <PageStrong>{POLICY_DATE}</PageStrong></PageP>
 
-      <PageH2>What we collect</PageH2>
       <PageP>
-        <PageStrong>Document content:</PageStrong> We do not store the text or files you upload or paste. Documents are processed in memory to generate a similarity comparison and are discarded immediately after the response is returned. We never write your document content to a database or disk.
-      </PageP>
-      <PageP>
-        <PageStrong>Usage data:</PageStrong> To enforce our free daily usage limit, we store a hashed version of your IP address along with a date and a usage count. We do not store your raw IP address — it is hashed before storage and cannot be reversed to identify you individually. This data is used solely for rate limiting and is not shared with third parties.
-      </PageP>
-      <PageP>
-        <PageStrong>Third-party processing:</PageStrong> When semantic similarity is enabled, sentence text is sent to Google&apos;s Gemini API for embedding generation. This is subject to Google&apos;s own data handling policies. We do not control or store what Google does with this data beyond the single API request/response cycle we initiate.
+        At DocSim Checker, we take your privacy seriously. This policy explains how we handle your data when you use our document comparison tool.
       </PageP>
 
-      <PageH2>What we don&apos;t do</PageH2>
+      <PageH2>1. Document Data</PageH2>
+      <PageP>
+        <PageStrong>We do not store your documents.</PageStrong> When you upload a file or paste text for comparison:
+      </PageP>
       <PageUl>
-        <PageLi>We don&apos;t sell or share your data with advertisers</PageLi>
-        <PageLi>We don&apos;t use your documents to train any models</PageLi>
-        <PageLi>We don&apos;t require an account, email, or personal information to use the free tier</PageLi>
+        <PageLi>The text is processed in-memory to calculate similarity scores.</PageLi>
+        <PageLi>For AI-powered analysis, text segments are sent to Google&apos;s Gemini API via a secure, private connection. Google&apos;s enterprise privacy terms generally ensure that data sent via their API is not used to train their models.</PageLi>
+        <PageLi>Immediately after the comparison is complete and results are shown to you, the document content is discarded from our servers.</PageLi>
       </PageUl>
 
-      <PageH2>Cookies</PageH2>
+      <PageH2>2. Usage Logging</PageH2>
       <PageP>
-        We do not currently use tracking or advertising cookies.
+        To prevent abuse and enforce our free tier limits (3 comparisons per day), we store a <PageStrong>one-way hash</PageStrong> of your IP address. We do not store your raw IP address, and we cannot reverse this hash to identify you. This log is used solely for rate limiting.
       </PageP>
 
-      <PageH2>Changes to this policy</PageH2>
+      <PageH2>3. Cookies and Analytics</PageH2>
       <PageP>
-        We may update this policy as the product evolves. Continued use of the site after changes constitutes acceptance of the updated policy.
+        DocSim Checker does not use tracking cookies or third-party marketing trackers. We may use basic, privacy-respecting analytics to understand general site traffic patterns without identifying individual users.
       </PageP>
 
-      <PageH2>Contact</PageH2>
+      <PageH2>4. Changes to This Policy</PageH2>
       <PageP>
-        Questions about this policy? <PageLink href={`mailto:${CONTACT_EMAIL}`}>Contact us</PageLink>.
+        We may update this policy occasionally. Any changes will be posted on this page with an updated &quot;Last Updated&quot; date.
       </PageP>
     </InfoPageLayout>
   );
