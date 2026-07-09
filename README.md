@@ -17,6 +17,7 @@ A document similarity checker MVP that compares two documents (pasted text or up
 - **Mobile Responsive:** Fully functional on mobile, tablet, and desktop screens.
 - **PDF Reports:** Downloadable similarity reports using `jspdf` and `html2canvas`.
 - **Rate Limiting:** IP-based daily limits (3 free comparisons/day) managed via Supabase.
+- **Contact Form:** Integrated with Formspree for user feedback and bug reports.
 - **Accessibility:** ARIA-compliant inputs and high-contrast match indicators.
 
 ## Prerequisites
@@ -51,6 +52,9 @@ GEMINI_API_KEY=your_google_gemini_api_key
 ENABLE_SEMANTIC_SIMILARITY=true
 TFIDF_WEIGHT=0.4
 SEMANTIC_WEIGHT=0.6
+
+# Frontend (root directory)
+NEXT_PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/your_endpoint_id
 ```
 
 ### 3. Local Installation
