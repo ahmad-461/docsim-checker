@@ -6,6 +6,7 @@ import Link from 'next/link';
 import AccordionItem from '../components/AccordionItem';
 
 const PriceCard = ({
+  id,
   name,
   price,
   period,
@@ -15,6 +16,7 @@ const PriceCard = ({
   isCurrent,
   isComingSoon
 }: {
+  id?: string,
   name: string,
   price: string,
   period: string,
@@ -70,7 +72,7 @@ const PriceCard = ({
   };
 
   return (
-    <div className={`flex flex-col p-8 rounded-3xl border-2 transition-all duration-300 relative ${
+    <div id={id} className={`flex flex-col p-8 rounded-3xl border-2 transition-all duration-300 relative ${
       isPopular
         ? 'border-orange-500 shadow-xl bg-card md:scale-105 z-10'
         : 'border-card-border shadow-sm bg-card'
@@ -81,10 +83,19 @@ const PriceCard = ({
         </div>
       )}
       <h3 className="text-xl font-bold text-foreground mb-2">{name}</h3>
-      <div className="flex items-baseline gap-1 mb-6">
+      <div className="flex items-baseline gap-1 mb-2">
         <span className="text-4xl font-black text-foreground">{price}</span>
         <span className="text-gray-500 dark:text-stone-500 font-medium">{period}</span>
       </div>
+
+      {/* Top Reassurance (Free Tier) */}
+      {!isComingSoon && (
+        <p className="text-xs text-gray-500 dark:text-stone-500 mb-6 font-medium">
+          No credit card. No expiration. Free forever at 3 comparisons/day.
+        </p>
+      )}
+
+      {isComingSoon && <div className="h-4 mb-2" />}
       <ul className="space-y-4 mb-8 flex-grow">
         {features.map((feature, i) => (
           <li key={i} className="flex items-start gap-3 text-gray-600 dark:text-stone-400">
@@ -140,6 +151,16 @@ const PriceCard = ({
               )}
             </form>
           )}
+
+          {/* Bottom Reassurance (Pro Tier) */}
+          <div className="mt-6 space-y-1">
+            <p className="text-xs text-center text-gray-500 dark:text-stone-500 font-medium italic">
+              Pro doesn&apos;t change our privacy policy — your documents are never stored, on any plan.
+            </p>
+            <p className="text-xs text-center text-gray-500 dark:text-stone-500 font-bold">
+              Cancel anytime, no questions asked.
+            </p>
+          </div>
         </div>
       ) : (
         <button
@@ -153,6 +174,75 @@ const PriceCard = ({
           {buttonText}
         </button>
       )}
+    </div>
+  );
+};
+
+const UsageCalculator = () => {
+  const [comparisons, setComparisons] = useState(30);
+  const freeLimitPerMonth = 3 * 30; // 3 per day * 30 days
+
+  const scrollToPro = () => {
+    const el = document.getElementById('pro-card');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('ring-4', 'ring-orange-500/50');
+      setTimeout(() => {
+        el.classList.remove('ring-4', 'ring-orange-500/50');
+      }, 2000);
+    }
+  };
+
+  return (
+    <div className="bg-card rounded-3xl p-8 border border-card-border shadow-sm mb-20 max-w-2xl mx-auto">
+      <h3 className="text-xl font-bold text-foreground mb-6 text-center">How many comparisons do you need per month?</h3>
+
+      <div className="space-y-8">
+        <div className="px-4">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-sm font-bold text-gray-500 dark:text-stone-500 uppercase tracking-widest">Est. Comparisons</span>
+            <span className="text-2xl font-black text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-4 py-1 rounded-xl">
+              {comparisons}{comparisons >= 150 ? '+' : ''}
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="150"
+            step="5"
+            value={comparisons}
+            onChange={(e) => setComparisons(parseInt(e.target.value))}
+            className="w-full h-3 bg-gray-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer accent-orange-600"
+          />
+          <div className="flex justify-between mt-2 text-xs text-gray-400 dark:text-stone-600 font-medium">
+            <span>0</span>
+            <span>75</span>
+            <span>150+</span>
+          </div>
+        </div>
+
+        <div className="p-6 bg-gray-50 dark:bg-stone-900/30 rounded-2xl border border-gray-100 dark:border-stone-800 text-center transition-all duration-300">
+          {comparisons <= freeLimitPerMonth ? (
+            <div className="animate-in fade-in zoom-in-95 duration-300">
+              <p className="text-lg font-bold text-foreground mb-1">The Free plan covers you.</p>
+              <p className="text-sm text-gray-500 dark:text-stone-400">You&apos;re well within the 90 free monthly comparisons.</p>
+            </div>
+          ) : (
+            <div className="animate-in fade-in zoom-in-95 duration-300">
+              <p className="text-lg font-bold text-foreground mb-2">You&apos;d benefit from Pro.</p>
+              <button
+                onClick={scrollToPro}
+                className="text-orange-600 font-bold hover:text-orange-700 transition-colors flex items-center justify-center gap-1 mx-auto"
+              >
+                Join the waitlist to be notified
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
@@ -218,6 +308,8 @@ const ComparisonTable = () => {
 };
 
 export default function PricingPage() {
+  const [audience, setAudience] = useState<'Students' | 'Teams'>('Students');
+
   return (
     <InfoPageLayout
       title="Simple, Transparent Pricing"
@@ -227,7 +319,39 @@ export default function PricingPage() {
         href: "/#tool"
       }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 mb-12 px-4 md:px-0">
+      {/* Audience Toggle */}
+      <div className="flex flex-col items-center mb-10">
+        <div className="inline-flex p-1 bg-gray-100 dark:bg-stone-800 rounded-full mb-6">
+          <button
+            onClick={() => setAudience('Students')}
+            className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+              audience === 'Students'
+                ? 'bg-orange-600 text-white shadow-md'
+                : 'text-gray-500 dark:text-stone-400 hover:text-gray-700 dark:hover:text-stone-200'
+            }`}
+          >
+            For Students
+          </button>
+          <button
+            onClick={() => setAudience('Teams')}
+            className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+              audience === 'Teams'
+                ? 'bg-orange-600 text-white shadow-md'
+                : 'text-gray-500 dark:text-stone-400 hover:text-gray-700 dark:hover:text-stone-200'
+            }`}
+          >
+            For Teams
+          </button>
+        </div>
+        <p className="text-center text-gray-600 dark:text-stone-400 font-medium animate-in fade-in slide-in-from-top-2 duration-500">
+          {audience === 'Students'
+            ? "Perfect for checking drafts, essays, and coursework before you submit."
+            : "Built for comparing contract versions, policy drafts, and internal documents."
+          }
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 mb-20 px-4 md:px-0">
         <PriceCard
           name="Free"
           price="$0"
@@ -243,6 +367,7 @@ export default function PricingPage() {
           isCurrent={true}
         />
         <PriceCard
+          id="pro-card"
           name="Pro"
           price="$10"
           period="/mo"
@@ -260,7 +385,31 @@ export default function PricingPage() {
         />
       </div>
 
+      <UsageCalculator />
+
       <ComparisonTable />
+
+      {/* Competitor Comparison */}
+      <div className="mb-20">
+        <div className="bg-orange-50/50 dark:bg-orange-950/10 border border-orange-100 dark:border-orange-900/30 rounded-3xl p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-10">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="p-1 bg-orange-100 dark:bg-orange-900/50 rounded-lg text-orange-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+            </span>
+            How we compare
+          </h3>
+          <p className="text-gray-600 dark:text-stone-400 leading-relaxed italic">
+            Unlike Turnitin, Copyleaks, or similar plagiarism-detection services, DocSim Checker doesn&apos;t require an account, doesn&apos;t check your documents against a web-wide index, and never stores anything you submit. It&apos;s built for direct, document-to-document comparison — not institutional-scale plagiarism detection.
+          </p>
+        </div>
+      </div>
 
       <div className="mb-20">
         <div className="bg-card rounded-3xl border border-card-border shadow-sm px-8 overflow-hidden mb-12">
