@@ -1,12 +1,12 @@
 import React from 'react';
-import InfoPageLayout, { PageP, PageStrong, PageH2, PageUl, PageLi } from '../components/InfoPageLayout';
+import InfoPageLayout, { PageP, PageStrong, PageUl, PageLi } from '../components/InfoPageLayout';
 import { POLICY_DATE } from '../constants';
 
 export default function PrivacyPage() {
   return (
     <InfoPageLayout
       title="Privacy Policy"
-      subtitle="How we handle (and don't store) your data"
+      subtitle="Your documents are never stored. Here's exactly how we handle your data."
     >
       <div className="space-y-8">
         <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">

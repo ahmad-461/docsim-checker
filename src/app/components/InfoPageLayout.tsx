@@ -1,9 +1,13 @@
 import React from 'react';
+import PageHero, { PageHeroCTA } from './PageHero';
 
 interface InfoPageLayoutProps {
   title: string;
   subtitle?: string;
+  cta?: PageHeroCTA;
   children: React.ReactNode;
+  maxWidth?: string;
+  noProse?: boolean;
 }
 
 export const PageH2 = ({ children }: { children: React.ReactNode }) => (
@@ -34,28 +38,32 @@ export const PageStrong = ({ children }: { children: React.ReactNode }) => (
   <strong className="font-bold text-foreground">{children}</strong>
 );
 
-const InfoPageLayout = ({ title, subtitle, children }: InfoPageLayoutProps) => {
+const InfoPageLayout = ({
+  title,
+  subtitle,
+  cta,
+  children,
+  maxWidth = "max-w-3xl",
+  noProse = false
+}: InfoPageLayoutProps) => {
   return (
     <div className="bg-background min-h-screen pb-20 transition-colors duration-200">
-      {/* Hero Section */}
-      <div className="bg-orange-50/50 dark:bg-orange-950/10 border-b border-orange-100 dark:border-orange-900/30 pt-32 pb-16 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
-        <div className="max-w-3xl mx-auto text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4 tracking-tight">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="text-xl text-gray-600 dark:text-stone-400 font-medium max-w-2xl">
-              {subtitle}
-            </p>
-          )}
-        </div>
-      </div>
+      <PageHero
+        title={title}
+        subtitle={subtitle}
+        cta={cta}
+        maxWidth={maxWidth}
+      />
 
       {/* Content Section */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="prose prose-stone dark:prose-invert prose-orange max-w-none">
-          {children}
-        </div>
+      <div className={`${maxWidth} mx-auto px-4 sm:px-6 lg:px-8 py-16`}>
+        {noProse ? (
+          children
+        ) : (
+          <div className="prose prose-stone dark:prose-invert prose-orange max-w-none">
+            {children}
+          </div>
+        )}
       </div>
     </div>
   );

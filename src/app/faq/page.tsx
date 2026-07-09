@@ -37,7 +37,12 @@ export default function FaqPage() {
   return (
     <InfoPageLayout
       title="Frequently Asked Questions"
-      subtitle="Everything you need to know about DocSim Checker"
+      subtitle="Everything you need to know about how DocSim Checker works."
+      cta={{
+        label: "Still have questions? Contact us",
+        href: `mailto:${CONTACT_EMAIL}`,
+        style: "subtle"
+      }}
     >
       <div className="bg-card rounded-3xl border border-card-border shadow-sm px-8 overflow-hidden">
         <AccordionItem question="Is my document stored anywhere?">

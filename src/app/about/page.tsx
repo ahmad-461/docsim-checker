@@ -1,16 +1,16 @@
 import React from 'react';
-import InfoPageLayout, { PageH2, PageP, PageLink } from '../components/InfoPageLayout';
+import InfoPageLayout, { PageP, PageLink } from '../components/InfoPageLayout';
 import { CONTACT_EMAIL } from '../constants';
-
-const SectionDivider = () => (
-  <div className="my-16 border-t border-gray-100 w-24 mx-auto" />
-);
 
 export default function AboutPage() {
   return (
     <InfoPageLayout
       title="About DocSim Checker"
-      subtitle="A simple, private, and powerful way to compare your documents."
+      subtitle="Built for writers, students, and teams who care about originality."
+      cta={{
+        label: "Try it now →",
+        href: "/#tool"
+      }}
     >
       <div className="space-y-8">
         <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">

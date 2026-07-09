@@ -73,8 +73,12 @@ const PriceCard = ({
 export default function PricingPage() {
   return (
     <InfoPageLayout
-      title="Simple Pricing"
-      subtitle="The right tools for every level of analysis"
+      title="Simple, Transparent Pricing"
+      subtitle="Start free. Upgrade when you need more."
+      cta={{
+        label: "Try it free →",
+        href: "/#tool"
+      }}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 mb-16 px-4 md:px-0">
         <PriceCard
