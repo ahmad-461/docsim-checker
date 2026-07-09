@@ -5,6 +5,7 @@ import DocumentInput from './components/DocumentInput';
 import Results from './components/Results';
 import CountdownTimer from './components/CountdownTimer';
 import ErrorMessage from './components/ErrorMessage';
+import { PageH2, PageP, PageStrong } from './components/InfoPageLayout';
 import { sampleDocA, sampleDocB, sampleResult, type ComparisonResult } from './sampleData';
 
 interface DocContent {
@@ -342,6 +343,59 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
           </a>
+        </div>
+      </section>
+
+      {/* SEO Content Section */}
+      <section className="py-24 bg-background border-t border-gray-100 dark:border-stone-800/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PageH2>Why Use a Document Similarity Checker</PageH2>
+          <PageP>
+            Comparing two pieces of writing to see how closely they match is a task that comes up more often than people expect. Students revising drafts want to know if they&apos;ve accidentally repeated phrasing from an earlier version. Writers publishing across multiple platforms want to avoid submitting near-duplicate content. Small teams reviewing contracts, policies, or internal documentation need a fast way to spot what changed between two versions without manually reading every line. DocSim Checker was built to solve exactly this problem: a free, private, and fast way to compare two documents directly against each other.
+          </PageP>
+          <PageP>
+            Unlike large-scale plagiarism detection platforms that check your writing against a vast index of the internet and academic papers, DocSim Checker focuses specifically on document-to-document comparison. You provide two documents — pasted text or uploaded files — and the tool tells you how similar they are, sentence by sentence, with a clear overall similarity percentage. This narrower focus makes it faster, simpler, and more private than institutional-grade tools, while still being genuinely useful for the situations most people actually run into.
+          </PageP>
+
+          <PageH2>How Document Similarity Is Calculated</PageH2>
+          <PageP>
+            DocSim Checker blends two different approaches to measure similarity. The first is TF-IDF (Term Frequency–Inverse Document Frequency) combined with cosine similarity, a well-established method in text analysis that measures how much vocabulary two pieces of text share, weighted by how distinctive that vocabulary is. This method is fast and effective for catching exact or near-exact wording matches.
+          </PageP>
+          <PageP>
+            The second approach uses AI-powered semantic similarity through Google&apos;s Gemini API. Semantic analysis doesn&apos;t just look at matching words — it evaluates whether two sentences convey the same meaning, even when the wording is completely different. This is what allows DocSim Checker to catch paraphrased or reworded content that a simple word-overlap tool would miss entirely. By blending both scores, the tool balances precision (catching exact matches) with depth (catching meaning-based matches), giving a more complete picture than either method alone.
+          </PageP>
+
+          <PageH2>Who Uses a Free Document Comparison Tool</PageH2>
+          <PageP>
+            <PageStrong>Students</PageStrong> use similarity checkers to self-review essays, research papers, and assignments before submission — not to detect plagiarism from external sources, but to compare their own drafts against earlier versions, or to check if two sections of their own writing repeat themselves more than intended.
+          </PageP>
+          <PageP>
+            <PageStrong>Writers and content creators</PageStrong> use this kind of tool when publishing across multiple platforms, newsletters, or clients, to avoid submitting content that overlaps too closely with something they&apos;ve already published elsewhere.
+          </PageP>
+          <PageP>
+            <PageStrong>Small teams and businesses</PageStrong> compare contract drafts, internal policy documents, or process documentation across versions — a lightweight alternative to manually redlining every change by eye, especially useful when a formal document management system isn&apos;t in place.
+          </PageP>
+
+          <PageH2>Free Online Text Comparison — No Sign-Up Required</PageH2>
+          <PageP>
+            DocSim Checker is free to use, with no account or sign-up required to run a comparison. Free users get three comparisons per day, which resets daily, covering the vast majority of casual or occasional use cases without any cost or commitment. Documents can be pasted directly as text or uploaded as .txt, .pdf, or .docx files, up to 2MB each.
+          </PageP>
+          <PageP>
+            Privacy is a core part of how the tool is built. Documents submitted for comparison are processed in memory to generate a similarity score and are never stored — not temporarily, not as a cache, not for any purpose beyond the single comparison request. This matters for a tool people are trusting with drafts of essays, unpublished writing, or business documents they wouldn&apos;t want stored on a third-party server indefinitely.
+          </PageP>
+
+          <PageH2>Document Similarity vs. Plagiarism Detection</PageH2>
+          <PageP>
+            It&apos;s worth being clear about what this tool is and isn&apos;t. Plagiarism detection services like Turnitin or Copyleaks check submitted work against enormous databases — the open web, academic journals, and previously submitted student papers — to identify whether content has been copied from an external source. DocSim Checker does not do this. It compares only the two documents you provide, directly against each other, with no external index or database involved.
+          </PageP>
+          <PageP>
+            This makes it a poor substitute for institutional academic integrity checks, but a strong fit for the narrower, more common task of comparing two specific pieces of writing — whether that&apos;s two drafts, two versions of a contract, or two documents you suspect might overlap. If you already know which two documents you want to compare, DocSim Checker gives you a fast, free, and private answer without needing to submit anything to a larger, less transparent system.
+          </PageP>
+
+          <PageH2>Getting Started</PageH2>
+          <PageP>
+            Using DocSim Checker takes less than a minute: paste or upload your first document into Document A, your second into Document B, and click Compare. Within seconds, you&apos;ll see an overall similarity percentage along with a side-by-side view showing exactly which sentences matched and how strongly. No account, no credit card, and no document ever leaves your session stored anywhere.
+          </PageP>
         </div>
       </section>
     </div>
