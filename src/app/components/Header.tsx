@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useScrollPosition } from '@/hooks/useScrollPosition';
 
 const tools = [
   {
@@ -38,19 +39,10 @@ const tools = [
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const { isScrolled } = useScrollPosition(50);
   const [theme, setTheme] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
-  // Handle scroll for header elevation
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Initialize theme
   useEffect(() => {

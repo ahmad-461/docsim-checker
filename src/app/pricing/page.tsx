@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import InfoPageLayout from '../components/InfoPageLayout';
 import Link from 'next/link';
 import AccordionItem from '../components/AccordionItem';
@@ -77,8 +77,13 @@ const PriceCard = ({
         ? 'border-orange-500 shadow-xl bg-card md:scale-105 z-10'
         : 'border-card-border shadow-sm bg-card'
     }`}>
+      {isPopular && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-600 text-white text-[10px] sm:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md z-20 border border-white/20 whitespace-nowrap">
+          Most Popular
+        </div>
+      )}
       {isComingSoon && (
-        <div className="absolute -top-4 right-6 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm z-20">
+        <div className="absolute -top-4 -right-2 bg-orange-600 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-sm z-10 border border-white/10">
           Coming Soon
         </div>
       )}
@@ -309,6 +314,25 @@ const ComparisonTable = () => {
 
 export default function PricingPage() {
   const [audience, setAudience] = useState<'Students' | 'Teams'>('Students');
+  const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const pricingCardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show CTA when pricing cards are NOT intersecting (scrolled past)
+        // and the user has scrolled down (entry.boundingClientRect.top < 0)
+        setShowStickyCTA(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0 }
+    );
+
+    if (pricingCardsRef.current) {
+      observer.observe(pricingCardsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <InfoPageLayout
@@ -351,7 +375,7 @@ export default function PricingPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 mb-20 px-4 md:px-0">
+      <div ref={pricingCardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 mb-20 px-4 md:px-0">
         <PriceCard
           name="Free"
           price="$0"
@@ -385,6 +409,7 @@ export default function PricingPage() {
         />
       </div>
 
+      {/* Target for intersection observer to know when cards are scrolled past */}
       <UsageCalculator />
 
       <ComparisonTable />
@@ -442,6 +467,25 @@ export default function PricingPage() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Sticky Floating CTA */}
+      <div
+        className={`fixed z-40 transition-all duration-500 ease-in-out ${
+          showStickyCTA
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 translate-y-4 pointer-events-none'
+        } bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0`}
+      >
+        <Link
+          href="/#tool"
+          className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white text-sm font-bold rounded-full shadow-lg hover:bg-orange-700 hover:scale-105 active:scale-95 transition-all"
+        >
+          Get Started Free
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </Link>
       </div>
     </InfoPageLayout>
   );
