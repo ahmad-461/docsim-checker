@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation';
 
 const tools = [
   { name: 'Word Counter', href: '/tools/word-counter' },
+  { name: 'Case Converter', href: '/tools/case-converter' },
+  { name: 'Duplicate Line Remover', href: '/tools/duplicate-line-remover' },
 ];
 
 const Header = () => {
