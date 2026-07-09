@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoPageLayout, { PageP, PageLink } from '../components/InfoPageLayout';
+import InfoPageLayout, { PageH2, PageP, PageLink } from '../components/InfoPageLayout';
 import { CONTACT_EMAIL } from '../constants';
 
 export default function AboutPage() {
@@ -61,6 +61,37 @@ export default function AboutPage() {
           </div>
           <PageP>
             DocSim Checker is an independently built tool, currently in active development. Have feedback or found a bug? <PageLink href={`mailto:${CONTACT_EMAIL}`}>Contact us</PageLink>.
+          </PageP>
+        </section>
+
+        <section className="pt-8">
+          <PageH2>The Problem DocSim Checker Solves</PageH2>
+          <PageP>
+            Most existing plagiarism and similarity tools are built for institutions — universities, publishers, and enterprises checking submitted work against enormous databases of existing content. That&apos;s a legitimate and different need than the one most individual writers, students, and small teams actually have day to day: comparing two specific documents they already have in hand to see how closely they match.
+          </PageP>
+          <PageP>
+            DocSim Checker was built to fill that narrower gap. It doesn&apos;t check your writing against the internet or an academic database — it takes exactly two documents you provide and tells you, in detail, how similar they are to each other. That&apos;s a smaller, more specific job than full plagiarism detection, but it&apos;s the job most people actually need done most of the time: comparing draft versions, checking for accidental repetition across published work, or reviewing how much a contract or policy document changed between revisions.
+          </PageP>
+
+          <PageH2>Built on Two Layers of Analysis</PageH2>
+          <PageP>
+            Similarity scoring combines two distinct methods rather than relying on a single approach. TF-IDF with cosine similarity — a long-established technique in text analysis — measures overlapping vocabulary between documents, weighted by how distinctive each term is. This catches exact or near-exact matches efficiently.
+          </PageP>
+          <PageP>
+            Layered on top of that is semantic similarity powered by Google&apos;s Gemini API, which evaluates whether sentences carry the same meaning even when worded completely differently. This is the layer that catches paraphrasing — the kind of rewording that a simple word-matching approach would miss entirely, but which matters just as much when the goal is understanding true overlap between two pieces of writing.
+          </PageP>
+
+          <PageH2>A Deliberate Stance on Privacy</PageH2>
+          <PageP>
+            Every design decision in DocSim Checker starts from the same constraint: documents are never stored. Not temporarily, not as a cache for performance, not for any secondary purpose. Text submitted for comparison is processed in memory to generate a result and then discarded the moment the response is returned. The only data retained at all is a hashed, non-reversible representation of IP address usage, kept solely to enforce the free daily comparison limit — never the content of what was compared.
+          </PageP>
+          <PageP>
+            This matters because the kinds of documents people run through a similarity checker are often exactly the kind they&apos;d be uncomfortable seeing stored somewhere indefinitely: unpublished drafts, personal essays, or confidential internal documents. Building the tool around a strict no-storage policy from the outset, rather than adding privacy protections later, was a deliberate choice.
+          </PageP>
+
+          <PageH2>Independently Built, Actively Developed</PageH2>
+          <PageP>
+            DocSim Checker is an independently developed project, still actively evolving. It started as a focused MVP — paste two documents, get a similarity score — and has grown to include a broader set of free writing utilities (word counting, case conversion, duplicate line removal) built on the same principle of instant, private, no-sign-up tools that solve a specific, common problem well rather than trying to be everything at once.
           </PageP>
         </section>
       </div>

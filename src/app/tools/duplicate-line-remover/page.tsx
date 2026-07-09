@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, ChangeEvent } from 'react';
-import InfoPageLayout from '../../components/InfoPageLayout';
+import InfoPageLayout, { PageH2, PageP, PageStrong } from '../../components/InfoPageLayout';
 
 export default function DuplicateLineRemoverPage() {
   const [inputText, setInputText] = useState('');
@@ -169,6 +169,54 @@ export default function DuplicateLineRemoverPage() {
             />
           </div>
         )}
+
+        {/* SEO Content Section */}
+        <div className="mt-16 border-t border-gray-100 dark:border-stone-800/50 pt-16">
+          <PageH2>What a Duplicate Line Remover Does</PageH2>
+          <PageP>
+            A duplicate line remover scans a block of text or a list and removes any lines that repeat, leaving only unique entries behind. This is a small but frequently needed task — anyone who has ever merged two lists, cleaned up exported data, or compiled notes from multiple sources has likely run into duplicate lines that need to be manually found and deleted, which becomes impractical once a list grows beyond a handful of entries.
+          </PageP>
+          <PageP>
+            DocSim Checker&apos;s Duplicate Line Remover handles this instantly: paste your text, click Remove Duplicates, and get back a cleaned version with repeated lines removed, along with a clear count of exactly how many duplicates were found.
+          </PageP>
+
+          <PageH2>Common Situations Where This Tool Helps</PageH2>
+          <PageP>
+            <PageStrong>Data cleanup</PageStrong> — merging email lists, contact lists, or exported spreadsheet data (pasted as plain text) often introduces duplicate entries that need to be removed before the data is usable.
+          </PageP>
+          <PageP>
+            <PageStrong>Note consolidation</PageStrong> — combining notes from multiple sources or drafts frequently results in repeated lines, especially when copying sections between documents.
+          </PageP>
+          <PageP>
+            <PageStrong>Content and SEO work</PageStrong> — checking lists of keywords, URLs, or tags for accidental duplicates before using them in a campaign or content plan.
+          </PageP>
+          <PageP>
+            <PageStrong>Developers and technical users</PageStrong> — cleaning up log files, configuration lists, or exported data where duplicate lines can cause errors or confusion downstream.
+          </PageP>
+
+          <PageH2>Case-Sensitive and Whitespace Options</PageH2>
+          <PageP>
+            Not all duplicates are exact character-for-character matches. The tool includes two configurable options to handle this: a <PageStrong>case-sensitive</PageStrong> toggle, which determines whether &quot;Apple&quot; and &quot;apple&quot; are treated as the same line or as different lines, and a <PageStrong>trim whitespace</PageStrong> option, which ignores leading or trailing spaces when comparing lines — useful when pasted data includes inconsistent spacing that would otherwise cause visually identical lines to be treated as unique.
+          </PageP>
+          <PageP>
+            These options matter because real-world pasted data is rarely perfectly clean. A list exported from a spreadsheet, for example, might have trailing spaces on some entries but not others, which would cause a naive duplicate check to miss matches that are functionally identical.
+          </PageP>
+
+          <PageH2>How the Comparison Works</PageH2>
+          <PageP>
+            Once you click &quot;Remove Duplicates,&quot; the tool processes your text line by line, comparing each line against every other line based on the options you&apos;ve selected, and returns a cleaned version showing only the first occurrence of each unique line. A summary line shows exactly how many duplicate lines were removed and the resulting total line count, so you can quickly confirm the cleanup worked as expected before copying the result.
+          </PageP>
+
+          <PageH2>Private and Instant Processing</PageH2>
+          <PageP>
+            As with DocSim Checker&apos;s other supporting tools, duplicate removal happens entirely in your browser using JavaScript — no text is uploaded, stored, or sent to any server. This makes it safe to use with sensitive lists (contact information, internal notes, or proprietary data) without any privacy concern, and means results appear instantly with no processing delay regardless of how large the pasted text is.
+          </PageP>
+
+          <PageH2>Part of a Larger Toolset</PageH2>
+          <PageP>
+            The Duplicate Line Remover is one of several free, no-sign-up writing and text utilities built alongside DocSim Checker&apos;s core document comparison tool. If your goal is closer to comparing two full documents for overlapping content — rather than cleaning duplicate lines within a single list — DocSim Checker&apos;s main similarity checker provides a detailed side-by-side comparison with both keyword-based and AI-powered semantic matching, useful for catching not just exact repeats but paraphrased or reworded overlap between two separate documents.
+          </PageP>
+        </div>
       </div>
     </InfoPageLayout>
   );
