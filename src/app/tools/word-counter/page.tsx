@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, ChangeEvent } from 'react';
-import Link from 'next/link';
+import InfoPageLayout from '../../components/InfoPageLayout';
 
 export default function WordCounterPage() {
   const [text, setText] = useState('');
@@ -137,17 +137,17 @@ export default function WordCounterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
-      <div className="max-w-4xl mx-auto">
-        {/* Header Section */}
-        <div className="mb-12 text-center md:text-left">
-          <h1 className="text-4xl font-extrabold text-foreground mb-4 tracking-tight">Word Counter</h1>
-          <p className="text-lg text-gray-600 dark:text-stone-400 leading-relaxed max-w-3xl">
-            A free, instant tool for checking word count, character count, and detailed text statistics.
-            All processing happens in your browser — your text is never stored or sent to any server.
-          </p>
-        </div>
-
+    <InfoPageLayout
+      title="Word Counter"
+      subtitle="Instantly check word count, character count, and reading time — free, private, no sign-up."
+      cta={{
+        label: "Compare documents instead →",
+        href: "/#tool"
+      }}
+      maxWidth="max-w-4xl"
+      noProse={true}
+    >
+      <div className="mx-auto">
         {/* Primary Stats Grid */}
         <div className={`grid grid-cols-2 md:grid-cols-5 gap-4 mb-4 transition-opacity duration-200 ${isStale ? 'opacity-50' : 'opacity-100'}`}>
           <div className="bg-card p-6 rounded-2xl border-2 border-orange-100 dark:border-orange-900/20 shadow-sm text-center transform transition-transform hover:scale-[1.02]">
@@ -253,23 +253,7 @@ export default function WordCounterPage() {
             </button>
           </div>
         </div>
-
-        {/* Cross-Promotion CTA */}
-        <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-900/30 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold text-foreground mb-1">Need detailed comparison?</h3>
-            <p className="text-gray-600 dark:text-stone-400">
-              Check similarity between two documents with our main tool.
-            </p>
-          </div>
-          <Link
-            href="/"
-            className="inline-flex items-center px-8 py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition-all shadow-sm whitespace-nowrap"
-          >
-            Try DocSim Checker →
-          </Link>
-        </div>
       </div>
-    </div>
+    </InfoPageLayout>
   );
 }

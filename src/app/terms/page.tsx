@@ -1,12 +1,12 @@
 import React from 'react';
-import InfoPageLayout, { PageP, PageStrong, PageH2, PageUl, PageLi } from '../components/InfoPageLayout';
-import { POLICY_DATE } from '../constants';
+import InfoPageLayout, { PageP, PageStrong, PageUl, PageLi } from '../components/InfoPageLayout';
+import { POLICY_DATE, CONTACT_EMAIL } from '../constants';
 
 export default function TermsPage() {
   return (
     <InfoPageLayout
       title="Terms of Use"
-      subtitle="The fine print, made readable"
+      subtitle="The ground rules for using DocSim Checker."
     >
       <div className="space-y-8">
         <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">
@@ -109,7 +109,7 @@ export default function TermsPage() {
           <h3 className="text-xl font-bold text-foreground mb-2">Have questions?</h3>
           <p className="text-gray-600 dark:text-stone-400 mb-6">If you have any questions about these Terms of Use, please contact us.</p>
           <a
-            href="mailto:support@docsimchecker.com"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="inline-flex items-center px-8 py-3 bg-orange-600 text-white font-semibold rounded-xl hover:bg-orange-700 transition-all shadow-sm"
           >
             Contact Support
