@@ -74,12 +74,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
+                <Link
+                  href="/contact"
                   className="hover:text-[#EA580C] transition-colors duration-200 text-sm"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

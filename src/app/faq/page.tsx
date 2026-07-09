@@ -40,7 +40,7 @@ export default function FaqPage() {
       subtitle="Everything you need to know about how DocSim Checker works."
       cta={{
         label: "Still have questions? Contact us",
-        href: `mailto:${CONTACT_EMAIL}`,
+        href: "/contact",
         style: "subtle"
       }}
     >
@@ -66,7 +66,7 @@ export default function FaqPage() {
         </AccordionItem>
 
         <AccordionItem question="Is this the same as Turnitin?">
-          <PageP>No. Turnitin (and similar tools) check your document against a massive database of academic papers, websites, and previously submitted work. DocSim Checker only compares the two documents you provide, directly against each other — it does not check against the internet or any external database.</PageP>
+          <PageP>No. Turnitin (and similar tools) check your document against a massive database of academic papers, websites, and previously submitted work. DocSim Checker only compares the two documents you provide, directly against each other — it does not check against the internet or any external database. Learn more <PageLink href="/about">about our tool</PageLink>.</PageP>
         </AccordionItem>
 
         <AccordionItem question="Do I need an account?">
@@ -74,11 +74,11 @@ export default function FaqPage() {
         </AccordionItem>
 
         <AccordionItem question="Is there a paid plan?">
-          <PageP>A Pro tier is planned for higher daily limits and additional features, but it is not yet available.</PageP>
+          <PageP>A Pro tier is planned for higher daily limits and additional features, but it is not yet available. See our <PageLink href="/pricing">pricing page</PageLink> for more details.</PageP>
         </AccordionItem>
 
         <AccordionItem question="Something went wrong or the score looks incorrect?">
-          <PageP><PageLink href={`mailto:${CONTACT_EMAIL}`}>Contact us</PageLink> with details and we&apos;ll look into it.</PageP>
+          <PageP><PageLink href="/contact">Contact us</PageLink> with details and we&apos;ll look into it.</PageP>
         </AccordionItem>
       </div>
     </InfoPageLayout>

@@ -42,7 +42,8 @@ create table usage_log (
 ```
 
 ### 2. Environment Variables
-Create an `api/.env` file (or set these in Vercel):
+
+**Backend (`api/.env`):**
 ```env
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_SERVICE_KEY=your_supabase_service_role_key
@@ -51,6 +52,11 @@ GEMINI_API_KEY=your_google_gemini_api_key
 ENABLE_SEMANTIC_SIMILARITY=true
 TFIDF_WEIGHT=0.4
 SEMANTIC_WEIGHT=0.6
+```
+
+**Frontend (`.env.local`):**
+```env
+NEXT_PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/your_endpoint_here
 ```
 
 ### 3. Local Installation

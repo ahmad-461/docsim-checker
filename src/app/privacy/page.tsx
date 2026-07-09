@@ -90,6 +90,12 @@ export default function PrivacyPage() {
             We may update this policy occasionally. Any changes will be posted on this page with an updated &quot;Last Updated&quot; date.
           </PageP>
         </section>
+
+        <div className="text-center mt-12 pt-8 border-t border-gray-100 dark:border-stone-800">
+          <PageP>
+            See also our <PageLink href="/terms">Terms of Use</PageLink>.
+          </PageP>
+        </div>
       </div>
     </InfoPageLayout>
   );
