@@ -49,12 +49,12 @@ const PriceCard = ({
       ))}
     </ul>
     {isComingSoon ? (
-      <a
-        href="mailto:support@docsimchecker.com?subject=Pro%20Waitlist"
+      <Link
+        href="/contact?subject=Pro%20Waitlist"
         className="w-full py-4 rounded-2xl font-bold text-center transition-all bg-orange-600 text-white hover:bg-orange-700 shadow-sm active:scale-95"
       >
         {buttonText}
-      </a>
+      </Link>
     ) : (
       <button
         disabled={isCurrent}
@@ -123,12 +123,12 @@ export default function PricingPage() {
           >
             Visit FAQ
           </Link>
-          <a
-            href="mailto:support@docsimchecker.com"
+          <Link
+            href="/contact"
             className="inline-block px-8 py-3 bg-white dark:bg-stone-800 border border-card-border text-gray-700 dark:text-stone-300 rounded-xl font-semibold hover:border-orange-500 hover:text-orange-600 transition-all shadow-sm"
           >
             Contact Support
-          </a>
+          </Link>
         </div>
       </div>
     </InfoPageLayout>

@@ -60,7 +60,10 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-foreground tracking-tight">Who&apos;s behind this</h2>
           </div>
           <PageP>
-            DocSim Checker is an independently built tool, currently in active development. Have feedback or found a bug? <PageLink href={`mailto:${CONTACT_EMAIL}`}>Contact us</PageLink>.
+            DocSim Checker is an independently built tool, currently in active development. Have feedback or found a bug? <PageLink href="/contact">Contact us</PageLink>.
+          </PageP>
+          <PageP>
+            Have more questions? Check our <PageLink href="/faq">FAQ</PageLink> or see our <PageLink href="/pricing">plans</PageLink>.
           </PageP>
         </section>
       </div>

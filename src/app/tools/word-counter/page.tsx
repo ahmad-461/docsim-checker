@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, ChangeEvent } from 'react';
-import InfoPageLayout from '../../components/InfoPageLayout';
+import InfoPageLayout, { PageP, PageLink } from '../../components/InfoPageLayout';
 
 export default function WordCounterPage() {
   const [text, setText] = useState('');
@@ -252,6 +252,12 @@ export default function WordCounterPage() {
               Count Text
             </button>
           </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <PageP>
+            Have questions about how it works? Check our <PageLink href="/faq">FAQ</PageLink>.
+          </PageP>
         </div>
       </div>
     </InfoPageLayout>
