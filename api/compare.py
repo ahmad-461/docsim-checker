@@ -5,6 +5,13 @@ import base64
 import os
 import sys
 import traceback
+import math
+
+# Add current directory to sys.path to resolve relative imports robustly
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -18,9 +25,6 @@ try:
     from rate_limiter import RateLimiter
     import pdfplumber
     from docx import Document
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    from sklearn.metrics.pairwise import cosine_similarity
-    import numpy as np
     from semantic_similarity import get_semantic_similarity_scores
 except Exception as e:
     startup_error = {
@@ -90,6 +94,101 @@ def split_sentences(text):
 def normalize_text(text):
     """Normalizes text by stripping excess whitespace and lowercasing."""
     return re.sub(r'\s+', ' ', text).strip().lower()
+
+def tokenize(text):
+    """Tokenize the text into words of length 2 or more, matching (?u)\\b\\w\\w+\\b."""
+    return re.findall(r'\b\w\w+\b', text.lower())
+
+def compute_tfidf_similarity(sentences_a_norm, sentences_b_norm):
+    """
+    Computes custom TF-IDF similarity between sentences in A and sentences in B.
+    Matches scikit-learn's default TfidfVectorizer(smooth_idf=True, norm='l2') and cosine_similarity.
+
+    Returns:
+        best_matches_a_tfidf (list of floats): Best match scores for sentences in A.
+        best_matches_b_tfidf (list of floats): Best match scores for sentences in B.
+    """
+    all_sentences = sentences_a_norm + sentences_b_norm
+    n_docs = len(all_sentences)
+
+    if n_docs == 0:
+        return [], []
+
+    # Tokenize all documents
+    tokenized_docs = [tokenize(doc) for doc in all_sentences]
+
+    # Identify unique vocabulary terms
+    vocab = sorted(list(set(term for doc in tokenized_docs for term in doc)))
+
+    # Compute document frequencies (df)
+    df = {term: 0 for term in vocab}
+    for doc in tokenized_docs:
+        unique_terms = set(doc)
+        for term in unique_terms:
+            df[term] += 1
+
+    # Compute inverse document frequencies (idf) with smooth_idf=True
+    # idf(t) = log((1 + n_docs) / (1 + df(t))) + 1
+    idf = {}
+    for term in vocab:
+        idf[term] = math.log((1 + n_docs) / (1 + df[term])) + 1.0
+
+    # Helper to compute L2-normalized TF-IDF vector for a document
+    def get_tfidf_vector(doc_tokens):
+        # Term frequencies (tf)
+        tf = {}
+        for token in doc_tokens:
+            tf[token] = tf.get(token, 0) + 1
+
+        # tf-idf values
+        vec = {}
+        for term, f in tf.items():
+            vec[term] = f * idf[term]
+
+        # L2 norm calculation
+        square_sum = sum(val * val for val in vec.values())
+        norm = math.sqrt(square_sum)
+
+        if norm == 0:
+            return {}
+
+        return {term: val / norm for term, val in vec.items()}
+
+    # Get L2-normalized TF-IDF vectors
+    vectors_a = [get_tfidf_vector(tokens) for tokens in tokenized_docs[:len(sentences_a_norm)]]
+    vectors_b = [get_tfidf_vector(tokens) for tokens in tokenized_docs[len(sentences_a_norm):]]
+
+    # Compute cosine similarity matrix (dot products of normalized vectors)
+    # sim_matrix[i][j] = similarity of vector i from A and vector j from B
+    sim_matrix = []
+    for vec_a in vectors_a:
+        row = []
+        for vec_b in vectors_b:
+            dot = 0.0
+            # Iterate over the smaller dict to optimize speed
+            if len(vec_a) < len(vec_b):
+                for term, val_a in vec_a.items():
+                    if term in vec_b:
+                        dot += val_a * vec_b[term]
+            else:
+                for term, val_b in vec_b.items():
+                    if term in vec_a:
+                        dot += val_b * vec_a[term]
+            row.append(dot)
+        sim_matrix.append(row)
+
+    # Compute best matches for A
+    best_matches_a_tfidf = []
+    for i in range(len(sentences_a_norm)):
+        best_matches_a_tfidf.append(max(sim_matrix[i]) if sim_matrix[i] else 0.0)
+
+    # Compute best matches for B
+    best_matches_b_tfidf = []
+    for j in range(len(sentences_b_norm)):
+        col_vals = [sim_matrix[i][j] for i in range(len(sentences_a_norm))]
+        best_matches_b_tfidf.append(max(col_vals) if col_vals else 0.0)
+
+    return best_matches_a_tfidf, best_matches_b_tfidf
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -192,19 +291,12 @@ def compare_documents():
         tfidf_weight = float(os.getenv('TFIDF_WEIGHT', 0.4))
         semantic_weight = float(os.getenv('SEMANTIC_WEIGHT', 0.6))
 
-        # Vectorize (TF-IDF)
-        vectorizer = TfidfVectorizer()
         try:
-            all_sentences = sentences_a_norm + sentences_b_norm
-            tfidf_matrix = vectorizer.fit_transform(all_sentences)
-
-            matrix_a = tfidf_matrix[:len(sentences_a_norm)]
-            matrix_b = tfidf_matrix[len(sentences_a_norm):]
-
-            # Cosine similarity (TF-IDF)
-            sim_matrix_tfidf = cosine_similarity(matrix_a, matrix_b)
-            best_matches_a_tfidf = np.max(sim_matrix_tfidf, axis=1)
-            best_matches_b_tfidf = np.max(sim_matrix_tfidf, axis=0)
+            # Cosine similarity (TF-IDF) using pure-Python implementation
+            best_matches_a_tfidf, best_matches_b_tfidf = compute_tfidf_similarity(
+                sentences_a_norm,
+                sentences_b_norm
+            )
 
             method = "tfidf_only"
             best_matches_a = best_matches_a_tfidf
@@ -221,8 +313,14 @@ def compare_documents():
 
                     # Blend scores
                     # Formula: blended_score = (tfidf_weight * tfidf_score) + (semantic_weight * semantic_score)
-                    best_matches_a = (tfidf_weight * best_matches_a_tfidf) + (semantic_weight * best_matches_a_semantic)
-                    best_matches_b = (tfidf_weight * best_matches_b_tfidf) + (semantic_weight * best_matches_b_semantic)
+                    best_matches_a = [
+                        (tfidf_weight * tf_val) + (semantic_weight * sem_val)
+                        for tf_val, sem_val in zip(best_matches_a_tfidf, best_matches_a_semantic)
+                    ]
+                    best_matches_b = [
+                        (tfidf_weight * tf_val) + (semantic_weight * sem_val)
+                        for tf_val, sem_val in zip(best_matches_b_tfidf, best_matches_b_semantic)
+                    ]
                     method = "blended"
                 except Exception as semantic_err:
                     print(f"Fallback to TF-IDF only: Gemini failed - {semantic_err}")
@@ -278,9 +376,5 @@ def compare_documents():
         }), 500
 
 # For Vercel, we need to export the app or use a handler.
-# Vercel's Python runtime can handle Flask apps if we name the entry point appropriately.
-# However, usually for simple functions it's handler(request).
-# Let's keep it as a Flask app for local testing and Vercel compatibility via 'app'.
-
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

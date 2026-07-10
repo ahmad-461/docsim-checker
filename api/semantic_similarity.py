@@ -1,8 +1,13 @@
 import os
+import math
 from google import genai
 from google.genai import types
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
+
+def normalize_vector(v):
+    mag = math.sqrt(sum(x * x for x in v))
+    if mag == 0:
+        return v
+    return [x / mag for x in v]
 
 def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name="text-embedding-004", timeout=3.5):
     # Current stable text embedding model as of early 2025: text-embedding-004
@@ -17,7 +22,7 @@ def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name
         timeout: Timeout in seconds for the API request.
 
     Returns:
-        tuple: (best_matches_a, best_matches_b) as numpy arrays.
+        tuple: (best_matches_a, best_matches_b) as lists of floats.
     """
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set")
@@ -47,7 +52,7 @@ def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name
             for embedding in response.embeddings:
                 embeddings.append(embedding.values)
 
-        return np.array(embeddings)
+        return embeddings
 
     try:
         all_embeddings = fetch_embeddings(all_sentences)
@@ -55,13 +60,29 @@ def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name
         embeddings_a = all_embeddings[:len(sentences_a)]
         embeddings_b = all_embeddings[len(sentences_a):]
 
-        # Compute cosine similarity between all A and all B
-        sim_matrix = cosine_similarity(embeddings_a, embeddings_b)
+        # Normalize the embeddings for fast cosine similarity via dot product
+        norm_a = [normalize_vector(v) for v in embeddings_a]
+        norm_b = [normalize_vector(v) for v in embeddings_b]
 
-        # For each sentence in A, find best match in B
-        best_matches_a = np.max(sim_matrix, axis=1)
-        # For each sentence in B, find best match in A
-        best_matches_b = np.max(sim_matrix, axis=0)
+        # Compute best matches for A against B
+        best_matches_a = []
+        for va in norm_a:
+            best_sim = 0.0
+            for vb in norm_b:
+                sim = sum(x * y for x, y in zip(va, vb))
+                if sim > best_sim:
+                    best_sim = sim
+            best_matches_a.append(best_sim)
+
+        # Compute best matches for B against A
+        best_matches_b = []
+        for vb in norm_b:
+            best_sim = 0.0
+            for va in norm_a:
+                sim = sum(x * y for x, y in zip(va, vb))
+                if sim > best_sim:
+                    best_sim = sim
+            best_matches_b.append(best_sim)
 
         return best_matches_a, best_matches_b
 
