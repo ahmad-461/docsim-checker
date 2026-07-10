@@ -51,19 +51,58 @@ export default function Home() {
         }),
       });
 
-      const data = await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      const isJson = contentType.includes('application/json');
 
       if (!response.ok) {
-        if (response.status === 429) {
-          setError({
-            message: data.message,
-            type: 'rate_limit',
-            resetAt: data.reset_at
-          });
-          setRemaining(0);
-          return;
+        console.error('Response failed with status:', response.status);
+        if (isJson) {
+          try {
+            const data = await response.json();
+            if (response.status === 429) {
+              setError({
+                message: data.message || "You've used all your free comparisons for today.",
+                type: 'rate_limit',
+                resetAt: data.reset_at
+              });
+              setRemaining(0);
+              return;
+            }
+            throw new Error(data.message || data.error || 'Failed to compare documents');
+          } catch (jsonErr) {
+            console.error('Failed to parse error JSON response:', jsonErr);
+            throw new Error('The server returned an unexpected response. Please try again, or try a smaller file.');
+          }
+        } else {
+          // If response not OK and NOT JSON (e.g. Vercel HTML error page or Gateway Timeout)
+          try {
+            const textResponse = await response.text();
+            console.error('Non-JSON error body:', textResponse.substring(0, 1000));
+          } catch (textErr) {
+            console.error('Failed to read non-JSON response body:', textErr);
+          }
+          throw new Error('The server returned an unexpected response. Please try again, or try a smaller file.');
         }
-        throw new Error(data.message || data.error || 'Failed to compare documents');
+      }
+
+      if (!isJson) {
+        console.error('Response succeeded (2xx) but was not JSON. Content-Type:', contentType);
+        try {
+          const textResponse = await response.text();
+          console.error('Non-JSON successful body:', textResponse.substring(0, 1000));
+        } catch (textErr) {
+          console.error('Failed to read non-JSON response body:', textErr);
+        }
+        throw new Error('The server returned an unexpected response. Please try again, or try a smaller file.');
+      }
+
+      // Safe JSON parsing of successful response
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseErr) {
+        console.error('Failed to parse successful JSON response:', parseErr);
+        throw new Error('The server returned an unexpected response. Please try again, or try a smaller file.');
       }
 
       setResult(data);
