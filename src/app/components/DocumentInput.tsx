@@ -105,7 +105,7 @@ const DocumentInput: React.FC<DocumentInputProps> = ({ label, onContentChange, e
             </button>
           )}
         </div>
-        <span className="text-xs text-gray-400 dark:text-stone-500">.txt, .pdf, .docx (max 2MB)</span>
+        <span className="text-xs text-gray-500 dark:text-stone-400">.txt, .pdf, .docx (max 2MB)</span>
       </div>
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </div>

@@ -1,6 +1,13 @@
-import React from 'react';
-import InfoPageLayout, { PageP, PageStrong, PageUl, PageLi } from '../components/InfoPageLayout';
-import { POLICY_DATE, CONTACT_EMAIL } from '../constants';
+import React from "react";
+import { Metadata } from "next";
+import Link from "next/link";
+import InfoPageLayout, { PageP, PageStrong, PageUl, PageLi } from "../components/InfoPageLayout";
+import { POLICY_DATE } from "../constants";
+
+export const metadata: Metadata = {
+  title: "Terms of Use — DocSim Checker",
+  description: "Review the Terms of Use for DocSim Checker. Learn about our terms, acceptable usage policies, and service guidelines for our comparison tools.",
+};
 
 export default function TermsPage() {
   return (
@@ -108,12 +115,12 @@ export default function TermsPage() {
         <section className="p-8 bg-orange-50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-900/30 rounded-2xl text-center">
           <h3 className="text-xl font-bold text-foreground mb-2">Have questions?</h3>
           <p className="text-gray-600 dark:text-stone-400 mb-6">If you have any questions about these Terms of Use, please contact us.</p>
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
+          <Link
+            href="/contact"
             className="inline-flex items-center px-8 py-3 bg-orange-600 text-white font-semibold rounded-xl hover:bg-orange-700 transition-all shadow-sm"
           >
             Contact Support
-          </a>
+          </Link>
         </section>
       </div>
     </InfoPageLayout>

@@ -87,7 +87,7 @@ const PriceCard = ({
           Coming Soon
         </div>
       )}
-      <h3 className="text-xl font-bold text-foreground mb-2">{name}</h3>
+      <h2 className="text-xl font-bold text-foreground mb-2">{name}</h2>
       <div className="flex items-baseline gap-1 mb-2">
         <span className="text-4xl font-black text-foreground">{price}</span>
         <span className="text-gray-500 dark:text-stone-500 font-medium">{period}</span>
@@ -95,7 +95,7 @@ const PriceCard = ({
 
       {/* Top Reassurance (Free Tier) */}
       {!isComingSoon && (
-        <p className="text-xs text-gray-500 dark:text-stone-500 mb-6 font-medium">
+        <p className="text-xs text-gray-500 dark:text-stone-400 mb-6 font-medium">
           No credit card. No expiration. Free forever at 3 comparisons/day.
         </p>
       )}
@@ -117,7 +117,7 @@ const PriceCard = ({
       {isComingSoon ? (
         <div className="mt-auto">
           {status === 'success' ? (
-            <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-900/30 rounded-2xl text-green-700 dark:text-green-400 text-sm font-medium text-center animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-900/30 rounded-xl text-green-700 dark:text-green-400 text-sm font-medium text-center animate-in fade-in slide-in-from-bottom-2 duration-300">
               You&apos;re on the list — we&apos;ll email you when Pro launches.
             </div>
           ) : (
@@ -129,13 +129,13 @@ const PriceCard = ({
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-2xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground text-sm"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground text-sm"
                 />
               </div>
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 shadow-sm active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 shadow-sm active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {status === 'loading' ? (
                   <>
@@ -159,10 +159,10 @@ const PriceCard = ({
 
           {/* Bottom Reassurance (Pro Tier) */}
           <div className="mt-6 space-y-1">
-            <p className="text-xs text-center text-gray-500 dark:text-stone-500 font-medium italic">
+            <p className="text-xs text-center text-gray-500 dark:text-stone-400 font-medium italic">
               Pro doesn&apos;t change our privacy policy — your documents are never stored, on any plan.
             </p>
-            <p className="text-xs text-center text-gray-500 dark:text-stone-500 font-bold">
+            <p className="text-xs text-center text-gray-500 dark:text-stone-400 font-bold">
               Cancel anytime, no questions asked.
             </p>
           </div>
@@ -170,7 +170,7 @@ const PriceCard = ({
       ) : (
         <button
           disabled={isCurrent}
-          className={`w-full py-4 rounded-2xl font-bold transition-all ${
+          className={`w-full py-4 rounded-xl font-bold transition-all ${
             isCurrent
               ? 'bg-gray-100 dark:bg-stone-800 text-gray-500 dark:text-stone-500 cursor-default'
               : 'bg-orange-600 text-white hover:bg-orange-700 shadow-sm active:scale-95'
@@ -200,7 +200,7 @@ const UsageCalculator = () => {
 
   return (
     <div className="bg-card rounded-3xl p-8 border border-card-border shadow-sm mb-20 max-w-2xl mx-auto">
-      <h3 className="text-xl font-bold text-foreground mb-6 text-center">How many comparisons do you need per month?</h3>
+      <h2 className="text-xl font-bold text-foreground mb-6 text-center">How many comparisons do you need per month?</h2>
 
       <div className="space-y-8">
         <div className="px-4">
@@ -219,7 +219,7 @@ const UsageCalculator = () => {
             onChange={(e) => setComparisons(parseInt(e.target.value))}
             className="w-full h-3 bg-gray-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer accent-orange-600"
           />
-          <div className="flex justify-between mt-2 text-xs text-gray-400 dark:text-stone-600 font-medium">
+          <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-stone-600 font-medium">
             <span>0</span>
             <span>75</span>
             <span>150+</span>
@@ -422,16 +422,16 @@ export default function PricingPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
           </div>
-          <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
             <span className="p-1 bg-orange-100 dark:bg-orange-900/50 rounded-lg text-orange-600">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
               </svg>
             </span>
             How we compare
-          </h3>
+          </h2>
           <p className="text-gray-600 dark:text-stone-400 leading-relaxed italic">
-            Unlike Turnitin, Copyleaks, or similar plagiarism-detection services, DocSim Checker doesn&apos;t require an account, doesn&apos;t check your documents against a web-wide index, and never stores anything you submit. It&apos;s built for direct, document-to-document comparison — not institutional-scale plagiarism detection.
+            Unlike <Link href="/faq" className="text-orange-600 hover:text-orange-700 transition-colors underline decoration-orange-200 dark:decoration-orange-900 underline-offset-4 hover:decoration-orange-600 font-semibold">Turnitin, Copyleaks, or similar plagiarism-detection services</Link>, DocSim Checker doesn&apos;t require an account, doesn&apos;t check your documents against a web-wide index, and never stores anything you submit. It&apos;s built for direct, document-to-document comparison — not institutional-scale plagiarism detection.
           </p>
         </div>
       </div>
@@ -450,7 +450,7 @@ export default function PricingPage() {
         </div>
 
         <div className="bg-card rounded-3xl p-8 border border-card-border text-center shadow-sm">
-          <h3 className="text-xl font-bold text-foreground mb-2">Still have questions?</h3>
+          <h2 className="text-xl font-bold text-foreground mb-2">Still have questions?</h2>
           <p className="text-gray-600 dark:text-stone-400 mb-6">Check our full FAQ or get in touch with our team.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link

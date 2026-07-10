@@ -5,7 +5,7 @@ import DocumentInput from './components/DocumentInput';
 import Results from './components/Results';
 import CountdownTimer from './components/CountdownTimer';
 import ErrorMessage from './components/ErrorMessage';
-import { PageH2, PageP, PageStrong } from './components/InfoPageLayout';
+import { PageH2, PageP, PageStrong, PageLink } from './components/InfoPageLayout';
 import { sampleDocA, sampleDocB, sampleResult, type ComparisonResult } from './sampleData';
 
 interface DocContent {
@@ -145,7 +145,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <button
               onClick={handleSampleCompare}
-              className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-gray-600 dark:text-stone-300 bg-white dark:bg-stone-800 border-2 border-gray-200 dark:border-stone-700 rounded-full hover:border-orange-500 dark:hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm hover:shadow-md active:scale-95"
+              className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-gray-600 dark:text-stone-300 bg-white dark:bg-stone-800 border-2 border-gray-200 dark:border-stone-700 rounded-xl hover:border-orange-500 dark:hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm hover:shadow-md active:scale-95"
             >
               Try a sample comparison
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -177,7 +177,7 @@ export default function Home() {
             <button
               onClick={handleCompare}
               disabled={loading || isRateLimited}
-              className={`flex items-center justify-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-full font-bold text-xl shadow-xl hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-orange-600/20`}
+              className={`flex items-center justify-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-xl font-bold text-xl shadow-xl hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-orange-600/20`}
             >
               {loading && (
                 <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -336,7 +336,7 @@ export default function Home() {
           </h2>
           <a
             href="#tool"
-            className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-orange-600 bg-white hover:bg-orange-50 transition-colors shadow-lg"
+            className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-orange-600 bg-white hover:bg-orange-50 transition-colors shadow-lg"
           >
             Try it now
             <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -378,7 +378,7 @@ export default function Home() {
 
           <PageH2>Free Online Text Comparison — No Sign-Up Required</PageH2>
           <PageP>
-            DocSim Checker is free to use, with no account or sign-up required to run a comparison. Free users get three comparisons per day, which resets daily, covering the vast majority of casual or occasional use cases without any cost or commitment. Documents can be pasted directly as text or uploaded as .txt, .pdf, or .docx files, up to 2MB each.
+            DocSim Checker is free to use, with no account or sign-up required to run a comparison. Free users get <PageLink href="/pricing">three comparisons per day</PageLink>, which resets daily, covering the vast majority of casual or occasional use cases without any cost or commitment. Documents can be pasted directly as text or uploaded as .txt, .pdf, or .docx files, up to 2MB each.
           </PageP>
           <PageP>
             Privacy is a core part of how the tool is built. Documents submitted for comparison are processed in memory to generate a similarity score and are never stored — not temporarily, not as a cache, not for any purpose beyond the single comparison request. This matters for a tool people are trusting with drafts of essays, unpublished writing, or business documents they wouldn&apos;t want stored on a third-party server indefinitely.

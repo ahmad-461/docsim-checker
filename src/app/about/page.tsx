@@ -1,6 +1,12 @@
-import React from 'react';
-import InfoPageLayout, { PageH2, PageP, PageLink } from '../components/InfoPageLayout';
-import { CONTACT_EMAIL } from '../constants';
+import React from "react";
+import { Metadata } from "next";
+import InfoPageLayout, { PageH2, PageP, PageLink } from "../components/InfoPageLayout";
+import { CONTACT_EMAIL } from "../constants";
+
+export const metadata: Metadata = {
+  title: "About DocSim Checker — Free & Private Text Comparison",
+  description: "Learn about DocSim Checker's secure, private approach to side-by-side document comparison and text similarity analysis without storing your files.",
+};
 
 export default function AboutPage() {
   return (
@@ -46,7 +52,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-foreground tracking-tight">How it works</h2>
           </div>
           <PageP>
-            We use a combination of text-matching techniques (TF-IDF) and AI-powered semantic analysis (via Google&apos;s Gemini API) to catch both exact matches and reworded/paraphrased similarities that simple word-matching would miss.
+            We use a <PageLink href="/how-it-works">combination of text-matching techniques (TF-IDF) and AI-powered semantic analysis</PageLink> (via Google&apos;s Gemini API) to catch both exact matches and reworded/paraphrased similarities that simple word-matching would miss.
           </PageP>
         </section>
 
@@ -60,7 +66,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-foreground tracking-tight">Who&apos;s behind this</h2>
           </div>
           <PageP>
-            DocSim Checker is an independently built tool, currently in active development. Have feedback or found a bug? <PageLink href={`mailto:${CONTACT_EMAIL}`}>Contact us</PageLink>.
+            DocSim Checker is an independently built tool, currently in active development. Have feedback or found a bug? <PageLink href="/contact">Contact us</PageLink>.
           </PageP>
         </section>
 

@@ -88,7 +88,7 @@ export default function ContactPage() {
           ) : (
             <form onSubmit={handleSubmit} className="p-8 md:p-10 space-y-6">
               {status === 'error' && (
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-2xl text-red-600 dark:text-red-400 text-sm font-medium">
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-xl text-red-600 dark:text-red-400 text-sm font-medium">
                   Something went wrong — please try again or email us directly at {CONTACT_EMAIL}.
                 </div>
               )}
@@ -106,7 +106,7 @@ export default function ContactPage() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your Name"
-                  className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-2xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground"
+                  className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground"
                 />
               </div>
 
@@ -123,7 +123,7 @@ export default function ContactPage() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-2xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground"
+                  className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground"
                 />
               </div>
 
@@ -137,7 +137,7 @@ export default function ContactPage() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-2xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground appearance-none cursor-pointer"
+                    className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground appearance-none cursor-pointer"
                   >
                     <option value="General Question">General Question</option>
                     <option value="Bug Report">Bug Report</option>
@@ -165,14 +165,14 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Tell us more..."
-                  className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-2xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground resize-none"
+                  className="w-full px-5 py-4 bg-gray-50 dark:bg-stone-900/50 border border-gray-200 dark:border-stone-700 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all text-foreground resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 shadow-sm hover:shadow-md active:scale-95 transition-all transform disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 shadow-sm hover:shadow-md active:scale-95 transition-all transform disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {status === 'loading' ? (
                   <>

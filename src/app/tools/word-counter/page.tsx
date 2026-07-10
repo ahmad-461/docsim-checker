@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, ChangeEvent } from 'react';
-import InfoPageLayout, { PageH2, PageP, PageStrong } from '../../components/InfoPageLayout';
+import InfoPageLayout, { PageH2, PageP, PageStrong, PageLink } from '../../components/InfoPageLayout';
 
 export default function WordCounterPage() {
   const [text, setText] = useState('');
@@ -152,23 +152,23 @@ export default function WordCounterPage() {
         <div className={`grid grid-cols-2 md:grid-cols-5 gap-4 mb-4 transition-opacity duration-200 ${isStale ? 'opacity-50' : 'opacity-100'}`}>
           <div className="bg-card p-6 rounded-2xl border-2 border-orange-100 dark:border-orange-900/20 shadow-sm text-center transform transition-transform hover:scale-[1.02]">
             <div className="text-3xl font-black text-orange-600">{stats.words}</div>
-            <div className="text-xs text-gray-500 dark:text-stone-500 uppercase tracking-widest font-bold mt-1">Words</div>
+            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Words</div>
           </div>
           <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center">
             <div className="text-3xl font-bold text-foreground">{stats.charsWithSpaces}</div>
-            <div className="text-xs text-gray-500 dark:text-stone-500 uppercase tracking-widest font-bold mt-1">Characters</div>
+            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Characters</div>
           </div>
           <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center">
             <div className="text-3xl font-bold text-foreground">{stats.sentences}</div>
-            <div className="text-xs text-gray-500 dark:text-stone-500 uppercase tracking-widest font-bold mt-1">Sentences</div>
+            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Sentences</div>
           </div>
           <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center">
             <div className="text-3xl font-bold text-foreground">{stats.paragraphs}</div>
-            <div className="text-xs text-gray-500 dark:text-stone-500 uppercase tracking-widest font-bold mt-1">Paragraphs</div>
+            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Paragraphs</div>
           </div>
           <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center col-span-2 md:col-span-1">
             <div className="text-3xl font-bold text-foreground">~{stats.readingTime}</div>
-            <div className="text-xs text-gray-500 dark:text-stone-500 uppercase tracking-widest font-bold mt-1">Min Read</div>
+            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Min Read</div>
           </div>
         </div>
 
@@ -176,29 +176,29 @@ export default function WordCounterPage() {
         <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-8 transition-opacity duration-200 ${isStale ? 'opacity-50' : 'opacity-100'}`}>
           <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
             <div className="text-lg font-bold text-foreground">{stats.punctuation.periods}</div>
-            <div className="text-[10px] text-gray-400 dark:text-stone-500 uppercase font-bold">Periods (.)</div>
+            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Periods (.)</div>
           </div>
           <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
             <div className="text-lg font-bold text-foreground">{stats.punctuation.commas}</div>
-            <div className="text-[10px] text-gray-400 dark:text-stone-500 uppercase font-bold">Commas (,)</div>
+            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Commas (,)</div>
           </div>
           <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
             <div className="text-lg font-bold text-foreground">{stats.punctuation.questions}</div>
-            <div className="text-[10px] text-gray-400 dark:text-stone-500 uppercase font-bold">Questions (?)</div>
+            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Questions (?)</div>
           </div>
           <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
             <div className="text-lg font-bold text-foreground">{stats.punctuation.exclamations}</div>
-            <div className="text-[10px] text-gray-400 dark:text-stone-500 uppercase font-bold">Exclaims (!)</div>
+            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Exclaims (!)</div>
           </div>
           <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
             <div className="text-lg font-bold text-foreground">{stats.avgWordsPerSentence}</div>
-            <div className="text-[10px] text-gray-400 dark:text-stone-500 uppercase font-bold">Words/Sent</div>
+            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Words/Sent</div>
           </div>
           <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center col-span-2">
             <div className="text-lg font-bold text-foreground truncate px-2" title={stats.longestWord}>
               {stats.longestWord || '-'}
             </div>
-            <div className="text-[10px] text-gray-400 dark:text-stone-500 uppercase font-bold">Longest Word</div>
+            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Longest Word</div>
           </div>
         </div>
 
@@ -232,7 +232,7 @@ export default function WordCounterPage() {
                 Clear
               </button>
             </div>
-            <div className="hidden sm:block text-xs font-medium text-gray-400 dark:text-stone-500 italic">
+            <div className="hidden sm:block text-xs font-medium text-gray-500 dark:text-stone-400 italic">
               {file ? `File: ${file.name}` : "Supports pasted text or .txt files"}
             </div>
           </div>
@@ -301,7 +301,7 @@ export default function WordCounterPage() {
 
           <PageH2>When You Need More Than a Count</PageH2>
           <PageP>
-            If you&apos;re comparing two versions of a document rather than just counting one, DocSim Checker&apos;s full similarity comparison tool shows exactly which sentences match or differ between two pieces of writing, with a detailed similarity score powered by both keyword and AI-based semantic analysis. The Word Counter and the Comparison tool are built to work together — check your word count here, then compare drafts using the main tool when you need a deeper look at what&apos;s changed.
+            If you&apos;re comparing two versions of a document rather than just counting one, <PageLink href="/">DocSim Checker&apos;s full similarity comparison tool</PageLink> shows exactly which sentences match or differ between two pieces of writing, with a detailed similarity score powered by both keyword and AI-based semantic analysis. The Word Counter and the Comparison tool are built to work together — check your word count here, then compare drafts using the main tool when you need a deeper look at what&apos;s changed.
           </PageP>
         </div>
       </div>
