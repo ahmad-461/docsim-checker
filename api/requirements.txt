@@ -1,7 +1,5 @@
 pdfplumber
 python-docx
-scikit-learn
-numpy
 flask
 flask-cors
 supabase
