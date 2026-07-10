@@ -26,16 +26,42 @@ CORS(app)
 limiter = RateLimiter()
 
 def extract_text(file_content, filename):
-    """Extracts text from different file types."""
+    """Extracts text from different file types with robust decoding and table support."""
     try:
-        if filename.endswith('.txt'):
-            return file_content.decode('utf-8')
-        elif filename.endswith('.pdf'):
+        if not filename:
+            return None
+        filename_lower = filename.lower()
+
+        if filename_lower.endswith('.txt'):
+            # Cascading decode fallback
+            try:
+                return file_content.decode('utf-8-sig')
+            except UnicodeDecodeError:
+                # Only try UTF-16 if it starts with a UTF-16 BOM to avoid false positives
+                if file_content.startswith(b'\xff\xfe') or file_content.startswith(b'\xfe\xff'):
+                    try:
+                        return file_content.decode('utf-16')
+                    except UnicodeDecodeError:
+                        pass
+                return file_content.decode('latin-1')
+        elif filename_lower.endswith('.pdf'):
             with pdfplumber.open(io.BytesIO(file_content)) as pdf:
                 return "\n".join(page.extract_text() or "" for page in pdf.pages)
-        elif filename.endswith('.docx'):
+        elif filename_lower.endswith('.docx'):
             doc = Document(io.BytesIO(file_content))
-            return "\n".join(paragraph.text for paragraph in doc.paragraphs)
+            # Extract paragraphs text
+            paragraphs_text = [paragraph.text for paragraph in doc.paragraphs]
+            # Extract table contents cell-by-cell and paragraph-by-paragraph
+            tables_text = []
+            for table in doc.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for paragraph in cell.paragraphs:
+                            tables_text.append(paragraph.text)
+
+            # Combine paragraphs and tables text, omitting empty segments
+            all_segments = paragraphs_text + tables_text
+            return "\n".join(segment for segment in all_segments if segment.strip())
         else:
             return None
     except Exception as e:
