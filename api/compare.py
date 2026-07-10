@@ -12,18 +12,30 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-from rate_limiter import RateLimiter
-import pdfplumber
-from docx import Document
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
-from semantic_similarity import get_semantic_similarity_scores
+# We store any import error that happens during startup
+startup_error = None
+try:
+    from rate_limiter import RateLimiter
+    import pdfplumber
+    from docx import Document
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+    import numpy as np
+    from semantic_similarity import get_semantic_similarity_scores
+except Exception as e:
+    startup_error = {
+        "error": "startup_import_error",
+        "message": str(e),
+        "traceback": traceback.format_exc()
+    }
 
 app = Flask(__name__)
 CORS(app)
 
-limiter = RateLimiter()
+if startup_error is None:
+    limiter = RateLimiter()
+else:
+    limiter = None
 
 def extract_text(file_content, filename):
     """Extracts text from different file types with robust decoding and table support."""
@@ -65,8 +77,8 @@ def extract_text(file_content, filename):
         else:
             return None
     except Exception as e:
-        print(f"Extraction error: {e}")
-        return None
+        # Propagate the full traceback in a temporary debug exception
+        raise ValueError(f"Extraction error for {filename}: {str(e)}\nTraceback:\n{traceback.format_exc()}")
 
 def split_sentences(text):
     """Splits text into sentences using simple regex."""
@@ -85,7 +97,8 @@ def handle_exception(e):
     traceback.print_exc()
     response = {
         "error": "server_error",
-        "message": "An unexpected server error occurred."
+        "message": f"An unexpected server error occurred: {str(e)}",
+        "traceback": traceback.format_exc()
     }
     status_code = 500
     if hasattr(e, "code"):
@@ -96,6 +109,13 @@ def handle_exception(e):
 
 @app.route('/api/compare', methods=['POST'])
 def compare_documents():
+    if startup_error:
+        return jsonify({
+            "error": "startup_error",
+            "message": f"Startup / Import error: {startup_error['message']}",
+            "traceback": startup_error['traceback']
+        }), 500
+
     try:
         # Rate Limiting
         forwarded = request.headers.get('x-forwarded-for')
@@ -243,13 +263,18 @@ def compare_documents():
 
         except Exception as e:
             traceback.print_exc()
-            return jsonify({"error": f"Similarity computation failed: {str(e)}"}), 500
+            return jsonify({
+                "error": "similarity_computation_failed",
+                "message": f"Similarity computation failed: {str(e)}",
+                "traceback": traceback.format_exc()
+            }), 500
 
     except Exception as e:
         traceback.print_exc()
         return jsonify({
             "error": "server_error",
-            "message": f"An unexpected error occurred: {str(e)}"
+            "message": f"An unexpected error occurred: {str(e)}",
+            "traceback": traceback.format_exc()
         }), 500
 
 # For Vercel, we need to export the app or use a handler.
