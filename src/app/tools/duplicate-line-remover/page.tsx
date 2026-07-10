@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, ChangeEvent } from 'react';
-import InfoPageLayout, { PageH2, PageP, PageStrong } from '../../components/InfoPageLayout';
+import InfoPageLayout, { PageH2, PageP, PageStrong, PageLink } from '../../components/InfoPageLayout';
 
 export default function DuplicateLineRemoverPage() {
   const [inputText, setInputText] = useState('');
@@ -214,7 +214,7 @@ export default function DuplicateLineRemoverPage() {
 
           <PageH2>Part of a Larger Toolset</PageH2>
           <PageP>
-            The Duplicate Line Remover is one of several free, no-sign-up writing and text utilities built alongside DocSim Checker&apos;s core document comparison tool. If your goal is closer to comparing two full documents for overlapping content — rather than cleaning duplicate lines within a single list — DocSim Checker&apos;s main similarity checker provides a detailed side-by-side comparison with both keyword-based and AI-powered semantic matching, useful for catching not just exact repeats but paraphrased or reworded overlap between two separate documents.
+            The Duplicate Line Remover is one of several free, no-sign-up writing and text utilities built alongside <PageLink href="/">DocSim Checker&apos;s core document comparison tool</PageLink>. If your goal is closer to comparing two full documents for overlapping content — rather than cleaning duplicate lines within a single list — DocSim Checker&apos;s main similarity checker provides a detailed side-by-side comparison with both keyword-based and AI-powered semantic matching, useful for catching not just exact repeats but paraphrased or reworded overlap between two separate documents.
           </PageP>
         </div>
       </div>

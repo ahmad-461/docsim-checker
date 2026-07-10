@@ -2,7 +2,6 @@
 
 import React from 'react';
 import InfoPageLayout, { PageP, PageLink } from '../components/InfoPageLayout';
-import { CONTACT_EMAIL } from '../constants';
 import AccordionItem from '../components/AccordionItem';
 
 export default function FaqPage() {
@@ -12,7 +11,7 @@ export default function FaqPage() {
       subtitle="Everything you need to know about how DocSim Checker works."
       cta={{
         label: "Still have questions? Contact us",
-        href: `mailto:${CONTACT_EMAIL}`,
+        href: "/contact",
         style: "subtle"
       }}
     >
@@ -50,7 +49,7 @@ export default function FaqPage() {
         </AccordionItem>
 
         <AccordionItem question="Something went wrong or the score looks incorrect?">
-          <PageP><PageLink href={`mailto:${CONTACT_EMAIL}`}>Contact us</PageLink> with details and we&apos;ll look into it.</PageP>
+          <PageP><PageLink href="/contact">Contact us</PageLink> with details and we&apos;ll look into it.</PageP>
         </AccordionItem>
       </div>
     </InfoPageLayout>

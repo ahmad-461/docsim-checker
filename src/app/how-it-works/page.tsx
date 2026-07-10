@@ -1,14 +1,20 @@
-import React from 'react';
-import InfoPageLayout, { PageP } from '../components/InfoPageLayout';
+import React from "react";
+import { Metadata } from "next";
+import InfoPageLayout, { PageP } from "../components/InfoPageLayout";
 
-const Step = ({ number, title, description }: { number: number, title: string, description: string }) => (
+export const metadata: Metadata = {
+  title: "How DocSim Checker Works — AI-Powered Similarity Detection",
+  description: "Discover how DocSim Checker uses a combination of advanced text-matching (TF-IDF) and semantic AI embeddings to analyze and highlight document overlap.",
+};
+
+const Step = ({ number, title, description }: { number: number; title: string; description: string }) => (
   <div className="flex gap-6 mb-12 last:mb-0">
-    <div className="flex-shrink-0 w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm">
+    <div className="flex-shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-950/50 text-orange-600 dark:text-orange-400 rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm">
       {number}
     </div>
     <div>
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">{title}</h3>
-      <p className="text-lg text-gray-600 leading-relaxed">{description}</p>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-2">{title}</h2>
+      <p className="text-lg text-gray-600 dark:text-stone-300 leading-relaxed">{description}</p>
     </div>
   </div>
 );
@@ -19,7 +25,7 @@ export default function HowItWorksPage() {
       title="How It Works"
       subtitle="From upload to results in seconds"
     >
-      <div className="bg-white rounded-3xl p-8 md:p-12 border border-gray-100 shadow-sm mb-12">
+      <div className="bg-white dark:bg-stone-800 rounded-3xl p-8 md:p-12 border border-gray-100 dark:border-stone-700 shadow-sm mb-12">
         <Step
           number={1}
           title="Input Documents"
@@ -37,8 +43,8 @@ export default function HowItWorksPage() {
         />
       </div>
 
-      <div className="bg-orange-50 rounded-3xl p-8 md:p-12 border border-orange-100">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">Our Technology</h3>
+      <div className="bg-orange-50 dark:bg-orange-950/20 rounded-3xl p-8 md:p-12 border border-orange-100 dark:border-orange-900/30">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-foreground mb-4">Our Technology</h2>
         <PageP>
           DocSim Checker leverages state-of-the-art Large Language Models via Google's Gemini API to generate vector embeddings of your text. These embeddings represent the "meaning" of sentences in a high-dimensional space. By calculating the cosine similarity between these vectors, we can identify sentences that are semantically similar even if they use different vocabulary.
         </PageP>

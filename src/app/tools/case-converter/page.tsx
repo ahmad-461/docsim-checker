@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, ChangeEvent } from 'react';
-import InfoPageLayout, { PageH2, PageP, PageStrong } from '../../components/InfoPageLayout';
+import InfoPageLayout, { PageH2, PageP, PageStrong, PageLink } from '../../components/InfoPageLayout';
 
 export default function CaseConverterPage() {
   const [text, setText] = useState('');
@@ -108,7 +108,7 @@ export default function CaseConverterPage() {
                 Clear
               </button>
             </div>
-            <div className="hidden sm:block text-xs font-medium text-gray-400 dark:text-stone-500 italic">
+            <div className="hidden sm:block text-xs font-medium text-gray-500 dark:text-stone-400 italic">
               Paste or type your text to convert instantly
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function CaseConverterPage() {
                   key={type}
                   onClick={() => transformText(type)}
                   disabled={!text}
-                  className="px-6 py-3 bg-white dark:bg-stone-900 border border-gray-200 dark:border-stone-700 rounded-full text-sm font-bold text-gray-700 dark:text-stone-300 hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-3 bg-white dark:bg-stone-900 border border-gray-200 dark:border-stone-700 rounded-xl text-sm font-bold text-gray-700 dark:text-stone-300 hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {type}
                 </button>
@@ -191,7 +191,7 @@ export default function CaseConverterPage() {
 
           <PageH2>A Companion to DocSim Checker&apos;s Full Toolset</PageH2>
           <PageP>
-            The Case Converter is one of several free writing utilities available alongside DocSim Checker&apos;s main document comparison tool. If you&apos;re preparing text for formatting, cleaning up copy-pasted content, or standardizing naming conventions in code, this tool handles that instantly. For deeper analysis — comparing two full documents to see how similar they are — DocSim Checker&apos;s primary comparison tool provides a detailed, sentence-by-sentence similarity breakdown using both keyword-based and AI-powered semantic matching.
+            The Case Converter is one of several free writing utilities available alongside DocSim Checker&apos;s main document comparison tool. If you&apos;re preparing text for formatting, cleaning up copy-pasted content, or standardizing naming conventions in code, this tool handles that instantly. For deeper analysis — comparing two full documents to see how similar they are — <PageLink href="/">DocSim Checker&apos;s primary comparison tool</PageLink> provides a detailed, sentence-by-sentence similarity breakdown using both keyword-based and AI-powered semantic matching.
           </PageP>
         </div>
       </div>

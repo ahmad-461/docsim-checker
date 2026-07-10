@@ -16,9 +16,9 @@ const AccordionItem = ({ question, children }: AccordionItemProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-6 flex justify-between items-center text-left focus:outline-none group"
       >
-        <span className={`text-xl font-bold transition-colors ${isOpen ? 'text-orange-600' : 'text-foreground group-hover:text-orange-600'}`}>
+        <h3 className={`text-xl font-bold transition-colors ${isOpen ? 'text-orange-600' : 'text-foreground group-hover:text-orange-600'}`}>
           {question}
-        </span>
+        </h3>
         <span className={`ml-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180 text-orange-600' : 'text-gray-400 dark:text-stone-500'}`}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

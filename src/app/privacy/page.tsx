@@ -1,6 +1,12 @@
-import React from 'react';
-import InfoPageLayout, { PageP, PageStrong, PageUl, PageLi } from '../components/InfoPageLayout';
-import { POLICY_DATE } from '../constants';
+import React from "react";
+import { Metadata } from "next";
+import InfoPageLayout, { PageP, PageStrong, PageUl, PageLi } from "../components/InfoPageLayout";
+import { POLICY_DATE } from "../constants";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy — DocSim Checker",
+  description: "Read the DocSim Checker Privacy Policy. Learn about our commitment to your privacy, text handling practices, and our strict zero-document-storage model.",
+};
 
 export default function PrivacyPage() {
   return (
