@@ -31,6 +31,8 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
     // Future gate: if (user_tier === 'pro') { ... } else { showUpsell() }
     if (!reportRef.current) return;
 
+    let tempStyleEl: HTMLStyleElement | null = null;
+
     try {
       const element = reportRef.current;
 
@@ -48,6 +50,44 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       docBContainer.style.height = 'auto';
       docBContainer.style.overflow = 'visible';
 
+      // 1. Gather all CSS rules from the original document
+      let cssText = '';
+      for (const sheet of Array.from(document.styleSheets)) {
+        try {
+          const rules = sheet.cssRules;
+          if (rules) {
+            for (const rule of Array.from(rules)) {
+              cssText += rule.cssText + '\n';
+            }
+          }
+        } catch (e) {
+          // Fallback for CORS security restrictions or inline style tags
+          if (sheet.ownerNode && (sheet.ownerNode.nodeName === 'STYLE')) {
+            cssText += sheet.ownerNode.textContent + '\n';
+          }
+        }
+      }
+
+      // Replace modern unsupported color functions oklch(...), oklab(...), lab(...), and lch(...) with standard hex/RGB
+      // Also replace modern color-mix function calls with standard hex fallback
+      const cleanCssText = cssText
+        .replace(/oklch\([^)]*\)/g, '#ea580c')
+        .replace(/oklab\([^)]*\)/g, '#ea580c')
+        .replace(/lab\([^)]*\)/g, '#ea580c')
+        .replace(/lch\([^)]*\)/g, '#ea580c')
+        .replace(/color-mix\([^;}]*\)/g, '#ea580c');
+
+      // 2. Create a temporary stylesheet in the document
+      tempStyleEl = document.createElement('style');
+      tempStyleEl.textContent = cleanCssText;
+      document.head.appendChild(tempStyleEl);
+
+      // 3. Temporarily override document.styleSheets so html2canvas reads the cleaned CSS rules
+      Object.defineProperty(document, 'styleSheets', {
+        value: [tempStyleEl.sheet],
+        configurable: true
+      });
+
       const canvas = await html2canvas(element, {
         scale: 2, // Higher quality
         useCORS: true,
@@ -55,16 +95,25 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
         onclone: (clonedDoc) => {
+          // Remove original style sheets and link tags in the cloned document
+          const stylesAndLinks = clonedDoc.querySelectorAll('link[rel="stylesheet"], style');
+          stylesAndLinks.forEach(el => el.remove());
+
+          // Inject the clean CSS as a single style block in the cloned document's head
+          const cleanStyleEl = clonedDoc.createElement('style');
+          cleanStyleEl.textContent = cleanCssText;
+          clonedDoc.head.appendChild(cleanStyleEl);
+
           // Fix for html2canvas failing on oklch colors used in Tailwind v4
           // Force standard RGB for elements that might use modern color functions
           const elementsWithColors = clonedDoc.querySelectorAll('*');
           elementsWithColors.forEach((el) => {
             const style = window.getComputedStyle(el);
             const element = el as HTMLElement;
-            if (style.color && (style.color.includes('oklch') || style.color.includes('lab'))) {
+            if (style.color && (style.color.includes('oklch') || style.color.includes('lab') || style.color.includes('oklab') || style.color.includes('lch'))) {
                element.style.color = 'black'; // Fallback
             }
-            if (style.backgroundColor && (style.backgroundColor.includes('oklch') || style.backgroundColor.includes('lab'))) {
+            if (style.backgroundColor && (style.backgroundColor.includes('oklch') || style.backgroundColor.includes('lab') || style.backgroundColor.includes('oklab') || style.backgroundColor.includes('lch'))) {
                element.style.backgroundColor = 'transparent'; // Fallback
             }
           });
@@ -88,6 +137,12 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       pdf.save(`DocSim-Report-${new Date().getTime()}.pdf`);
     } catch (error) {
       console.error('Failed to generate PDF:', error);
+    } finally {
+      // 4. Restore original document.styleSheets and remove the temporary style element
+      if (tempStyleEl) {
+        delete (document as any).styleSheets;
+        tempStyleEl.remove();
+      }
     }
   };
 

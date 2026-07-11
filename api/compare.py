@@ -81,8 +81,9 @@ def extract_text(file_content, filename):
         else:
             return None
     except Exception as e:
-        # Propagate the full traceback in a temporary debug exception
-        raise ValueError(f"Extraction error for {filename}: {str(e)}\nTraceback:\n{traceback.format_exc()}")
+        # Log the full traceback on the server stderr
+        traceback.print_exc()
+        raise ValueError(f"Extraction error for {filename}: {str(e)}")
 
 def split_sentences(text):
     """Splits text into sentences using simple regex."""
@@ -196,8 +197,7 @@ def handle_exception(e):
     traceback.print_exc()
     response = {
         "error": "server_error",
-        "message": f"An unexpected server error occurred: {str(e)}",
-        "traceback": traceback.format_exc()
+        "message": f"An unexpected server error occurred: {str(e)}"
     }
     status_code = 500
     if hasattr(e, "code"):
@@ -211,8 +211,7 @@ def compare_documents():
     if startup_error:
         return jsonify({
             "error": "startup_error",
-            "message": f"Startup / Import error: {startup_error['message']}",
-            "traceback": startup_error['traceback']
+            "message": f"Startup / Import error: {startup_error['message']}"
         }), 500
 
     try:
@@ -363,16 +362,14 @@ def compare_documents():
             traceback.print_exc()
             return jsonify({
                 "error": "similarity_computation_failed",
-                "message": f"Similarity computation failed: {str(e)}",
-                "traceback": traceback.format_exc()
+                "message": f"Similarity computation failed: {str(e)}"
             }), 500
 
     except Exception as e:
         traceback.print_exc()
         return jsonify({
             "error": "server_error",
-            "message": f"An unexpected error occurred: {str(e)}",
-            "traceback": traceback.format_exc()
+            "message": f"An unexpected error occurred: {str(e)}"
         }), 500
 
 # For Vercel, we need to export the app or use a handler.
