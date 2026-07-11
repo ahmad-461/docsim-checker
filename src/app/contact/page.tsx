@@ -62,7 +62,7 @@ export default function ContactPage() {
   return (
     <InfoPageLayout
       title="Contact Us"
-      subtitle="Questions, feedback, or found a bug? We'd love to hear from you."
+      subtitle="Questions, feedback, or found a bug? We'd love to hear from you. We aim to respond to all inquiries within 2-3 business days."
       noProse={true}
     >
       <div className="max-w-2xl mx-auto">
@@ -76,7 +76,7 @@ export default function ContactPage() {
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-4">Thanks — we'll get back to you soon.</h2>
               <p className="text-gray-600 dark:text-stone-400 mb-8">
-                Your message has been sent successfully. We typically respond within 24-48 hours.
+                Your message has been sent successfully. We aim to respond within 2-3 business days.
               </p>
               <button
                 onClick={handleReset}
@@ -186,6 +186,10 @@ export default function ContactPage() {
                   'Send Message'
                 )}
               </button>
+
+              <div className="text-center text-xs text-gray-500 dark:text-stone-400 font-medium">
+                We aim to respond to all inquiries within 2-3 business days.
+              </div>
             </form>
           )}
         </div>

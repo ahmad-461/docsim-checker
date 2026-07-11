@@ -397,11 +397,38 @@ export default function Home() {
           </PageP>
 
           <PageH2>How Document Similarity Is Calculated</PageH2>
+          <div className="my-6 p-6 bg-orange-50/50 dark:bg-orange-950/10 border-l-4 border-orange-500 rounded-r-xl">
+            <p className="text-base text-gray-700 dark:text-stone-300 leading-relaxed font-medium">
+              <span className="font-bold text-orange-600 dark:text-orange-500">Important:</span> DocSim Checker compares your two documents directly against each other. It does not search the public internet or external academic databases like Turnitin or Copyleaks. This direct comparison model is what enables our strict privacy promise.
+            </p>
+          </div>
+
           <PageP>
-            DocSim Checker blends two different approaches to measure similarity. The first is TF-IDF (Term Frequency–Inverse Document Frequency) combined with cosine similarity, a well-established method in text analysis that measures how much vocabulary two pieces of text share, weighted by how distinctive that vocabulary is. This method is fast and effective for catching exact or near-exact wording matches.
+            DocSim Checker blends two different approaches to measure similarity to give an accurate, multi-layered score:
           </PageP>
+
+          <div className="space-y-6 my-6">
+            <div className="p-6 bg-card border border-card-border rounded-xl">
+              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-orange-600 font-black">1.</span> TF-IDF &amp; Cosine Similarity (Syntactic Matching)
+              </h3>
+              <PageP>
+                TF-IDF (Term Frequency–Inverse Document Frequency) is a robust statistical method that evaluates how important a word is to a document relative to the rest of the text. By combining this with Cosine Similarity, the tool mathematically maps the documents as multi-dimensional vectors and measures the angle between them. This is highly effective at identifying exact matches, identical paragraphs, and minor word rearrangements.
+              </PageP>
+            </div>
+
+            <div className="p-6 bg-card border border-card-border rounded-xl">
+              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-orange-600 font-black">2.</span> Google Gemini Embeddings (Semantic AI Matching)
+              </h3>
+              <PageP>
+                While TF-IDF handles exact matches, semantic AI analysis takes this a step further. We leverage Google&apos;s Gemini API to generate deep semantic embeddings of each sentence. These embeddings represent the abstract &quot;meaning&quot; of the sentences in a high-dimensional mathematical space. By measuring the similarity of these vectors, we identify sentences that express the exact same ideas, arguments, or facts, even if they use completely different vocabularies or are fully paraphrased.
+              </PageP>
+            </div>
+          </div>
+
           <PageP>
-            The second approach uses AI-powered semantic similarity through Google&apos;s Gemini API. Semantic analysis doesn&apos;t just look at matching words — it evaluates whether two sentences convey the same meaning, even when the wording is completely different. This is what allows DocSim Checker to catch paraphrased or reworded content that a simple word-overlap tool would miss entirely. By blending both scores, the tool balances precision (catching exact matches) with depth (catching meaning-based matches), giving a more complete picture than either method alone.
+            By blending both methods, DocSim Checker balances precision (syntactic vocabulary alignment) with conceptual depth (semantic paraphrasing detection), giving you an exhaustive side-by-side comparison.
           </PageP>
 
           <PageH2>Who Uses a Free Document Comparison Tool</PageH2>
