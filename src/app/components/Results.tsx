@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import ErrorMessage from './ErrorMessage';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -18,6 +18,14 @@ interface ResultsProps {
 
 const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB, isSample }) => {
   const reportRef = useRef<HTMLDivElement>(null);
+  const [threshold, setThreshold] = useState<number>(0);
+  const [prevSentences, setPrevSentences] = useState<{a: Sentence[], b: Sentence[]}>({ a: sentencesA, b: sentencesB });
+
+  // Reset threshold to 0% whenever a new comparison result is rendered
+  if (prevSentences.a !== sentencesA || prevSentences.b !== sentencesB) {
+    setThreshold(0);
+    setPrevSentences({ a: sentencesA, b: sentencesB });
+  }
 
   const handleDownloadPDF = async () => {
     // Future gate: if (user_tier === 'pro') { ... } else { showUpsell() }
@@ -27,9 +35,6 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       const element = reportRef.current;
 
       // Temporary style changes to ensure full content is captured
-      const originalStyle = element.style.height;
-      const originalOverflow = element.style.overflow;
-
       const docAContainer = element.querySelector('#doc-a-container') as HTMLElement;
       const docBContainer = element.querySelector('#doc-b-container') as HTMLElement;
 
@@ -87,6 +92,11 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
   };
 
   const getHighlightColor = (score: number) => {
+    // Convert score to percentage
+    const percentage = score * 100;
+    // If the sentence's match score is below the threshold, revert to normal, unhighlighted text (transparent)
+    if (percentage < threshold) return 'transparent';
+
     // 0% = white, 100% = deep orange
     const intensity = score;
     if (intensity < 0.05) return 'transparent';
@@ -141,6 +151,52 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
           )}
         </div>
       </div>
+
+      {/* Slider UI */}
+      <div data-html2canvas-ignore="true" className="max-w-md mx-auto space-y-3 pt-2 pb-4 w-full">
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-bold text-gray-500 dark:text-stone-400 uppercase tracking-wider">
+            Show matches above:
+          </span>
+          <span className="text-lg font-black text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-1 rounded-lg">
+            {threshold}%
+          </span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="5"
+          value={threshold}
+          onChange={(e) => setThreshold(parseInt(e.target.value))}
+          className="w-full h-2.5 bg-gray-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer accent-orange-600 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+        <div className="flex justify-between text-xs text-gray-500 dark:text-stone-500 font-medium px-0.5">
+          <span>0% (All matches)</span>
+          <span>50%</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      {/* Empty State Banner (between slider and documents, excluded from PDF export via data-html2canvas-ignore) */}
+      {(() => {
+        const hasMatchA = sentencesA.some(s => s.match_score * 100 >= threshold && s.match_score >= 0.05);
+        const hasMatchB = sentencesB.some(s => s.match_score * 100 >= threshold && s.match_score >= 0.05);
+
+        if (!hasMatchA && !hasMatchB) {
+          return (
+            <div data-html2canvas-ignore="true" className="max-w-md mx-auto animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="flex items-center gap-3 p-4 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 rounded-xl text-orange-800 dark:text-orange-300 text-sm font-medium text-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-orange-600 dark:text-orange-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>No matches found above this threshold. Try lowering the slider.</span>
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })()}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
