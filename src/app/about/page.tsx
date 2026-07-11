@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import InfoPageLayout, { PageH2, PageP, PageLink } from "../components/InfoPageLayout";
+import InfoPageLayout, { PageH2, PageP, PageLink, PageStrong } from "../components/InfoPageLayout";
 import { CONTACT_EMAIL } from "../constants";
 
 export const metadata: Metadata = {
@@ -66,11 +66,21 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-foreground tracking-tight">Who&apos;s behind this</h2>
           </div>
           <PageP>
-            DocSim Checker is an independently built tool, currently in active development. Have feedback or found a bug? <PageLink href="/contact">Contact us</PageLink>.
+            DocSim Checker was built by <PageStrong>Muhammad Ahmad Khan</PageStrong>, an independent developer focused on building free, privacy-first tools for writers, students, and small teams. It is an independently built project, currently in active development.
+          </PageP>
+          <PageP>
+            The project started with a clear philosophy: software shouldn&apos;t require invasive tracking, complex accounts, or credit cards just to perform helpful, everyday utility tasks.
+          </PageP>
+          <PageP>
+            Have feedback, feature requests, or found a bug? Please <PageLink href="/contact">Contact us</PageLink> — we are always looking to improve based on real user suggestions.
           </PageP>
         </section>
 
         <section className="pt-8">
+          <div className="text-sm text-gray-500 dark:text-stone-500 mb-8 border-b border-gray-100 dark:border-stone-800 pb-4">
+            Last updated: <span className="font-semibold text-foreground">July 8, 2026</span>
+          </div>
+
           <PageH2>The Problem DocSim Checker Solves</PageH2>
           <PageP>
             Most existing plagiarism and similarity tools are built for institutions — universities, publishers, and enterprises checking submitted work against enormous databases of existing content. That&apos;s a legitimate and different need than the one most individual writers, students, and small teams actually have day to day: comparing two specific documents they already have in hand to see how closely they match.

@@ -53,6 +53,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "DocSim Checker",
+    "url": "https://docsimchecker.com",
+    "logo": "https://docsimchecker.com/logo.png",
+    "description": "Compare two documents side-by-side to detect overlapping content, matching sentences, and similarity scores. Free, private, and instant text comparison tool."
+  };
+
   return (
     <html
       lang="en"
@@ -60,6 +69,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
