@@ -182,21 +182,21 @@ export default function DuplicateLineRemoverPage() {
 
           <PageH2>Common Situations Where This Tool Helps</PageH2>
           <PageP>
-            <PageStrong>Data cleanup</PageStrong> — merging email lists, contact lists, or exported spreadsheet data (pasted as plain text) often introduces duplicate entries that need to be removed before the data is usable.
+            <PageStrong>Data cleanup</PageStrong>{" "}— merging email lists, contact lists, or exported spreadsheet data (pasted as plain text) often introduces duplicate entries that need to be removed before the data is usable.
           </PageP>
           <PageP>
-            <PageStrong>Note consolidation</PageStrong> — combining notes from multiple sources or drafts frequently results in repeated lines, especially when copying sections between documents.
+            <PageStrong>Note consolidation</PageStrong>{" "}— combining notes from multiple sources or drafts frequently results in repeated lines, especially when copying sections between documents.
           </PageP>
           <PageP>
-            <PageStrong>Content and SEO work</PageStrong> — checking lists of keywords, URLs, or tags for accidental duplicates before using them in a campaign or content plan.
+            <PageStrong>Content and SEO work</PageStrong>{" "}— checking lists of keywords, URLs, or tags for accidental duplicates before using them in a campaign or content plan.
           </PageP>
           <PageP>
-            <PageStrong>Developers and technical users</PageStrong> — cleaning up log files, configuration lists, or exported data where duplicate lines can cause errors or confusion downstream.
+            <PageStrong>Developers and technical users</PageStrong>{" "}— cleaning up log files, configuration lists, or exported data where duplicate lines can cause errors or confusion downstream.
           </PageP>
 
           <PageH2>Case-Sensitive and Whitespace Options</PageH2>
           <PageP>
-            Not all duplicates are exact character-for-character matches. The tool includes two configurable options to handle this: a <PageStrong>case-sensitive</PageStrong> toggle, which determines whether &quot;Apple&quot; and &quot;apple&quot; are treated as the same line or as different lines, and a <PageStrong>trim whitespace</PageStrong> option, which ignores leading or trailing spaces when comparing lines — useful when pasted data includes inconsistent spacing that would otherwise cause visually identical lines to be treated as unique.
+            Not all duplicates are exact character-for-character matches. The tool includes two configurable options to handle this: a{" "}<PageStrong>case-sensitive</PageStrong>{" "}toggle, which determines whether &quot;Apple&quot; and &quot;apple&quot; are treated as the same line or as different lines, and a{" "}<PageStrong>trim whitespace</PageStrong>{" "}option, which ignores leading or trailing spaces when comparing lines — useful when pasted data includes inconsistent spacing that would otherwise cause visually identical lines to be treated as unique.
           </PageP>
           <PageP>
             These options matter because real-world pasted data is rarely perfectly clean. A list exported from a spreadsheet, for example, might have trailing spaces on some entries but not others, which would cause a naive duplicate check to miss matches that are functionally identical.

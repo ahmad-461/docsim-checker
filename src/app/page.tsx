@@ -410,7 +410,7 @@ export default function Home() {
           <div className="space-y-6 my-6">
             <div className="p-6 bg-card border border-card-border rounded-xl">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-orange-600 font-black">1.</span> TF-IDF &amp; Cosine Similarity (Syntactic Matching)
+                <span className="text-orange-600 font-black">1.</span>{" "}TF-IDF &amp; Cosine Similarity (Syntactic Matching)
               </h3>
               <PageP>
                 TF-IDF (Term Frequency–Inverse Document Frequency) is a robust statistical method that evaluates how important a word is to a document relative to the rest of the text. By combining this with Cosine Similarity, the tool mathematically maps the documents as multi-dimensional vectors and measures the angle between them. This is highly effective at identifying exact matches, identical paragraphs, and minor word rearrangements.
@@ -419,7 +419,7 @@ export default function Home() {
 
             <div className="p-6 bg-card border border-card-border rounded-xl">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-orange-600 font-black">2.</span> Google Gemini Embeddings (Semantic AI Matching)
+                <span className="text-orange-600 font-black">2.</span>{" "}Google Gemini Embeddings (Semantic AI Matching)
               </h3>
               <PageP>
                 While TF-IDF handles exact matches, semantic AI analysis takes this a step further. We leverage Google&apos;s Gemini API to generate deep semantic embeddings of each sentence. These embeddings represent the abstract &quot;meaning&quot; of the sentences in a high-dimensional mathematical space. By measuring the similarity of these vectors, we identify sentences that express the exact same ideas, arguments, or facts, even if they use completely different vocabularies or are fully paraphrased.
@@ -433,13 +433,13 @@ export default function Home() {
 
           <PageH2>Who Uses a Free Document Comparison Tool</PageH2>
           <PageP>
-            <PageStrong>Students</PageStrong> use similarity checkers to self-review essays, research papers, and assignments before submission — not to detect plagiarism from external sources, but to compare their own drafts against earlier versions, or to check if two sections of their own writing repeat themselves more than intended.
+            <PageStrong>Students</PageStrong>{" "}use similarity checkers to self-review essays, research papers, and assignments before submission — not to detect plagiarism from external sources, but to compare their own drafts against earlier versions, or to check if two sections of their own writing repeat themselves more than intended.
           </PageP>
           <PageP>
-            <PageStrong>Writers and content creators</PageStrong> use this kind of tool when publishing across multiple platforms, newsletters, or clients, to avoid submitting content that overlaps too closely with something they&apos;ve already published elsewhere.
+            <PageStrong>Writers and content creators</PageStrong>{" "}use this kind of tool when publishing across multiple platforms, newsletters, or clients, to avoid submitting content that overlaps too closely with something they&apos;ve already published elsewhere.
           </PageP>
           <PageP>
-            <PageStrong>Small teams and businesses</PageStrong> compare contract drafts, internal policy documents, or process documentation across versions — a lightweight alternative to manually redlining every change by eye, especially useful when a formal document management system isn&apos;t in place.
+            <PageStrong>Small teams and businesses</PageStrong>{" "}compare contract drafts, internal policy documents, or process documentation across versions — a lightweight alternative to manually redlining every change by eye, especially useful when a formal document management system isn&apos;t in place.
           </PageP>
 
           <PageH2>Free Online Text Comparison — No Sign-Up Required</PageH2>
@@ -460,7 +460,7 @@ export default function Home() {
 
           <PageH2>Getting Started</PageH2>
           <PageP>
-            Using DocSim Checker takes less than a minute: paste or upload your first document into Document A, your second into Document B, and click Compare. Within seconds, you&apos;ll see an overall similarity percentage along with a side-by-side view showing exactly which sentences matched and how strongly. No account, no credit card, and no document ever leaves your session stored anywhere.
+            DocSim Checker is built from the ground up to be safe, fast, and entirely private. With zero sign-ups, no logs, and in-memory processing that immediately discards your text after analysis, you can compare drafts, papers, or contracts with absolute confidence. It is the fastest, most secure way to verify your content on your own terms.
           </PageP>
         </div>
       </section>

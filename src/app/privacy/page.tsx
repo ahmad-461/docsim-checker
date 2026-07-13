@@ -45,7 +45,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-foreground tracking-tight">1. Document Data</h2>
           </div>
           <PageP>
-            <PageStrong>We do not store your documents.</PageStrong> When you upload a file or paste text for comparison:
+            <PageStrong>We do not store your documents.</PageStrong>{" "}When you upload a file or paste text for comparison:
           </PageP>
           <PageUl>
             <PageLi>The text is processed in-memory to calculate similarity scores.</PageLi>
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-foreground tracking-tight">2. Usage Logging</h2>
           </div>
           <PageP>
-            To prevent abuse and enforce our free tier limits (3 comparisons per day), we store a <PageStrong>one-way hash</PageStrong> of your IP address. We do not store your raw IP address, and we cannot reverse this hash to identify you. This log is used solely for rate limiting.
+            To prevent abuse and enforce our free tier limits (3 comparisons per day), we store a{" "}<PageStrong>one-way hash</PageStrong>{" "}of your IP address. We do not store your raw IP address, and we cannot reverse this hash to identify you. This log is used solely for rate limiting.
           </PageP>
         </section>
 

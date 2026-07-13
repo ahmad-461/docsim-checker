@@ -266,16 +266,16 @@ export default function WordCounterPage() {
 
           <PageH2>Who Uses an Online Word Counter</PageH2>
           <PageP>
-            <PageStrong>Students and academics</PageStrong> rely on word counters constantly — essays, dissertations, and research papers almost always come with strict minimum or maximum word requirements, and manually counting is impractical for anything beyond a few sentences.
+            <PageStrong>Students and academics</PageStrong>{" "}rely on word counters constantly — essays, dissertations, and research papers almost always come with strict minimum or maximum word requirements, and manually counting is impractical for anything beyond a few sentences.
           </PageP>
           <PageP>
-            <PageStrong>Job seekers</PageStrong> writing cover letters or application responses often face character or word limits imposed by application portals, where going over the limit can cause a submission to be rejected or truncated.
+            <PageStrong>Job seekers</PageStrong>{" "}writing cover letters or application responses often face character or word limits imposed by application portals, where going over the limit can cause a submission to be rejected or truncated.
           </PageP>
           <PageP>
-            <PageStrong>Bloggers, copywriters, and marketers</PageStrong> use word counters to hit target lengths for SEO-optimized content, social media captions with strict character limits, or client deliverables with agreed-upon word counts.
+            <PageStrong>Bloggers, copywriters, and marketers</PageStrong>{" "}use word counters to hit target lengths for SEO-optimized content, social media captions with strict character limits, or client deliverables with agreed-upon word counts.
           </PageP>
           <PageP>
-            <PageStrong>Speakers and presenters</PageStrong> use the reading time estimate to gauge how long a script or speech will take to deliver, based on an average speaking/reading pace of roughly 200 words per minute.
+            <PageStrong>Speakers and presenters</PageStrong>{" "}use the reading time estimate to gauge how long a script or speech will take to deliver, based on an average speaking/reading pace of roughly 200 words per minute.
           </PageP>
 
           <PageH2>What Gets Counted, and How</PageH2>

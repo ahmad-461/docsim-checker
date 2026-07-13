@@ -152,36 +152,36 @@ export default function CaseConverterPage() {
 
           <PageH2>Common Uses for Case Conversion</PageH2>
           <PageP>
-            <PageStrong>Writers and editors</PageStrong> often need to fix text that was accidentally typed in all caps (a common issue when Caps Lock is left on by mistake), or need to convert a heading into Title Case to match a style guide.
+            <PageStrong>Writers and editors</PageStrong>{" "}often need to fix text that was accidentally typed in all caps (a common issue when Caps Lock is left on by mistake), or need to convert a heading into Title Case to match a style guide.
           </PageP>
           <PageP>
-            <PageStrong>Developers</PageStrong> frequently need to convert variable or function names between camelCase and snake_case depending on the programming language or style convention they&apos;re working in — JavaScript commonly uses camelCase, while Python and many database schemas favor snake_case.
+            <PageStrong>Developers</PageStrong>{" "}frequently need to convert variable or function names between camelCase and snake_case depending on the programming language or style convention they&apos;re working in — JavaScript commonly uses camelCase, while Python and many database schemas favor snake_case.
           </PageP>
           <PageP>
-            <PageStrong>Social media managers and marketers</PageStrong> use case conversion to quickly reformat captions, headlines, or ad copy to match platform conventions or brand style guidelines, without retyping content from scratch.
+            <PageStrong>Social media managers and marketers</PageStrong>{" "}use case conversion to quickly reformat captions, headlines, or ad copy to match platform conventions or brand style guidelines, without retyping content from scratch.
           </PageP>
           <PageP>
-            <PageStrong>Students</PageStrong> converting headings or titles for papers into the correct capitalization style required by formatting guides like APA or MLA, which often specify Title Case for headings.
+            <PageStrong>Students</PageStrong>{" "}converting headings or titles for papers into the correct capitalization style required by formatting guides like APA or MLA, which often specify Title Case for headings.
           </PageP>
 
           <PageH2>How Each Case Format Works</PageH2>
           <PageP>
-            <PageStrong>UPPERCASE</PageStrong> converts every letter in the text to capital letters — commonly used for emphasis, headers, or acronyms.
+            <PageStrong>UPPERCASE</PageStrong>{" "}converts every letter in the text to capital letters — commonly used for emphasis, headers, or acronyms.
           </PageP>
           <PageP>
-            <PageStrong>lowercase</PageStrong> converts every letter to lowercase — useful for normalizing text before further processing, or for stylistic effect in casual writing and design.
+            <PageStrong>lowercase</PageStrong>{" "}converts every letter to lowercase — useful for normalizing text before further processing, or for stylistic effect in casual writing and design.
           </PageP>
           <PageP>
-            <PageStrong>Title Case</PageStrong> capitalizes the first letter of every word, commonly used for headlines, titles, and headings across most style guides.
+            <PageStrong>Title Case</PageStrong>{" "}capitalizes the first letter of every word, commonly used for headlines, titles, and headings across most style guides.
           </PageP>
           <PageP>
-            <PageStrong>Sentence case</PageStrong> capitalizes only the first letter of each sentence (and the first word of the text), matching normal prose writing conventions — useful for correcting text that was pasted from a source using different capitalization rules.
+            <PageStrong>Sentence case</PageStrong>{" "}capitalizes only the first letter of each sentence (and the first word of the text), matching normal prose writing conventions — useful for correcting text that was pasted from a source using different capitalization rules.
           </PageP>
           <PageP>
-            <PageStrong>camelCase</PageStrong> removes spaces and punctuation, joining words together with each word after the first capitalized (e.g., &quot;hello world&quot; becomes &quot;helloWorld&quot;) — the standard naming convention in many programming languages for variables and functions.
+            <PageStrong>camelCase</PageStrong>{" "}removes spaces and punctuation, joining words together with each word after the first capitalized (e.g., &quot;hello world&quot; becomes &quot;helloWorld&quot;) — the standard naming convention in many programming languages for variables and functions.
           </PageP>
           <PageP>
-            <PageStrong>snake_case</PageStrong> similarly removes spaces and punctuation but joins words with underscores in all lowercase (e.g., &quot;hello world&quot; becomes &quot;hello_world&quot;) — commonly used in Python, database column names, and file naming conventions.
+            <PageStrong>snake_case</PageStrong>{" "}similarly removes spaces and punctuation but joins words with underscores in all lowercase (e.g., &quot;hello world&quot; becomes &quot;hello_world&quot;) — commonly used in Python, database column names, and file naming conventions.
           </PageP>
 
           <PageH2>Free and Instant, No Sign-Up Required</PageH2>
