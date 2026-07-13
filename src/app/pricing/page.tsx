@@ -74,8 +74,8 @@ const PriceCard = ({
   return (
     <div id={id} className={`flex flex-col p-8 rounded-3xl border-2 transition-all duration-300 relative ${
       isPopular
-        ? 'border-orange-500 shadow-xl bg-card md:scale-105 z-10'
-        : 'border-card-border shadow-sm bg-card'
+        ? 'border-orange-500 shadow-xl bg-[#FAF8F5] dark:bg-[#181615] md:scale-105 z-10'
+        : 'border-[#E6DDC4] dark:border-[#2C2420] shadow-sm bg-[#FAF8F5] dark:bg-[#181615]'
     }`}>
       {isPopular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-600 text-white text-[10px] sm:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md z-20 border border-white/20 whitespace-nowrap">
@@ -87,9 +87,9 @@ const PriceCard = ({
           Coming Soon
         </div>
       )}
-      <h2 className="text-xl font-bold text-foreground mb-2">{name}</h2>
+      <h2 className="text-xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] mb-2">{name}</h2>
       <div className="flex items-baseline gap-1 mb-2">
-        <span className="text-4xl font-black text-foreground">{price}</span>
+        <span className="text-4xl font-black font-editorial text-[#1A1A1A] dark:text-[#F5F5F4]">{price}</span>
         <span className="text-gray-500 dark:text-stone-500 font-medium">{period}</span>
       </div>
 
@@ -199,8 +199,8 @@ const UsageCalculator = () => {
   };
 
   return (
-    <div className="bg-card rounded-3xl p-8 border border-card-border shadow-sm mb-20 max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold text-foreground mb-6 text-center">How many comparisons do you need per month?</h2>
+    <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-3xl p-8 border border-[#E6DDC4] dark:border-[#2C2420] shadow-lg mb-20 max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] mb-6 text-center">How many comparisons do you need per month?</h2>
 
       <div className="space-y-8">
         <div className="px-4">
@@ -275,17 +275,17 @@ const ComparisonTable = () => {
 
   return (
     <div className="mt-20 mb-20">
-      <h2 className="text-3xl font-bold text-center mb-10">Compare Features</h2>
-      <div className="overflow-x-auto rounded-3xl border border-card-border shadow-sm bg-card">
+      <h2 className="text-3xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] text-center mb-10">Compare Features</h2>
+      <div className="overflow-x-auto rounded-3xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-md bg-[#FAF8F5] dark:bg-[#181615]">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-card-border">
-              <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-stone-500">Feature</th>
-              <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-stone-500 text-center">Free</th>
-              <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-stone-500 text-center">Pro</th>
+            <tr className="border-b border-[#E6DDC4] dark:border-[#2C2420]">
+              <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">Feature</th>
+              <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 text-center">Free</th>
+              <th className="py-6 px-8 text-sm font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 text-center">Pro</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-card-border">
+          <tbody className="divide-y divide-[#E6DDC4] dark:divide-[#2C2420]">
             {features.map((feature, i) => (
               <tr key={i} className="hover:bg-gray-50/50 dark:hover:bg-stone-900/20 transition-colors">
                 <td className="py-6 px-8 font-medium text-foreground">{feature.name}</td>
@@ -416,7 +416,7 @@ export default function PricingPage() {
 
       {/* Competitor Comparison */}
       <div className="mb-20">
-        <div className="bg-orange-50/50 dark:bg-orange-950/10 border border-orange-100 dark:border-orange-900/30 rounded-3xl p-8 relative overflow-hidden">
+        <div className="bg-[#FAF8F5] dark:bg-[#181615] border border-[#E6DDC4] dark:border-[#2C2420] rounded-3xl p-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -437,7 +437,7 @@ export default function PricingPage() {
       </div>
 
       <div className="mb-20">
-        <div className="bg-card rounded-3xl border border-card-border shadow-sm px-8 overflow-hidden mb-12">
+        <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-3xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-sm px-8 overflow-hidden mb-12">
           <AccordionItem question="When will Pro be available?">
             <p>We&apos;re actively working on it — join the waitlist to be notified first as soon as we launch.</p>
           </AccordionItem>
@@ -449,8 +449,8 @@ export default function PricingPage() {
           </AccordionItem>
         </div>
 
-        <div className="bg-card rounded-3xl p-8 border border-card-border text-center shadow-sm">
-          <h2 className="text-xl font-bold text-foreground mb-2">Still have questions?</h2>
+        <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-3xl p-8 border border-[#E6DDC4] dark:border-[#2C2420] text-center shadow-sm">
+          <h2 className="text-xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] mb-2">Still have questions?</h2>
           <p className="text-gray-600 dark:text-stone-400 mb-6">Check our full FAQ or get in touch with our team.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link

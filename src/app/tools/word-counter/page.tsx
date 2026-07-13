@@ -150,61 +150,61 @@ export default function WordCounterPage() {
       <div className="mx-auto">
         {/* Primary Stats Grid */}
         <div className={`grid grid-cols-2 md:grid-cols-5 gap-4 mb-4 transition-opacity duration-200 ${isStale ? 'opacity-50' : 'opacity-100'}`}>
-          <div className="bg-card p-6 rounded-2xl border-2 border-orange-100 dark:border-orange-900/20 shadow-sm text-center transform transition-transform hover:scale-[1.02]">
-            <div className="text-3xl font-black text-orange-600">{stats.words}</div>
-            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Words</div>
+          <div className="bg-[#FAF8F5] dark:bg-[#181615] p-6 rounded-2xl border-2 border-orange-500/30 dark:border-orange-500/20 shadow-sm text-center transform transition-all hover:scale-[1.02]">
+            <div className="text-3xl font-black font-editorial text-orange-600">{stats.words}</div>
+            <div className="text-xs text-stone-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Words</div>
           </div>
-          <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center">
-            <div className="text-3xl font-bold text-foreground">{stats.charsWithSpaces}</div>
-            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Characters</div>
+          <div className="bg-[#FAF8F5] dark:bg-[#181615] p-6 rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-sm text-center">
+            <div className="text-3xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.charsWithSpaces}</div>
+            <div className="text-xs text-stone-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Characters</div>
           </div>
-          <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center">
-            <div className="text-3xl font-bold text-foreground">{stats.sentences}</div>
-            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Sentences</div>
+          <div className="bg-[#FAF8F5] dark:bg-[#181615] p-6 rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-sm text-center">
+            <div className="text-3xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.sentences}</div>
+            <div className="text-xs text-stone-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Sentences</div>
           </div>
-          <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center">
-            <div className="text-3xl font-bold text-foreground">{stats.paragraphs}</div>
-            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Paragraphs</div>
+          <div className="bg-[#FAF8F5] dark:bg-[#181615] p-6 rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-sm text-center">
+            <div className="text-3xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.paragraphs}</div>
+            <div className="text-xs text-stone-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Paragraphs</div>
           </div>
-          <div className="bg-card p-6 rounded-2xl border border-card-border shadow-sm text-center col-span-2 md:col-span-1">
-            <div className="text-3xl font-bold text-foreground">~{stats.readingTime}</div>
-            <div className="text-xs text-gray-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Min Read</div>
+          <div className="bg-[#FAF8F5] dark:bg-[#181615] p-6 rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-sm text-center col-span-2 md:col-span-1">
+            <div className="text-3xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4]">~{stats.readingTime}</div>
+            <div className="text-xs text-stone-600 dark:text-stone-400 uppercase tracking-widest font-bold mt-1">Min Read</div>
           </div>
         </div>
 
         {/* Secondary Stats Grid */}
         <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-8 transition-opacity duration-200 ${isStale ? 'opacity-50' : 'opacity-100'}`}>
-          <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
-            <div className="text-lg font-bold text-foreground">{stats.punctuation.periods}</div>
-            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Periods (.)</div>
+          <div className="bg-[#FAF8F5]/60 dark:bg-[#181615]/40 p-3 rounded-xl border border-[#E6DDC4] dark:border-[#2C2420] text-center">
+            <div className="text-lg font-bold text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.punctuation.periods}</div>
+            <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase font-bold">Periods (.)</div>
           </div>
-          <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
-            <div className="text-lg font-bold text-foreground">{stats.punctuation.commas}</div>
-            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Commas (,)</div>
+          <div className="bg-[#FAF8F5]/60 dark:bg-[#181615]/40 p-3 rounded-xl border border-[#E6DDC4] dark:border-[#2C2420] text-center">
+            <div className="text-lg font-bold text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.punctuation.commas}</div>
+            <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase font-bold">Commas (,)</div>
           </div>
-          <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
-            <div className="text-lg font-bold text-foreground">{stats.punctuation.questions}</div>
-            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Questions (?)</div>
+          <div className="bg-[#FAF8F5]/60 dark:bg-[#181615]/40 p-3 rounded-xl border border-[#E6DDC4] dark:border-[#2C2420] text-center">
+            <div className="text-lg font-bold text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.punctuation.questions}</div>
+            <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase font-bold">Questions (?)</div>
           </div>
-          <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
-            <div className="text-lg font-bold text-foreground">{stats.punctuation.exclamations}</div>
-            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Exclaims (!)</div>
+          <div className="bg-[#FAF8F5]/60 dark:bg-[#181615]/40 p-3 rounded-xl border border-[#E6DDC4] dark:border-[#2C2420] text-center">
+            <div className="text-lg font-bold text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.punctuation.exclamations}</div>
+            <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase font-bold">Exclaims (!)</div>
           </div>
-          <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center">
-            <div className="text-lg font-bold text-foreground">{stats.avgWordsPerSentence}</div>
-            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Words/Sent</div>
+          <div className="bg-[#FAF8F5]/60 dark:bg-[#181615]/40 p-3 rounded-xl border border-[#E6DDC4] dark:border-[#2C2420] text-center">
+            <div className="text-lg font-bold text-[#1A1A1A] dark:text-[#F5F5F4]">{stats.avgWordsPerSentence}</div>
+            <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase font-bold">Words/Sent</div>
           </div>
-          <div className="bg-gray-50/50 dark:bg-stone-800/30 p-3 rounded-xl border border-card-border text-center col-span-2">
-            <div className="text-lg font-bold text-foreground truncate px-2" title={stats.longestWord}>
+          <div className="bg-[#FAF8F5]/60 dark:bg-[#181615]/40 p-3 rounded-xl border border-[#E6DDC4] dark:border-[#2C2420] text-center col-span-2">
+            <div className="text-lg font-bold text-[#1A1A1A] dark:text-[#F5F5F4] truncate px-2" title={stats.longestWord}>
               {stats.longestWord || '-'}
             </div>
-            <div className="text-[10px] text-gray-500 dark:text-stone-400 uppercase font-bold">Longest Word</div>
+            <div className="text-[10px] text-stone-500 dark:text-stone-400 uppercase font-bold">Longest Word</div>
           </div>
         </div>
 
         {/* Editor Area */}
-        <div className="bg-card rounded-2xl border border-card-border shadow-lg overflow-hidden mb-8">
-          <div className="p-4 border-b border-card-border flex justify-between items-center bg-gray-50/50 dark:bg-stone-800/50">
+        <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-lg overflow-hidden mb-8">
+          <div className="p-4 border-b border-[#E6DDC4] dark:border-[#2C2420] flex justify-between items-center bg-[#FAF8F5]/55 dark:bg-[#181615]/50">
             <div className="flex items-center space-x-6">
               <input
                 type="file"
@@ -237,13 +237,13 @@ export default function WordCounterPage() {
             </div>
           </div>
           <textarea
-            className="w-full h-96 p-8 focus:outline-none resize-none bg-transparent text-foreground leading-relaxed text-lg"
+            className="w-full h-96 p-8 focus:outline-none resize-none bg-transparent text-[#1A1A1A] dark:text-[#F5F5F4] leading-relaxed text-lg"
             placeholder="Start typing or paste your text here..."
             value={text}
             onChange={handleTextChange}
             id="word-counter-input"
           />
-          <div className="p-6 bg-gray-50/50 dark:bg-stone-800/50 border-t border-card-border flex justify-center">
+          <div className="p-6 bg-[#FAF8F5]/60 dark:bg-[#181615]/60 border-t border-[#E6DDC4] dark:border-[#2C2420] flex justify-center">
             <button
               onClick={calculateStats}
               disabled={text.trim().length === 0}

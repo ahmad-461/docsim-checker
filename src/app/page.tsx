@@ -392,6 +392,16 @@ export default function Home() {
                   View an interactive comparison report highlighting similar passages in real-time. Export standard PDF reports for legal, academic, or professional validation.
                 </p>
               </div>
+
+              {/* Core Methodology Brief (Folded from SEO) */}
+              <div className="relative pl-12 sm:pl-16 pt-4 border-t border-[#E6DDC4] dark:border-[#3A302B]">
+                <div className="p-6 bg-orange-50/50 dark:bg-orange-950/10 border-l-4 border-orange-500 rounded-r-xl">
+                  <h4 className="text-base font-bold text-[#1A1A1A] dark:text-[#F5F5F4] mb-2">How Similarity is Calculated</h4>
+                  <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                    DocSim Checker blends <span className="font-semibold text-stone-800 dark:text-stone-200">TF-IDF word-matching</span> (which maps vocabulary alignments and sentence structures mathematically) with <span className="font-semibold text-stone-800 dark:text-stone-200">AI Semantic Embeddings</span> (via Google&apos;s Gemini API to detect factual and concept replica, even when rephrased). This delivers an exhaustive, conceptual side-by-side analysis completely locally in seconds.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -449,10 +459,10 @@ export default function Home() {
                 III.
               </div>
               <h3 className="font-editorial text-lg sm:text-xl font-bold mb-3 text-[#1A1A1A] dark:text-[#F5F5F4]">
-                Speed &amp; Standard Calibration
+                Honest Boundaries vs. Plagiarism Databases
               </h3>
               <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">
-                Compute vectors and generate interactive reports in fractions of a second. Side-by-side highlighting updates on-the-fly as you adjust threshold standards.
+                DocSim Checker operates strictly as a side-by-side comparison engine. We do not search the public internet or academic databases like Turnitin or Copyleaks, nor do we index your work, ensuring complete safety from leakage.
               </p>
             </div>
 
@@ -465,90 +475,9 @@ export default function Home() {
                 Unified Document Ingestion
               </h3>
               <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">
-                Complete, multi-format capabilities natively parsing PDFs, Microsoft Word manuscripts (.docx), and plain text files with consistent results.
+                Complete, multi-format capabilities natively parsing PDFs, Microsoft Word manuscripts (.docx), and plain text files up to 2MB each with consistent results.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA section — Elegant Editorial Block */}
-      <section className="relative overflow-hidden py-24 bg-gradient-to-br from-[#1E1A17] to-[#12100F] border-b border-[#2C2420]/60 text-center transition-colors duration-300">
-        <div className="absolute inset-0 bg-[radial-gradient(#EA580C_0.5px,transparent_0.5px)] [background-size:16px_16px] opacity-10" />
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <span className="text-[10px] font-mono tracking-widest text-orange-500 font-bold uppercase mb-4 inline-block">
-            Commitment-Free Utility
-          </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-[#F5F5F4] leading-tight mb-8">
-            Ready to compare <br className="sm:hidden" />
-            your manuscripts?
-          </h2>
-          <p className="font-sans text-stone-400 text-sm sm:text-base max-w-xl mx-auto mb-10 leading-relaxed">
-            Run a detailed analysis across two files in under five seconds. Zero sign-ups or credentials required.
-          </p>
-          <div className="flex justify-center">
-            <a
-              href="#tool"
-              className="inline-flex items-center justify-center px-10 py-4 text-base font-bold rounded-xl text-white bg-orange-600 hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-orange-600/20"
-            >
-              Analyze Now
-              <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-6l-7 7-7-7" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* SEO Content Section */}
-      <section className="py-24 bg-background border-t border-gray-100 dark:border-stone-800/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div>
-            <PageH2>How Document Similarity Is Calculated</PageH2>
-            <div className="my-6 p-6 bg-orange-50/50 dark:bg-orange-950/10 border-l-4 border-orange-500 rounded-r-xl">
-              <p className="text-base text-gray-700 dark:text-stone-300 leading-relaxed font-medium">
-                <span className="font-bold text-orange-600 dark:text-orange-500">Important:</span> DocSim Checker compares your two documents directly against each other. It does not search the public internet or external academic databases like Turnitin or Copyleaks. This direct comparison model is what enables our strict privacy promise.
-              </p>
-            </div>
-
-            <PageP>
-              DocSim Checker is free to use, with no account or sign-up required to run a comparison. Free users get <PageLink href="/pricing">three comparisons per day</PageLink>, which resets daily, covering the vast majority of casual or occasional use cases without any cost or commitment. The tool blends two different approaches to measure similarity to give an accurate, multi-layered score:
-            </PageP>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
-              <div className="p-6 bg-card border border-card-border rounded-xl">
-                <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                  <span className="text-orange-600 font-black">1.</span>{" "}TF-IDF &amp; Cosine Similarity
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-stone-400 leading-relaxed">
-                  TF-IDF evaluates word importance relative to your text. Combined with Cosine Similarity, it mathematically maps documents as multi-dimensional vectors to measure vocabulary alignment. This is highly effective at identifying exact matches, identical paragraphs, and minor word rearrangements.
-                </p>
-              </div>
-
-              <div className="p-6 bg-card border border-card-border rounded-xl">
-                <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                  <span className="text-orange-600 font-black">2.</span>{" "}AI Semantic Matching
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-stone-400 leading-relaxed">
-                  We leverage Google&apos;s Gemini API to generate deep semantic embeddings representing the meaning of each sentence. By measuring the similarity of these vectors, we identify sentences expressing the exact same ideas or facts, even if they use completely different vocabularies or are fully paraphrased.
-                </p>
-              </div>
-            </div>
-
-            <PageP>
-              By blending both methods, DocSim Checker balances precision (syntactic vocabulary alignment) with conceptual depth (semantic paraphrasing detection), giving you an exhaustive side-by-side comparison without uploading or storing any files.
-            </PageP>
-          </div>
-
-          <div>
-            <PageH2>Document Similarity vs. Plagiarism Detection</PageH2>
-            <PageP>
-              It&apos;s worth being clear about what this tool is and isn&apos;t. Plagiarism detection services like Turnitin or Copyleaks check submitted work against enormous databases — the open web, academic journals, and previously submitted student papers — to identify whether content has been copied from an external source. DocSim Checker does not do this. It compares only the two documents you provide, directly against each other, with no external index or database involved.
-            </PageP>
-            <PageP>
-              This makes it a strong fit for the narrower, more common task of comparing two specific pieces of writing — whether that&apos;s two drafts, two versions of a contract, or two documents you suspect might overlap. If you already know which two documents you want to compare, DocSim Checker gives you a fast, free, and private answer without needing to submit anything to a larger, less transparent system.
-            </PageP>
           </div>
         </div>
       </section>

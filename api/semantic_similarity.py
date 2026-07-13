@@ -9,7 +9,7 @@ def normalize_vector(v):
         return v
     return [x / mag for x in v]
 
-def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name="text-embedding-004", timeout=3.5):
+def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name="text-embedding-004", timeout=7.0):
     # Current stable text embedding model as of early 2025: text-embedding-004
     """
     Computes semantic similarity scores between two sets of sentences using Gemini API embeddings.
@@ -54,6 +54,7 @@ def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name
 
         return embeddings
 
+    import traceback
     try:
         all_embeddings = fetch_embeddings(all_sentences)
 
@@ -87,5 +88,6 @@ def get_semantic_similarity_scores(sentences_a, sentences_b, api_key, model_name
         return best_matches_a, best_matches_b
 
     except Exception as e:
-        print(f"Gemini Semantic Similarity Error: {e}")
+        print(f"Gemini Semantic Similarity Error: {e}", flush=True)
+        traceback.print_exc()
         raise

@@ -77,13 +77,13 @@ export default function DuplicateLineRemoverPage() {
     >
       <div className="mx-auto">
         {/* Input Card */}
-        <div className="bg-card rounded-2xl border border-card-border shadow-lg overflow-hidden mb-8">
-          <div className="p-4 border-b border-card-border flex justify-between items-center bg-gray-50/50 dark:bg-stone-800/50">
+        <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-lg overflow-hidden mb-8">
+          <div className="p-4 border-b border-[#E6DDC4] dark:border-[#2C2420] flex justify-between items-center bg-[#FAF8F5]/55 dark:bg-[#181615]/50">
             <div className="flex items-center space-x-6">
-              <span className="text-sm font-bold text-gray-700 dark:text-stone-300 uppercase tracking-wider">Input</span>
+              <span className="text-sm font-bold text-stone-700 dark:text-stone-300 uppercase tracking-widest">Input</span>
               <button
                 onClick={clearAll}
-                className="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                className="flex items-center gap-2 text-sm font-semibold text-stone-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -93,13 +93,13 @@ export default function DuplicateLineRemoverPage() {
             </div>
           </div>
           <textarea
-            className="w-full h-64 p-8 focus:outline-none resize-none bg-transparent text-foreground leading-relaxed text-lg"
+            className="w-full h-64 p-8 focus:outline-none resize-none bg-transparent text-[#1A1A1A] dark:text-[#F5F5F4] leading-relaxed text-lg"
             placeholder="Paste your lines here..."
             value={inputText}
             onChange={handleInputTextChange}
             id="duplicate-remover-input"
           />
-          <div className="p-8 bg-gray-50/50 dark:bg-stone-800/50 border-t border-card-border">
+          <div className="p-8 bg-[#FAF8F5]/60 dark:bg-[#181615]/60 border-t border-[#E6DDC4] dark:border-[#2C2420]">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex flex-wrap gap-6">
                 <label className="flex items-center gap-3 cursor-pointer group">
@@ -108,13 +108,13 @@ export default function DuplicateLineRemoverPage() {
                       type="checkbox"
                       checked={isCaseSensitive}
                       onChange={(e) => setIsCaseSensitive(e.target.checked)}
-                      className="peer appearance-none w-6 h-6 border-2 border-gray-300 dark:border-stone-600 rounded-md checked:bg-orange-600 checked:border-orange-600 transition-all cursor-pointer"
+                      className="peer appearance-none w-6 h-6 border-2 border-[#E6DDC4] dark:border-[#2C2420] rounded-md checked:bg-orange-600 checked:border-orange-600 transition-all cursor-pointer"
                     />
                     <svg className="absolute w-4 h-4 text-white opacity-0 peer-checked:opacity-100 left-1 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-sm font-semibold text-gray-700 dark:text-stone-300 group-hover:text-orange-600 transition-colors">Case-sensitive</span>
+                  <span className="text-sm font-semibold text-stone-700 dark:text-stone-300 group-hover:text-orange-600 transition-colors">Case-sensitive</span>
                 </label>
                 <label className="flex items-center gap-3 cursor-pointer group">
                   <div className="relative flex items-center">
@@ -122,13 +122,13 @@ export default function DuplicateLineRemoverPage() {
                       type="checkbox"
                       checked={trimWhitespace}
                       onChange={(e) => setTrimWhitespace(e.target.checked)}
-                      className="peer appearance-none w-6 h-6 border-2 border-gray-300 dark:border-stone-600 rounded-md checked:bg-orange-600 checked:border-orange-600 transition-all cursor-pointer"
+                      className="peer appearance-none w-6 h-6 border-2 border-[#E6DDC4] dark:border-[#2C2420] rounded-md checked:bg-orange-600 checked:border-orange-600 transition-all cursor-pointer"
                     />
                     <svg className="absolute w-4 h-4 text-white opacity-0 peer-checked:opacity-100 left-1 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-sm font-semibold text-gray-700 dark:text-stone-300 group-hover:text-orange-600 transition-colors">Trim whitespace</span>
+                  <span className="text-sm font-semibold text-stone-700 dark:text-stone-300 group-hover:text-orange-600 transition-colors">Trim whitespace</span>
                 </label>
               </div>
               <button
@@ -144,10 +144,10 @@ export default function DuplicateLineRemoverPage() {
 
         {/* Output Card */}
         {showOutput && (
-          <div className="bg-card rounded-2xl border border-card-border shadow-lg overflow-hidden mb-8 animate-in slide-in-from-bottom-4 duration-500">
-            <div className="p-4 border-b border-card-border flex justify-between items-center bg-orange-50/30 dark:bg-orange-950/10">
+          <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-lg overflow-hidden mb-8 animate-in slide-in-from-bottom-4 duration-500">
+            <div className="p-4 border-b border-[#E6DDC4] dark:border-[#2C2420] flex justify-between items-center bg-orange-50/10 dark:bg-orange-950/10">
               <div className="flex items-center space-x-6">
-                <span className="text-sm font-bold text-orange-600 uppercase tracking-wider">Cleaned Result</span>
+                <span className="text-sm font-bold text-orange-600 uppercase tracking-widest">Cleaned Result</span>
                 <button
                   onClick={handleCopy}
                   className="flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700 transition-colors"
@@ -158,13 +158,13 @@ export default function DuplicateLineRemoverPage() {
                   {copyStatus}
                 </button>
               </div>
-              <div className="text-xs font-bold text-gray-500 dark:text-stone-400">
+              <div className="text-xs font-bold text-stone-500 dark:text-stone-400">
                 Removed <span className="text-orange-600">{stats.removed}</span> duplicate lines ({stats.original} → {stats.final} total lines)
               </div>
             </div>
             <textarea
               readOnly
-              className="w-full h-64 p-8 focus:outline-none resize-none bg-gray-50/30 dark:bg-stone-900/20 text-foreground leading-relaxed text-lg"
+              className="w-full h-64 p-8 focus:outline-none resize-none bg-transparent text-[#1A1A1A] dark:text-[#F5F5F4] leading-relaxed text-lg"
               value={outputText}
             />
           </div>

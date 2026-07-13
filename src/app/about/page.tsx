@@ -19,7 +19,7 @@ export default function AboutPage() {
       }}
     >
       <div className="space-y-8">
-        <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">
+        <div className="p-8 bg-[#FAF8F5] dark:bg-[#181615] border border-[#E6DDC4] dark:border-[#2C2420] rounded-2xl shadow-sm">
           <PageP>
             DocSim Checker is a simple tool for comparing two documents and seeing how similar they are — sentence by sentence.
           </PageP>
@@ -28,42 +28,42 @@ export default function AboutPage() {
           </PageP>
         </div>
 
-        <section className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">
+        <section className="p-8 bg-[#FAF8F5] dark:bg-[#181615] border border-[#E6DDC4] dark:border-[#2C2420] rounded-2xl shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="text-orange-600">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-foreground tracking-tight">Our approach to privacy</h2>
+            <h2 className="text-2xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] tracking-tight">Our approach to privacy</h2>
           </div>
           <PageP>
             We don&apos;t store your documents. Ever. Your text is processed to generate a similarity score and then discarded — nothing is saved beyond the single comparison request.
           </PageP>
         </section>
 
-        <section className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">
+        <section className="p-8 bg-[#FAF8F5] dark:bg-[#181615] border border-[#E6DDC4] dark:border-[#2C2420] rounded-2xl shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="text-orange-600">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-foreground tracking-tight">How it works</h2>
+            <h2 className="text-2xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] tracking-tight">How it works</h2>
           </div>
           <PageP>
             We use a <PageLink href="/how-it-works">combination of text-matching techniques (TF-IDF) and AI-powered semantic analysis</PageLink> (via Google&apos;s Gemini API) to catch both exact matches and reworded/paraphrased similarities that simple word-matching would miss.
           </PageP>
         </section>
 
-        <section className="p-8 bg-card border border-card-border rounded-2xl shadow-sm">
+        <section className="p-8 bg-[#FAF8F5] dark:bg-[#181615] border border-[#E6DDC4] dark:border-[#2C2420] rounded-2xl shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="text-orange-600">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-foreground tracking-tight">Who&apos;s behind this</h2>
+            <h2 className="text-2xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] tracking-tight">Who&apos;s behind this</h2>
           </div>
           <PageP>
             DocSim Checker was built by <PageStrong>Muhammad Ahmad Khan</PageStrong>, an independent developer focused on building free, privacy-first tools for writers, students, and small teams. It is an independently built project, currently in active development.

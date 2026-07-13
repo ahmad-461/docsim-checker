@@ -27,13 +27,13 @@ const PageHero = ({
   const isBalanced = textAlign === 'balanced';
 
   return (
-    <div className="bg-orange-50/50 dark:bg-orange-950/10 border-b border-orange-100 dark:border-orange-900/30 pt-32 pb-16 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
+    <div className="bg-[#FAF8F5] dark:bg-[#181615] border-b border-[#E6DDC4]/60 dark:border-[#2C2420]/60 pt-32 pb-16 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
       <div className={`${maxWidth} mx-auto ${isBalanced ? 'text-center md:text-left' : isCentered ? 'text-center' : 'text-left'}`}>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] mb-4 tracking-tight">
           {title}
         </h1>
         {subtitle && (
-          <p className={`text-xl text-gray-600 dark:text-stone-400 font-medium ${isBalanced ? 'mx-auto md:mx-0' : isCentered ? 'mx-auto' : ''} max-w-2xl`}>
+          <p className={`text-xl text-stone-600 dark:text-stone-400 font-medium ${isBalanced ? 'mx-auto md:mx-0' : isCentered ? 'mx-auto' : ''} max-w-2xl`}>
             {subtitle}
           </p>
         )}
