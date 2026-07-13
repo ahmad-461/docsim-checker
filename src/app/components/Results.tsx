@@ -18,6 +18,7 @@ interface ResultsProps {
 
 const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB, isSample }) => {
   const reportRef = useRef<HTMLDivElement>(null);
+  const printReportRef = useRef<HTMLDivElement>(null);
   const [threshold, setThreshold] = useState<number>(0);
   const [prevSentences, setPrevSentences] = useState<{a: Sentence[], b: Sentence[]}>({ a: sentencesA, b: sentencesB });
 
@@ -27,28 +28,27 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
     setPrevSentences({ a: sentencesA, b: sentencesB });
   }
 
+  const getVerdict = (score: number) => {
+    if (score >= 70) return "Substantial overlap detected";
+    if (score >= 30) return "Moderate similarity detected";
+    return "Mostly original content";
+  };
+
   const handleDownloadPDF = async () => {
-    // Future gate: if (user_tier === 'pro') { ... } else { showUpsell() }
-    if (!reportRef.current) return;
+    if (!printReportRef.current) return;
+
+    // Preload logo image to ensure it's in the browser cache for html2canvas
+    await new Promise<void>((resolve) => {
+      const img = new window.Image();
+      img.src = '/logo.png';
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
+    });
 
     let tempStyleEl: HTMLStyleElement | null = null;
 
     try {
-      const element = reportRef.current;
-
-      // Temporary style changes to ensure full content is captured
-      const docAContainer = element.querySelector('#doc-a-container') as HTMLElement;
-      const docBContainer = element.querySelector('#doc-b-container') as HTMLElement;
-
-      const originalAHeight = docAContainer.style.height;
-      const originalAOverflow = docAContainer.style.overflow;
-      const originalBHeight = docBContainer.style.height;
-      const originalBOverflow = docBContainer.style.overflow;
-
-      docAContainer.style.height = 'auto';
-      docAContainer.style.overflow = 'visible';
-      docBContainer.style.height = 'auto';
-      docBContainer.style.overflow = 'visible';
+      const element = printReportRef.current;
 
       // 1. Gather all CSS rules from the original document
       let cssText = '';
@@ -92,8 +92,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
         scale: 2, // Higher quality
         useCORS: true,
         logging: false,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
+        backgroundColor: '#ffffff',
         onclone: (clonedDoc) => {
           // Remove original style sheets and link tags in the cloned document
           const stylesAndLinks = clonedDoc.querySelectorAll('link[rel="stylesheet"], style');
@@ -104,37 +103,84 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
           cleanStyleEl.textContent = cleanCssText;
           clonedDoc.head.appendChild(cleanStyleEl);
 
-          // Fix for html2canvas failing on oklch colors used in Tailwind v4
-          // Force standard RGB for elements that might use modern color functions
+          // Force standard color fallbacks inside the cloned print template to render correctly
           const elementsWithColors = clonedDoc.querySelectorAll('*');
           elementsWithColors.forEach((el) => {
             const style = window.getComputedStyle(el);
-            const element = el as HTMLElement;
+            const htmlEl = el as HTMLElement;
             if (style.color && (style.color.includes('oklch') || style.color.includes('lab') || style.color.includes('oklab') || style.color.includes('lch'))) {
-               element.style.color = 'black'; // Fallback
-            }
-            if (style.backgroundColor && (style.backgroundColor.includes('oklch') || style.backgroundColor.includes('lab') || style.backgroundColor.includes('oklab') || style.backgroundColor.includes('lch'))) {
-               element.style.backgroundColor = 'transparent'; // Fallback
+               htmlEl.style.color = '#0f172a'; // Default slate-900 style
             }
           });
         }
       });
 
-      // Restore original styles
-      docAContainer.style.height = originalAHeight;
-      docAContainer.style.overflow = originalAOverflow;
-      docBContainer.style.height = originalBHeight;
-      docBContainer.style.overflow = originalBOverflow;
+      // Compress the canvas using JPEG at 85% quality to keep file size small while maintaining crisp text
+      const imgData = canvas.toDataURL('image/jpeg', 0.85);
 
-      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
+        unit: 'pt',
+        format: 'a4', // A4: 595.28 x 841.89 pt
+        compress: true // Enable page stream compression
       });
 
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save(`DocSim-Report-${new Date().getTime()}.pdf`);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+
+      // Bottom footer area height
+      const footerHeight = 45;
+      const usablePageHeight = pdfHeight - footerHeight;
+
+      // Calculate how many canvas pixels map to one usable PDF page height
+      const scale = pdfWidth / canvas.width;
+      const contentHeightInPdfPoints = canvas.height * scale;
+
+      const totalPages = Math.ceil(contentHeightInPdfPoints / usablePageHeight);
+
+      for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+        if (pageNum > 1) {
+          pdf.addPage();
+        }
+
+        // Render canvas slice on this page by offset drawing
+        const yOffset = - (pageNum - 1) * usablePageHeight;
+
+        // Add the image with JPEG and FAST compression
+        pdf.addImage(imgData, 'JPEG', 0, yOffset, pdfWidth, contentHeightInPdfPoints, undefined, 'FAST');
+
+        // Draw a solid white masking rectangle over the footer area to clean any canvas overflow
+        pdf.setFillColor(255, 255, 255);
+        pdf.rect(0, usablePageHeight, pdfWidth, footerHeight, 'F');
+
+        // Draw a light gray separation horizontal rule right above the footer
+        pdf.setDrawColor(229, 231, 235); // gray-200
+        pdf.setLineWidth(1);
+        pdf.line(0, usablePageHeight, pdfWidth, usablePageHeight);
+
+        // Draw footer text and page numbers
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(9);
+        pdf.setTextColor(100, 116, 139); // slate-500
+
+        // Center the brand text
+        const footerBrand = "Generated by DocSim Checker — docsimchecker.com";
+        const brandWidth = pdf.getTextWidth(footerBrand);
+        pdf.text(footerBrand, (pdfWidth - brandWidth) / 2, usablePageHeight + 25);
+
+        // Right-align page numbering
+        const pageText = `Page ${pageNum} of ${totalPages}`;
+        const pageTextWidth = pdf.getTextWidth(pageText);
+        pdf.text(pageText, pdfWidth - 40 - pageTextWidth, usablePageHeight + 25);
+      }
+
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const filename = `DocSim-Report-${year}-${month}-${day}.pdf`;
+
+      pdf.save(filename);
     } catch (error) {
       console.error('Failed to generate PDF:', error);
     } finally {
@@ -173,6 +219,117 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
           </svg>
           Download Report
         </button>
+      </div>
+
+      {/* DEDICATED OFF-SCREEN PRINT TEMPLATE FOR PDF GENERATION */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+        <div
+          ref={printReportRef}
+          className="w-[800px] bg-white p-12 text-slate-900 space-y-10"
+          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+        >
+          {/* Header */}
+          <div className="flex justify-between items-end border-b-2 border-orange-600 pb-6">
+            <div className="flex flex-col gap-4">
+              <img
+                src="/logo.png"
+                alt="DocSim Checker Logo"
+                className="h-10 w-auto object-contain self-start"
+              />
+              <h1 className="text-3xl font-black tracking-tight text-slate-900">
+                Document Similarity Report
+              </h1>
+            </div>
+            <div className="text-right text-sm text-slate-500 font-medium">
+              <div className="font-semibold text-slate-800">Generated Date</div>
+              <div>
+                {new Date().toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Summary Section */}
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 flex justify-between items-center">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">
+                  Verdict
+                </span>
+                {isSample && (
+                  <span className="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+                    Sample Result
+                  </span>
+                )}
+              </div>
+              <h2 className="text-2xl font-extrabold text-slate-900">
+                {getVerdict(score)}
+              </h2>
+              <div className="text-sm text-slate-500 font-medium space-y-1.5">
+                <div>Comparison Method: {method === 'tfidf_only' ? 'Basic Similarity Matching' : 'AI-Powered Semantic Analysis'}</div>
+                <div className={threshold > 0 ? "text-orange-600 font-bold" : "text-slate-500"}>
+                  Match Threshold: {threshold > 0 ? `Showing matches above ${threshold}% similarity` : 'Showing all matches (0% threshold)'}
+                </div>
+              </div>
+            </div>
+            <div className="text-center bg-white border border-slate-200 rounded-xl px-6 py-4 shadow-sm">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Similarity
+              </div>
+              <div className="text-5xl font-black text-orange-600 mt-1">
+                {score}%
+              </div>
+            </div>
+          </div>
+
+          {/* Document Content Stack */}
+          <div className="space-y-10 pt-4">
+            {/* Document A */}
+            <div className="space-y-4">
+              <div className="border-b border-slate-200 pb-2">
+                <h3 className="text-lg font-bold text-slate-800 tracking-wide uppercase">
+                  Document A
+                </h3>
+              </div>
+              <div className="text-base text-slate-800 leading-relaxed bg-slate-50/50 border border-slate-100 rounded-xl p-6 whitespace-pre-line">
+                {sentencesA.map((s, i) => (
+                  <span
+                    key={i}
+                    style={{ backgroundColor: getHighlightColor(s.match_score) }}
+                    className="inline transition-colors duration-300"
+                  >
+                    {s.text}{' '}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Document B */}
+            <div className="space-y-4">
+              <div className="border-b border-slate-200 pb-2">
+                <h3 className="text-lg font-bold text-slate-800 tracking-wide uppercase">
+                  Document B
+                </h3>
+              </div>
+              <div className="text-base text-slate-800 leading-relaxed bg-slate-50/50 border border-slate-100 rounded-xl p-6 whitespace-pre-line">
+                {sentencesB.map((s, i) => (
+                  <span
+                    key={i}
+                    style={{ backgroundColor: getHighlightColor(s.match_score) }}
+                    className="inline transition-colors duration-300"
+                  >
+                    {s.text}{' '}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div ref={reportRef} className="bg-card p-8 rounded-xl border border-card-border shadow-sm space-y-8 transition-colors duration-200">
