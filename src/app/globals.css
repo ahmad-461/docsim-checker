@@ -29,6 +29,7 @@
   --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-editorial: var(--font-playfair-display);
 }
 
 body {
