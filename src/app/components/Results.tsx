@@ -21,12 +21,26 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
   const printReportRef = useRef<HTMLDivElement>(null);
   const [threshold, setThreshold] = useState<number>(0);
   const [prevSentences, setPrevSentences] = useState<{a: Sentence[], b: Sentence[]}>({ a: sentencesA, b: sentencesB });
+  const [showPreview, setShowPreview] = useState(false);
 
   // Reset threshold to 0% whenever a new comparison result is rendered
   if (prevSentences.a !== sentencesA || prevSentences.b !== sentencesB) {
     setThreshold(0);
     setPrevSentences({ a: sentencesA, b: sentencesB });
   }
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const isDevEnv = process.env.NODE_ENV === 'development';
+      if (params.get('preview') === 'pdf' && isDevEnv) {
+        // Run asynchronously to avoid synchronous setState inside useEffect warning
+        setTimeout(() => {
+          setShowPreview(true);
+        }, 0);
+      }
+    }
+  }, []);
 
   const getVerdict = (score: number) => {
     if (score >= 70) return "Substantial overlap detected";
@@ -50,68 +64,41 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
     try {
       const element = printReportRef.current;
 
-      // 1. Gather all CSS rules from the original document
-      let cssText = '';
-      for (const sheet of Array.from(document.styleSheets)) {
-        try {
-          const rules = sheet.cssRules;
-          if (rules) {
-            for (const rule of Array.from(rules)) {
-              cssText += rule.cssText + '\n';
-            }
-          }
-        } catch (e) {
-          // Fallback for CORS security restrictions or inline style tags
-          if (sheet.ownerNode && (sheet.ownerNode.nodeName === 'STYLE')) {
-            cssText += sheet.ownerNode.textContent + '\n';
-          }
-        }
-      }
+      // 1. Create a safe temporary stylesheet in the document with fallback basic CSS styles
+      // to bypass html2canvas parsing errors of modern CSS v4 styles entirely.
+      // Since the print template is completely styled using 100% standard inline CSS,
+      // we only need simple styling support.
+      const safeCssText = `
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #ffffff; color: #0f172a; font-family: system-ui, -apple-system, sans-serif; }
+      `;
 
-      // Replace modern unsupported color functions oklch(...), oklab(...), lab(...), and lch(...) with standard hex/RGB
-      // Also replace modern color-mix function calls with standard hex fallback
-      const cleanCssText = cssText
-        .replace(/oklch\([^)]*\)/g, '#ea580c')
-        .replace(/oklab\([^)]*\)/g, '#ea580c')
-        .replace(/lab\([^)]*\)/g, '#ea580c')
-        .replace(/lch\([^)]*\)/g, '#ea580c')
-        .replace(/color-mix\([^;}]*\)/g, '#ea580c');
-
-      // 2. Create a temporary stylesheet in the document
       tempStyleEl = document.createElement('style');
-      tempStyleEl.textContent = cleanCssText;
+      tempStyleEl.textContent = safeCssText;
       document.head.appendChild(tempStyleEl);
 
-      // 3. Temporarily override document.styleSheets so html2canvas reads the cleaned CSS rules
+      // 2. Temporarily override document.styleSheets so html2canvas reads the safe, clean CSS rules
       Object.defineProperty(document, 'styleSheets', {
         value: [tempStyleEl.sheet],
         configurable: true
       });
 
       const canvas = await html2canvas(element, {
-        scale: 2, // Higher quality
+        scale: 2, // 2x high-resolution canvas capture
         useCORS: true,
         logging: false,
         backgroundColor: '#ffffff',
+        width: 800, // Force canvas width to exactly 800px to avoid any flex responsive sizing shrinkage
+        windowWidth: 800, // Mock layout viewport width of 800px during capture
         onclone: (clonedDoc) => {
           // Remove original style sheets and link tags in the cloned document
           const stylesAndLinks = clonedDoc.querySelectorAll('link[rel="stylesheet"], style');
           stylesAndLinks.forEach(el => el.remove());
 
-          // Inject the clean CSS as a single style block in the cloned document's head
+          // Inject the clean, safe CSS as a single style block in the cloned document's head
           const cleanStyleEl = clonedDoc.createElement('style');
-          cleanStyleEl.textContent = cleanCssText;
+          cleanStyleEl.textContent = safeCssText;
           clonedDoc.head.appendChild(cleanStyleEl);
-
-          // Force standard color fallbacks inside the cloned print template to render correctly
-          const elementsWithColors = clonedDoc.querySelectorAll('*');
-          elementsWithColors.forEach((el) => {
-            const style = window.getComputedStyle(el);
-            const htmlEl = el as HTMLElement;
-            if (style.color && (style.color.includes('oklch') || style.color.includes('lab') || style.color.includes('oklab') || style.color.includes('lch'))) {
-               htmlEl.style.color = '#0f172a'; // Default slate-900 style
-            }
-          });
         }
       });
 
@@ -132,9 +119,9 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       const footerHeight = 45;
       const usablePageHeight = pdfHeight - footerHeight;
 
-      // Calculate how many canvas pixels map to one usable PDF page height
-      const scale = pdfWidth / canvas.width;
-      const contentHeightInPdfPoints = canvas.height * scale;
+      // Calculate standard scaling factor: map 800px container width to standard PDF width points
+      const scale = pdfWidth / 800; // Since element has fixed width 800px, map exactly to pdfWidth
+      const contentHeightInPdfPoints = canvas.height * (scale / 2); // Divide by 2 because canvas scale is 2
 
       const totalPages = Math.ceil(contentHeightInPdfPoints / usablePageHeight);
 
@@ -147,6 +134,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
         const yOffset = - (pageNum - 1) * usablePageHeight;
 
         // Add the image with JPEG and FAST compression
+        // Ensure image width and height matches the exact layout mapping
         pdf.addImage(imgData, 'JPEG', 0, yOffset, pdfWidth, contentHeightInPdfPoints, undefined, 'FAST');
 
         // Draw a solid white masking rectangle over the footer area to clean any canvas overflow
@@ -186,7 +174,9 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
     } finally {
       // 4. Restore original document.styleSheets and remove the temporary style element
       if (tempStyleEl) {
-        delete (document as any).styleSheets;
+        // Use a safer type casting to comply with ESLint standard rules
+        const docWithStylesheets = document as unknown as { styleSheets?: unknown };
+        delete docWithStylesheets.styleSheets;
         tempStyleEl.remove();
       }
     }
@@ -222,26 +212,70 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       </div>
 
       {/* DEDICATED OFF-SCREEN PRINT TEMPLATE FOR PDF GENERATION */}
-      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+      <div
+        style={
+          showPreview
+            ? {
+                display: 'block',
+                margin: '40px auto',
+                border: '4px dashed #ea580c',
+                borderRadius: '16px',
+                width: '800px',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                overflow: 'hidden',
+                position: 'relative',
+              }
+            : { position: 'absolute', left: '-9999px', top: '-9999px' }
+        }
+      >
+        {showPreview && (
+          <div style={{ backgroundColor: '#ea580c', color: '#ffffff', padding: '16px', fontWeight: 'bold', textAlign: 'center', fontSize: '14px', borderBottom: '2px solid #c2410c', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            DEVELOPMENT-ONLY PDF PREVIEW (Gated to Development Environment)
+          </div>
+        )}
         <div
           ref={printReportRef}
-          className="w-[800px] bg-white p-12 text-slate-900 space-y-10"
-          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+          style={{
+            width: '800px',
+            backgroundColor: '#ffffff',
+            padding: '48px',
+            color: '#0f172a', // slate-900
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '40px',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            boxSizing: 'border-box',
+          }}
         >
           {/* Header */}
-          <div className="flex justify-between items-end border-b-2 border-orange-600 pb-6">
-            <div className="flex flex-col gap-4">
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            borderBottom: '2px solid #ea580c',
+            paddingBottom: '24px',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <img
                 src="/logo.png"
                 alt="DocSim Checker Logo"
-                className="h-10 w-auto object-contain self-start"
+                style={{ height: '40px', width: 'auto', display: 'block' }}
               />
-              <h1 className="text-3xl font-black tracking-tight text-slate-900">
+              <h1 style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                color: '#0f172a',
+                margin: 0,
+                lineHeight: '1.2',
+              }}>
                 Document Similarity Report
               </h1>
             </div>
-            <div className="text-right text-sm text-slate-500 font-medium">
-              <div className="font-semibold text-slate-800">Generated Date</div>
+            <div style={{ textAlign: 'right', fontSize: '11px', color: '#64748b' }}>
+              <div style={{ fontWeight: '600', color: '#1e293b', marginBottom: '4px' }}>Generated Date</div>
               <div>
                 {new Date().toLocaleString('en-US', {
                   year: 'numeric',
@@ -255,53 +289,90 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
           </div>
 
           {/* Summary Section */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 flex justify-between items-center">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <span className="text-sm font-bold uppercase tracking-wider text-slate-500">
+          <div style={{
+            backgroundColor: '#f8fafc', // slate-50
+            border: '1px solid #e2e8f0', // slate-200
+            borderRadius: '16px',
+            padding: '32px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#64748b' }}>
                   Verdict
                 </span>
                 {isSample && (
-                  <span className="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-orange-200 uppercase tracking-widest">
+                  <span style={{
+                    backgroundColor: '#ffedd5', // orange-100
+                    color: '#c2410c', // orange-700
+                    fontSize: '10px',
+                    fontWeight: '800',
+                    padding: '2px 8px',
+                    borderRadius: '9999px',
+                    border: '1px solid #fed7aa', // orange-200
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                  }}>
                     Sample Result
                   </span>
                 )}
               </div>
-              <h2 className="text-2xl font-extrabold text-slate-900">
+              <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>
                 {getVerdict(score)}
               </h2>
-              <div className="text-sm text-slate-500 font-medium space-y-1.5">
+              <div style={{ fontSize: '11px', color: '#64748b', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <div>Comparison Method: {method === 'tfidf_only' ? 'Basic Similarity Matching' : 'AI-Powered Semantic Analysis'}</div>
-                <div className={threshold > 0 ? "text-orange-600 font-bold" : "text-slate-500"}>
+                <div style={threshold > 0 ? { color: '#ea580c', fontWeight: 'bold' } : { color: '#64748b' }}>
                   Match Threshold: {threshold > 0 ? `Showing matches above ${threshold}% similarity` : 'Showing all matches (0% threshold)'}
                 </div>
               </div>
             </div>
-            <div className="text-center bg-white border border-slate-200 rounded-xl px-6 py-4 shadow-sm">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div style={{
+              textAlign: 'center',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e2e8f0',
+              borderRadius: '12px',
+              padding: '16px 24px',
+              boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+            }}>
+              <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Similarity
               </div>
-              <div className="text-5xl font-black text-orange-600 mt-1">
+              <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#ea580c', marginTop: '4px', lineHeight: '1' }}>
                 {score}%
               </div>
             </div>
           </div>
 
           {/* Document Content Stack */}
-          <div className="space-y-10 pt-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', width: '100%', boxSizing: 'border-box' }}>
             {/* Document A */}
-            <div className="space-y-4">
-              <div className="border-b border-slate-200 pb-2">
-                <h3 className="text-lg font-bold text-slate-800 tracking-wide uppercase">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+              <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: 'bold', color: '#1e293b', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Document A
                 </h3>
               </div>
-              <div className="text-base text-slate-800 leading-relaxed bg-slate-50/50 border border-slate-100 rounded-xl p-6 whitespace-pre-line">
+              <div style={{
+                fontSize: '14px',
+                color: '#1e293b',
+                lineHeight: '1.6',
+                backgroundColor: 'rgba(248, 250, 252, 0.5)',
+                border: '1px solid #f1f5f9',
+                borderRadius: '12px',
+                padding: '24px',
+                whiteSpace: 'pre-line',
+                boxSizing: 'border-box',
+                width: '100%',
+              }}>
                 {sentencesA.map((s, i) => (
                   <span
                     key={i}
                     style={{ backgroundColor: getHighlightColor(s.match_score) }}
-                    className="inline transition-colors duration-300"
                   >
                     {s.text}{' '}
                   </span>
@@ -309,19 +380,32 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
               </div>
             </div>
 
+            {/* Visible Divider Line between Document A and Document B */}
+            <div style={{ borderTop: '2px dashed #e2e8f0', margin: '8px 0' }}></div>
+
             {/* Document B */}
-            <div className="space-y-4">
-              <div className="border-b border-slate-200 pb-2">
-                <h3 className="text-lg font-bold text-slate-800 tracking-wide uppercase">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+              <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: 'bold', color: '#1e293b', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Document B
                 </h3>
               </div>
-              <div className="text-base text-slate-800 leading-relaxed bg-slate-50/50 border border-slate-100 rounded-xl p-6 whitespace-pre-line">
+              <div style={{
+                fontSize: '14px',
+                color: '#1e293b',
+                lineHeight: '1.6',
+                backgroundColor: 'rgba(248, 250, 252, 0.5)',
+                border: '1px solid #f1f5f9',
+                borderRadius: '12px',
+                padding: '24px',
+                whiteSpace: 'pre-line',
+                boxSizing: 'border-box',
+                width: '100%',
+              }}>
                 {sentencesB.map((s, i) => (
                   <span
                     key={i}
                     style={{ backgroundColor: getHighlightColor(s.match_score) }}
-                    className="inline transition-colors duration-300"
                   >
                     {s.text}{' '}
                   </span>
