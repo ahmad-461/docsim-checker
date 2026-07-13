@@ -85,13 +85,13 @@ export default function CaseConverterPage() {
       noProse={true}
     >
       <div className="mx-auto">
-        <div className="bg-card rounded-2xl border border-card-border shadow-lg overflow-hidden mb-8">
-          <div className="p-4 border-b border-card-border flex justify-between items-center bg-gray-50/50 dark:bg-stone-800/50">
+        <div className="bg-[#FAF8F5] dark:bg-[#181615] rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-lg overflow-hidden mb-8">
+          <div className="p-4 border-b border-[#E6DDC4] dark:border-[#2C2420] flex justify-between items-center bg-[#FAF8F5]/55 dark:bg-[#181615]/50">
             <div className="flex items-center space-x-6">
               <button
                 onClick={handleCopy}
                 disabled={!text}
-                className="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-stone-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 text-sm font-semibold text-stone-600 dark:text-stone-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
@@ -100,7 +100,7 @@ export default function CaseConverterPage() {
               </button>
               <button
                 onClick={clearAll}
-                className="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                className="flex items-center gap-2 text-sm font-semibold text-stone-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -108,20 +108,20 @@ export default function CaseConverterPage() {
                 Clear
               </button>
             </div>
-            <div className="hidden sm:block text-xs font-medium text-gray-500 dark:text-stone-400 italic">
+            <div className="hidden sm:block text-xs font-medium text-stone-500 dark:text-stone-400 italic">
               Paste or type your text to convert instantly
             </div>
           </div>
           <textarea
-            className="w-full h-96 p-8 focus:outline-none resize-none bg-transparent text-foreground leading-relaxed text-lg"
+            className="w-full h-96 p-8 focus:outline-none resize-none bg-transparent text-[#1A1A1A] dark:text-[#F5F5F4] leading-relaxed text-lg"
             placeholder="Start typing or paste your text here..."
             value={text}
             onChange={handleTextChange}
             id="case-converter-input"
           />
-          <div className="p-8 bg-gray-50/50 dark:bg-stone-800/50 border-t border-card-border">
+          <div className="p-8 bg-[#FAF8F5]/60 dark:bg-[#181615]/60 border-t border-[#E6DDC4] dark:border-[#2C2420]">
             <div className="text-center mb-6">
-              <p className="text-sm font-medium text-gray-500 dark:text-stone-400">
+              <p className="text-sm font-medium text-stone-500 dark:text-stone-400">
                 Choose a format to transform your text instantly.
               </p>
             </div>
@@ -131,7 +131,7 @@ export default function CaseConverterPage() {
                   key={type}
                   onClick={() => transformText(type)}
                   disabled={!text}
-                  className="px-6 py-3 bg-white dark:bg-stone-900 border border-gray-200 dark:border-stone-700 rounded-xl text-sm font-bold text-gray-700 dark:text-stone-300 hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-3 bg-white dark:bg-stone-900 border border-[#E6DDC4] dark:border-[#2C2420] rounded-xl text-sm font-bold text-stone-700 dark:text-stone-300 hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-500 transition-all shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {type}
                 </button>

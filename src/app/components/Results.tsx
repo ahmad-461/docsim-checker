@@ -202,7 +202,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       <div className="flex justify-center">
         <button
           onClick={handleDownloadPDF}
-          className="flex items-center gap-2 px-6 py-2 bg-gray-800 dark:bg-stone-700 text-white rounded-md hover:bg-gray-900 dark:hover:bg-stone-600 transition-colors shadow-sm"
+          className="flex items-center gap-2 px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-orange-600/10 active:scale-95 transform hover:scale-[1.02]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -416,10 +416,10 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
         </div>
       </div>
 
-      <div ref={reportRef} className="bg-card p-8 rounded-xl border border-card-border shadow-sm space-y-8 transition-colors duration-200">
-        <div className="border-b border-card-border pb-6 text-center">
-          <h1 className="text-2xl font-bold text-foreground">DocSim Checker — Similarity Report</h1>
-          <p className="text-gray-500 dark:text-stone-400 mt-1">{new Date().toLocaleString(undefined, {
+      <div ref={reportRef} className="bg-[#FAF8F5] dark:bg-[#181615] p-8 rounded-2xl border border-[#E6DDC4] dark:border-[#2C2420] shadow-lg space-y-8 transition-colors duration-200">
+        <div className="border-b border-[#E6DDC4] dark:border-[#2C2420] pb-6 text-center">
+          <h1 className="text-2xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4]">DocSim Checker — Similarity Report</h1>
+          <p className="text-stone-500 dark:text-stone-400 mt-1">{new Date().toLocaleString(undefined, {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
@@ -429,12 +429,12 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
         </div>
 
       <div className="text-center">
-        <h2 className="text-lg font-medium text-foreground">Overall Similarity</h2>
+        <h2 className="text-lg font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] uppercase tracking-wider">Overall Similarity</h2>
         <div className="mt-2 inline-flex flex-col items-center w-full relative">
           <div className="flex items-center gap-3">
-            <span className="text-6xl font-extrabold text-orange-600">{score}%</span>
+            <span className="text-6xl font-black font-editorial text-orange-600">{score}%</span>
             {isSample && (
-              <span className="bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-bold px-2.5 py-1 rounded-full border border-orange-200 dark:border-orange-800/50 uppercase tracking-wider animate-pulse">
+              <span className="bg-orange-100 dark:bg-orange-950/20 text-orange-700 dark:text-orange-300 text-xs font-bold px-2.5 py-1 rounded-full border border-orange-200 dark:border-orange-900/30 uppercase tracking-wider animate-pulse">
                 Sample Result
               </span>
             )}
@@ -451,10 +451,10 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
       {/* Slider UI */}
       <div data-html2canvas-ignore="true" className="max-w-md mx-auto space-y-3 pt-2 pb-4 w-full">
         <div className="flex justify-between items-center">
-          <span className="text-sm font-bold text-gray-500 dark:text-stone-400 uppercase tracking-wider">
+          <span className="text-sm font-bold text-stone-500 dark:text-stone-400 uppercase tracking-widest">
             Show matches above:
           </span>
-          <span className="text-lg font-black text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-1 rounded-lg">
+          <span className="text-lg font-black text-orange-600 bg-orange-50/50 dark:bg-orange-950/20 px-3 py-1 rounded-lg">
             {threshold}%
           </span>
         </div>
@@ -467,7 +467,7 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
           onChange={(e) => setThreshold(parseInt(e.target.value))}
           className="w-full h-2.5 bg-gray-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer accent-orange-600 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-        <div className="flex justify-between text-xs text-gray-500 dark:text-stone-500 font-medium px-0.5">
+        <div className="flex justify-between text-xs text-stone-500 dark:text-stone-500 font-medium px-0.5">
           <span>0% (All matches)</span>
           <span>50%</span>
           <span>100%</span>
@@ -496,8 +496,8 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
-          <h3 className="text-md font-semibold text-gray-700 dark:text-stone-300 border-b border-card-border pb-2">Document A</h3>
-          <div id="doc-a-container" className="bg-white dark:bg-stone-900/50 p-4 border border-card-border rounded-lg h-[300px] md:h-[500px] overflow-y-auto leading-relaxed text-foreground">
+          <h3 className="text-md font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] border-b border-[#E6DDC4] dark:border-[#2C2420] pb-2">Document A</h3>
+          <div id="doc-a-container" className="bg-white dark:bg-stone-900/40 p-4 border border-[#E6DDC4] dark:border-[#2C2420] rounded-xl h-[300px] md:h-[500px] overflow-y-auto leading-relaxed text-foreground shadow-inner">
             {sentencesA.map((s, i) => (
               <span
                 key={i}
@@ -511,8 +511,8 @@ const Results: React.FC<ResultsProps> = ({ score, method, sentencesA, sentencesB
           </div>
         </div>
         <div className="space-y-4">
-          <h3 className="text-md font-semibold text-gray-700 dark:text-stone-300 border-b border-card-border pb-2">Document B</h3>
-          <div id="doc-b-container" className="bg-white dark:bg-stone-900/50 p-4 border border-card-border rounded-lg h-[300px] md:h-[500px] overflow-y-auto leading-relaxed text-foreground">
+          <h3 className="text-md font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] border-b border-[#E6DDC4] dark:border-[#2C2420] pb-2">Document B</h3>
+          <div id="doc-b-container" className="bg-white dark:bg-stone-900/40 p-4 border border-[#E6DDC4] dark:border-[#2C2420] rounded-xl h-[300px] md:h-[500px] overflow-y-auto leading-relaxed text-foreground shadow-inner">
             {sentencesB.map((s, i) => (
               <span
                 key={i}

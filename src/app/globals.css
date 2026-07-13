@@ -9,17 +9,17 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fcfcfc; /* Very subtle gray */
-  --foreground: #171717;
-  --card-bg: #ffffff;
-  --card-border: #e5e7eb; /* gray-200 */
+  --background: #FBF9F6; /* Cream Parchment */
+  --foreground: #1A1A1A; /* Deep Ink */
+  --card-bg: #FAF8F5; /* Parchment panel background */
+  --card-border: #E6DDC4; /* Parchment panel border */
 }
 
 .dark {
-  --background: #171412; /* Slightly darker than stone-900 */
-  --foreground: #f5f5f4; /* stone-100 */
-  --card-bg: #292524; /* stone-800 */
-  --card-border: #44403c; /* stone-700 */
+  --background: #141211; /* Warm Charcoal */
+  --foreground: #F5F5F4; /* Ink white */
+  --card-bg: #181615; /* Charcoal panel background */
+  --card-border: #2C2420; /* Charcoal panel border */
 }
 
 @theme inline {
@@ -41,5 +41,5 @@ body {
 
 /* Base styles for standard elements in dark mode */
 .dark body {
-  background-color: #171412;
+  background-color: #141211;
 }

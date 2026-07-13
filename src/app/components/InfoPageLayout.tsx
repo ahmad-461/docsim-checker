@@ -11,11 +11,11 @@ interface InfoPageLayoutProps {
 }
 
 export const PageH2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-2xl font-bold text-foreground mt-20 mb-8 tracking-tight">{children}</h2>
+  <h2 className="text-2xl font-bold font-editorial text-[#1A1A1A] dark:text-[#F5F5F4] mt-20 mb-8 tracking-tight">{children}</h2>
 );
 
 export const PageP = ({ children }: { children: React.ReactNode }) => (
-  <p className="mb-6 text-gray-600 dark:text-stone-400 leading-relaxed text-lg">{children}</p>
+  <p className="mb-6 text-stone-600 dark:text-stone-400 leading-relaxed text-lg">{children}</p>
 );
 
 export const PageLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
