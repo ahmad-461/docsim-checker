@@ -7,6 +7,7 @@ import CountdownTimer from './components/CountdownTimer';
 import ErrorMessage from './components/ErrorMessage';
 import { PageH2, PageP, PageStrong, PageLink } from './components/InfoPageLayout';
 import { sampleDocA, sampleDocB, sampleResult, type ComparisonResult } from './sampleData';
+import AnimatedHeroComparison from './components/AnimatedHeroComparison';
 
 interface DocContent {
   type: 'text' | 'file';
@@ -184,40 +185,75 @@ export default function Home() {
 
   return (
     <div className="bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-20">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-extrabold text-foreground tracking-tight sm:text-6xl mb-6">
-            Compare Documents. <br className="hidden sm:block" />
-            Catch Similarities. <span className="text-orange-600">Instantly.</span>
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-500 dark:text-stone-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Free, private, and fast — paste or upload two documents and get a detailed similarity breakdown in seconds. No sign-up required.
-          </p>
+      {/* Editorial / Manuscript Hero Section with Asymmetric Layout */}
+      <section className="relative overflow-hidden bg-[#FBF9F6] dark:bg-[#141211] border-b border-[#E6DDC4]/60 dark:border-[#2C2420]/60 py-16 lg:py-24 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            {/* Left side: Editorial Typography and Headlines */}
+            <div className="lg:col-span-5 flex flex-col justify-center text-left relative">
+              {/* Highlight / Redline Editorial Motif behind the main header */}
+              <div className="absolute -left-4 -top-8 w-24 h-24 bg-orange-500/10 dark:bg-orange-500/5 rounded-full blur-2xl pointer-events-none" />
 
-          {/* Trust Signals */}
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-12 text-sm font-medium text-gray-600 dark:text-stone-400">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              No documents stored
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-100/60 dark:bg-orange-950/20 text-orange-800 dark:text-orange-400 border border-orange-200/40 dark:border-orange-900/30 rounded-full text-xs font-semibold font-mono tracking-wider uppercase mb-6 self-start">
+                <span className="w-2 h-2 rounded-full bg-orange-600 animate-pulse" />
+                Editorial Manuscript Standard
+              </div>
+
+              <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-[#1A1A1A] dark:text-[#F5F5F4] tracking-tight leading-[1.1] mb-6 font-bold">
+                Compare Documents. <br />
+                Catch Similarities. <br />
+                <span className="relative inline-block text-orange-600 dark:text-orange-500 font-bold">
+                  Instantly.
+                  <span className="absolute -bottom-1.5 left-0 w-full h-[3px] bg-orange-600/60 dark:bg-orange-500/60 rounded" />
+                </span>
+              </h1>
+
+              <p className="font-sans text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-8 max-w-xl leading-relaxed">
+                Free, private, and fast. Paste or upload two documents to reveal a detailed semantic similarity analysis in seconds. No credentials, tracking, or document indexing.
+              </p>
+
+              {/* Editorial styled Trust Marks */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-b border-[#E6DDC4] dark:border-[#3A302B] py-6 mb-8 text-xs font-mono tracking-wide text-stone-600 dark:text-stone-400">
+                <div className="flex items-center gap-2">
+                  <span className="text-orange-600 dark:text-orange-500 font-bold">✓</span>
+                  No documents stored
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-orange-600 dark:text-orange-500 font-bold">✓</span>
+                  Results in seconds
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-orange-600 dark:text-orange-500 font-bold">✓</span>
+                  3 free comparisons daily
+                </div>
+              </div>
+
+              {/* Call to Actions */}
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="#tool"
+                  className="px-8 py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-orange-600/20 transform hover:scale-[1.02] active:scale-[0.98] transition-all text-center"
+                >
+                  Start Comparing
+                </a>
+                <button
+                  onClick={handleSampleCompare}
+                  className="px-6 py-3.5 bg-transparent hover:bg-orange-50/40 dark:hover:bg-orange-950/10 text-stone-700 dark:text-stone-300 border border-stone-300 dark:border-stone-700 hover:border-orange-500 rounded-xl transition-all font-semibold text-center"
+                >
+                  Try Sample Comparison
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              Results in seconds
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              3 free comparisons daily
+
+            {/* Right side: Animated visual centerpiece */}
+            <div className="lg:col-span-7 flex justify-center lg:pl-4">
+              <AnimatedHeroComparison />
             </div>
           </div>
         </div>
+      </section>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-20">
         <div id="tool" className="scroll-mt-24">
           <div className="flex justify-center mb-8">
             <button
@@ -293,133 +329,175 @@ export default function Home() {
         </div>
       )}
 
-      {/* How It Works section */}
-      <section className="py-24 bg-gray-50 dark:bg-stone-900/40 border-y border-gray-100 dark:border-stone-800/50">
+      {/* How It Works section — Editorial Timeline Layout */}
+      <section className="py-24 bg-[#FAF8F5] dark:bg-[#181615] border-y border-[#E6DDC4]/50 dark:border-[#2C2420]/50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl mb-4">How It Works</h2>
-            <p className="text-lg text-gray-600 dark:text-stone-400 max-w-2xl mx-auto">
-              Compare your documents in three simple steps using our advanced analysis engine.
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left side column: Section Title */}
+            <div className="lg:col-span-4 lg:sticky lg:top-28">
+              <div className="inline-block text-[10px] font-mono tracking-widest text-orange-600 dark:text-orange-400 font-bold uppercase mb-3 bg-orange-100/60 dark:bg-orange-950/20 px-2.5 py-1 rounded">
+                The Methodology
+              </div>
+              <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#F5F5F4] leading-tight mb-4">
+                How It Works
+              </h2>
+              <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed max-w-sm">
+                Compare your manuscripts in three deliberate stages designed for precision, clarity, and absolute confidentiality.
+              </p>
+
+              <div className="mt-8 hidden lg:block border-l-2 border-orange-500/30 pl-4 py-2 font-mono text-xs text-stone-400 dark:text-stone-500 space-y-2">
+                <div>// COMPILATION</div>
+                <div>// SEMANTIC MAPPING</div>
+                <div>// HIGHLIGHT INTEGRATION</div>
+              </div>
+            </div>
+
+            {/* Right side column: Timeline Steps */}
+            <div className="lg:col-span-8 space-y-12 relative before:absolute before:left-4 before:top-2 before:bottom-2 before:w-[1px] before:bg-[#E6DDC4] dark:before:bg-[#3A302B] sm:before:left-6">
+              {/* Step 1 */}
+              <div className="relative pl-12 sm:pl-16">
+                <div className="absolute left-0 sm:left-2 top-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FBF9F6] dark:bg-[#141211] border border-orange-500 text-orange-600 flex items-center justify-center font-editorial font-bold text-sm sm:text-base shadow-sm">
+                  1
+                </div>
+                <h3 className="font-editorial text-xl font-bold text-[#1A1A1A] dark:text-[#F5F5F4] mb-3 flex items-center gap-2">
+                  Prepare Your Manuscripts
+                </h3>
+                <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed max-w-2xl">
+                  Paste raw text directly or upload document formats such as <span className="font-semibold text-stone-800 dark:text-stone-200">.pdf, .docx, or .txt</span>. Our offline extraction handles character sets without retaining any files.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative pl-12 sm:pl-16">
+                <div className="absolute left-0 sm:left-2 top-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FBF9F6] dark:bg-[#141211] border border-orange-500 text-orange-600 flex items-center justify-center font-editorial font-bold text-sm sm:text-base shadow-sm">
+                  2
+                </div>
+                <h3 className="font-editorial text-xl font-bold text-[#1A1A1A] dark:text-[#F5F5F4] mb-3">
+                  AI-Powered Semantic Mapping
+                </h3>
+                <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed max-w-2xl">
+                  We generate high-dimensional vectors representing sentence concepts. This flags paraphrased claims, synonyms, and restructured sentences that traditional word-for-word detectors completely ignore.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative pl-12 sm:pl-16">
+                <div className="absolute left-0 sm:left-2 top-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FBF9F6] dark:bg-[#141211] border border-orange-500 text-orange-600 flex items-center justify-center font-editorial font-bold text-sm sm:text-base shadow-sm">
+                  3
+                </div>
+                <h3 className="font-editorial text-xl font-bold text-[#1A1A1A] dark:text-[#F5F5F4] mb-3">
+                  Read the Side-by-Side Redline Breakdown
+                </h3>
+                <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed max-w-2xl">
+                  View an interactive comparison report highlighting similar passages in real-time. Export standard PDF reports for legal, academic, or professional validation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why DocSim Checker section — Asymmetric Newspaper Block Layout */}
+      <section className="py-24 bg-[#FBF9F6] dark:bg-[#141211] border-b border-[#E6DDC4]/40 dark:border-[#2C2420]/40 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-end">
+            <div className="lg:col-span-6">
+              <div className="inline-block text-[10px] font-mono tracking-widest text-orange-600 dark:text-orange-400 font-bold uppercase mb-3 bg-orange-100/60 dark:bg-orange-950/20 px-2.5 py-1 rounded">
+                Distinction
+              </div>
+              <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#F5F5F4] leading-tight">
+                Why DocSim Checker?
+              </h2>
+            </div>
+            <div className="lg:col-span-6">
+              <p className="font-sans text-sm sm:text-base text-stone-500 dark:text-stone-400 leading-relaxed max-w-xl">
+                A non-commercial, privacy-first instrument designed for rigorous writers, researchers, and legal counsel who require absolute data boundaries and state-of-the-art accuracy.
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#E6DDC4]/80 dark:bg-[#3A302B]/80 rounded-2xl overflow-hidden border border-[#E6DDC4] dark:border-[#3A302B] shadow-lg">
+            {/* Feature 1 */}
+            <div className="p-8 sm:p-10 bg-[#FAF8F5] dark:bg-[#181615] relative group transition-colors hover:bg-white dark:hover:bg-[#1D1917]">
+              <div className="text-orange-600 dark:text-orange-500 mb-6 font-editorial text-4xl font-semibold opacity-30 group-hover:opacity-100 transition-opacity">
+                I.
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground">1. Upload documents</h3>
-              <p className="text-gray-600 dark:text-stone-400">
-                Paste your text directly or upload .pdf, .docx, or .txt files for comparison.
+              <h3 className="font-editorial text-lg sm:text-xl font-bold mb-3 text-[#1A1A1A] dark:text-[#F5F5F4]">
+                Semantic Match Alignment
+              </h3>
+              <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">
+                Using deep-learning semantic models, our system detects when thoughts or facts are replicated, even when the phrasing, synonyms, or structure are modified.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+            {/* Feature 2 */}
+            <div className="p-8 sm:p-10 bg-[#FAF8F5] dark:bg-[#181615] relative group transition-colors hover:bg-white dark:hover:bg-[#1D1917]">
+              <div className="text-orange-600 dark:text-orange-500 mb-6 font-editorial text-4xl font-semibold opacity-30 group-hover:opacity-100 transition-opacity">
+                II.
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground">2. AI-Powered Analysis</h3>
-              <p className="text-gray-600 dark:text-stone-400">
-                We use semantic AI to catch paraphrased content that simple word-matching misses.
+              <h3 className="font-editorial text-lg sm:text-xl font-bold mb-3 text-[#1A1A1A] dark:text-[#F5F5F4]">
+                Guaranteed Local Confidentiality
+              </h3>
+              <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">
+                Your intellectual property is never stored, indexed, or cached. Your files are processed securely and deleted from server memory immediately after analysis.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+            {/* Feature 3 */}
+            <div className="p-8 sm:p-10 bg-[#FAF8F5] dark:bg-[#181615] relative group transition-colors hover:bg-white dark:hover:bg-[#1D1917]">
+              <div className="text-orange-600 dark:text-orange-500 mb-6 font-editorial text-4xl font-semibold opacity-30 group-hover:opacity-100 transition-opacity">
+                III.
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground">3. Get Results</h3>
-              <p className="text-gray-600 dark:text-stone-400">
-                Receive a detailed similarity breakdown with highlighted matches in seconds.
+              <h3 className="font-editorial text-lg sm:text-xl font-bold mb-3 text-[#1A1A1A] dark:text-[#F5F5F4]">
+                Speed &amp; Standard Calibration
+              </h3>
+              <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">
+                Compute vectors and generate interactive reports in fractions of a second. Side-by-side highlighting updates on-the-fly as you adjust threshold standards.
+              </p>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="p-8 sm:p-10 bg-[#FAF8F5] dark:bg-[#181615] relative group transition-colors hover:bg-white dark:hover:bg-[#1D1917]">
+              <div className="text-orange-600 dark:text-orange-500 mb-6 font-editorial text-4xl font-semibold opacity-30 group-hover:opacity-100 transition-opacity">
+                IV.
+              </div>
+              <h3 className="font-editorial text-lg sm:text-xl font-bold mb-3 text-[#1A1A1A] dark:text-[#F5F5F4]">
+                Unified Document Ingestion
+              </h3>
+              <p className="font-sans text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">
+                Complete, multi-format capabilities natively parsing PDFs, Microsoft Word manuscripts (.docx), and plain text files with consistent results.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why DocSim Checker section */}
-      <section className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl mb-4">Why DocSim Checker?</h2>
-            <p className="text-lg text-gray-600 dark:text-stone-400 max-w-2xl mx-auto">
-              Built for speed, privacy, and accuracy.
-            </p>
-          </div>
+      {/* CTA section — Elegant Editorial Block */}
+      <section className="relative overflow-hidden py-24 bg-gradient-to-br from-[#1E1A17] to-[#12100F] border-b border-[#2C2420]/60 text-center transition-colors duration-300">
+        <div className="absolute inset-0 bg-[radial-gradient(#EA580C_0.5px,transparent_0.5px)] [background-size:16px_16px] opacity-10" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-orange-600 mb-4">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-foreground">Semantic Matching</h3>
-              <p className="text-sm text-gray-600 dark:text-stone-400">
-                Catches paraphrased content, not just exact word matches.
-              </p>
-            </div>
-
-            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-orange-600 mb-4">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-foreground">Complete Privacy</h3>
-              <p className="text-sm text-gray-600 dark:text-stone-400">
-                Documents are never stored. Your data stays yours.
-              </p>
-            </div>
-
-            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-orange-600 mb-4">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-foreground">Fast Results</h3>
-              <p className="text-sm text-gray-600 dark:text-stone-400">
-                Get your similarity score and breakdown in seconds.
-              </p>
-            </div>
-
-            <div className="p-8 bg-card border border-card-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-orange-600 mb-4">
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-foreground">Multiple File Types</h3>
-              <p className="text-sm text-gray-600 dark:text-stone-400">
-                Supports .txt, .pdf, and .docx formats out of the box.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA section */}
-      <section className="py-20 bg-orange-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-8">
-            Ready to compare your documents?
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <span className="text-[10px] font-mono tracking-widest text-orange-500 font-bold uppercase mb-4 inline-block">
+            Commitment-Free Utility
+          </span>
+          <h2 className="font-editorial text-3xl sm:text-5xl font-bold text-[#F5F5F4] leading-tight mb-8">
+            Ready to compare <br className="sm:hidden" />
+            your manuscripts?
           </h2>
-          <a
-            href="#tool"
-            className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-orange-600 bg-white hover:bg-orange-50 transition-colors shadow-lg"
-          >
-            Try it now
-            <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </a>
+          <p className="font-sans text-stone-400 text-sm sm:text-base max-w-xl mx-auto mb-10 leading-relaxed">
+            Run a detailed analysis across two files in under five seconds. Zero sign-ups or credentials required.
+          </p>
+          <div className="flex justify-center">
+            <a
+              href="#tool"
+              className="inline-flex items-center justify-center px-10 py-4 text-base font-bold rounded-xl text-white bg-orange-600 hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-orange-600/20"
+            >
+              Analyze Now
+              <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-6l-7 7-7-7" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
