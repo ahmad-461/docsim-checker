@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/tools/word-counter", priority: 0.8, changeFrequency: "weekly" as const },
     { url: "/tools/case-converter", priority: 0.8, changeFrequency: "weekly" as const },
     { url: "/tools/duplicate-line-remover", priority: 0.8, changeFrequency: "weekly" as const },
+    { url: "/changelog", priority: 0.5, changeFrequency: "monthly" as const },
     { url: "/privacy", priority: 0.3, changeFrequency: "monthly" as const },
     { url: "/terms", priority: 0.3, changeFrequency: "monthly" as const },
   ];
