@@ -5,14 +5,8 @@
 ▲ Next.js 16.2.10 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-✓ Ready in 493ms
+✓ Ready in 473ms
 
 ○ Compiling / ...
- GET / 200 in 7.9s (next.js: 7.0s, application-code: 975ms)
- GET /media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2 404 in 977ms (next.js: 693ms, application-code: 284ms)
- GET /media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2 404 in 193ms (next.js: 9ms, application-code: 185ms)
- GET /media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2 404 in 73ms (next.js: 6ms, application-code: 67ms)
- GET / 200 in 95ms (next.js: 7ms, application-code: 88ms)
- GET /media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2 404 in 88ms (next.js: 4ms, application-code: 84ms)
- GET /media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2 404 in 95ms (next.js: 8ms, application-code: 87ms)
- GET /media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2 404 in 102ms (next.js: 5ms, application-code: 98ms)
+ GET /?preview=pdf 200 in 7.5s (next.js: 6.7s, application-code: 810ms)
+ GET /?preview=pdf 200 in 88ms (next.js: 5ms, application-code: 84ms)
