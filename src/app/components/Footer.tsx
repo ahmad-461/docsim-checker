@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -5,12 +7,20 @@ import Image from 'next/image';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const scrollToTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <footer className="bg-[#1C1917] text-stone-300 border-t border-white/10 transition-colors duration-200">
+    <footer className="bg-[#1C1917] text-stone-300 border-t border-white/5 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           {/* Column 1 — Brand */}
-          <div className="flex flex-col space-y-5 items-center text-center sm:items-start sm:text-left">
+          <div className="flex flex-col space-y-6 items-center text-center sm:items-start sm:text-left">
             <Link href="/" className="inline-block transition-opacity hover:opacity-90">
               <Image
                 src="/logo-light.svg"
@@ -21,11 +31,11 @@ const Footer = () => {
                 priority
               />
             </Link>
-            <div className="space-y-3">
+            <div className="space-y-4">
               <p className="text-sm leading-relaxed max-w-xs text-stone-400">
                 Compare documents. Catch similarities. Protect your work.
               </p>
-              <p className="text-xs text-stone-400 font-medium">
+              <p className="text-xs text-orange-500/90 font-semibold tracking-wide uppercase">
                 We never store your documents.
               </p>
             </div>
@@ -43,11 +53,6 @@ const Footer = () => {
               <li>
                 <Link href="/" className="hover:text-brand-orange transition-colors duration-200 text-sm">
                   Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-it-works" className="hover:text-brand-orange transition-colors duration-200 text-sm">
-                  How it works
                 </Link>
               </li>
               <li>
@@ -78,6 +83,11 @@ const Footer = () => {
             <h3 className="text-stone-400 font-bold mb-6 text-xs uppercase tracking-widest">Company</h3>
             <ul className="space-y-4">
               <li>
+                <Link href="/how-it-works" className="hover:text-brand-orange transition-colors duration-200 text-sm">
+                  How it works
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="hover:text-brand-orange transition-colors duration-200 text-sm">
                   About
                 </Link>
@@ -90,14 +100,6 @@ const Footer = () => {
               <li>
                 <Link href="/changelog" className="hover:text-brand-orange transition-colors duration-200 text-sm">
                   What&apos;s New
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-brand-orange transition-colors duration-200 text-sm"
-                >
-                  Contact
                 </Link>
               </li>
             </ul>
@@ -122,18 +124,32 @@ const Footer = () => {
                   Terms of Use
                 </Link>
               </li>
+              <li>
+                <Link href="/contact" className="hover:text-brand-orange transition-colors duration-200 text-sm">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-16 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-          <p className="text-xs text-stone-400">
-            &copy; {currentYear} DocSim Checker. All rights reserved.
-          </p>
-          <p className="text-xs text-stone-400">
-            Built with care for writers, students, and teams.
-          </p>
+        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+            <p className="text-xs text-stone-400">
+              &copy; {currentYear} DocSim Checker. All rights reserved.
+            </p>
+            <p className="text-xs text-stone-500/30 hidden sm:block">|</p>
+            <p className="text-xs text-stone-400">
+              Built with care for writers, students, and teams.
+            </p>
+          </div>
+          <button
+            onClick={scrollToTop}
+            className="text-xs text-stone-400 hover:text-brand-orange font-medium flex items-center gap-1 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 rounded px-1"
+          >
+            Back to top ↑
+          </button>
         </div>
       </div>
     </footer>

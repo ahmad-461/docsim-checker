@@ -27,10 +27,10 @@ try:
     from docx import Document
     from semantic_similarity import get_semantic_similarity_scores
 except Exception as e:
+    traceback.print_exc()
     startup_error = {
         "error": "startup_import_error",
-        "message": str(e),
-        "traceback": traceback.format_exc()
+        "message": str(e)
     }
 
 app = Flask(__name__)

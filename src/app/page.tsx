@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DocumentInput from './components/DocumentInput';
 import Results from './components/Results';
 import CountdownTimer from './components/CountdownTimer';
@@ -13,6 +13,42 @@ interface DocContent {
   content: string;
   filename?: string;
 }
+
+const getFriendlyErrorMessage = (errorKeyOrMessage: string, serverMessage?: string): string => {
+  const message = serverMessage || errorKeyOrMessage || 'An unexpected error occurred';
+
+  switch (errorKeyOrMessage) {
+    case 'rate_limit_exceeded':
+      return "You've used all your free comparisons for today.";
+    case 'extraction_failed':
+      return "Couldn't extract text from this file. Please try another file or paste text directly.";
+    case 'similarity_computation_failed':
+      return "Similarity computation failed. Please try again with a smaller document.";
+    case 'server_error':
+      return "An unexpected server error occurred. Please try again later.";
+    case 'startup_error':
+    case 'startup_import_error':
+      return "Server initialization error. Please contact support.";
+  }
+
+  if (message.includes('rate_limit_exceeded')) {
+    return "You've used all your free comparisons for today.";
+  }
+  if (message.includes('extraction_failed')) {
+    return "Couldn't extract text from this file. Please try another file or paste text directly.";
+  }
+  if (message.includes('similarity_computation_failed')) {
+    return "Similarity computation failed. Please try again with a smaller document.";
+  }
+  if (message.includes('server_error')) {
+    return "An unexpected server error occurred. Please try again later.";
+  }
+  if (message.includes('startup_error') || message.includes('startup_import_error')) {
+    return "Server initialization error. Please contact support.";
+  }
+
+  return message.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+};
 
 export default function Home() {
   const [docA, setDocA] = useState<DocContent>({ type: 'text', content: '' });
@@ -61,17 +97,18 @@ export default function Home() {
             const data = await response.json();
             if (response.status === 429) {
               setError({
-                message: data.message || "You've used all your free comparisons for today.",
+                message: getFriendlyErrorMessage('rate_limit_exceeded', data.message),
                 type: 'rate_limit',
                 resetAt: data.reset_at
               });
               setRemaining(0);
               return;
             }
-            throw new Error(data.message || data.error || 'Failed to compare documents');
-          } catch (jsonErr) {
+            throw new Error(getFriendlyErrorMessage(data.error || '', data.message));
+          } catch (jsonErr: unknown) {
             console.error('Failed to parse error JSON response:', jsonErr);
-            throw new Error('The server returned an unexpected response. Please try again, or try a smaller file.');
+            const errMsg = jsonErr instanceof Error ? jsonErr.message : 'The server returned an unexpected response. Please try again, or try a smaller file.';
+            throw new Error(errMsg);
           }
         } else {
           // If response not OK and NOT JSON (e.g. Vercel HTML error page or Gateway Timeout)
@@ -109,8 +146,9 @@ export default function Home() {
       if (typeof data.remaining === 'number') {
         setRemaining(data.remaining);
       }
-    } catch (err: any) {
-      setError({ message: err.message || 'An unexpected error occurred' });
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError({ message: getFriendlyErrorMessage(errMsg) });
     } finally {
       setLoading(false);
     }
@@ -230,7 +268,7 @@ export default function Home() {
             {error && (
               <ErrorMessage
                 message={isRateLimited ? "You've used your 3 free comparisons today. Pro coming soon — check back later or wait for reset." : error.message}
-                type={error.type as any}
+                type={error.type as 'rate_limit' | 'fallback' | 'error' | undefined}
               >
                 {isRateLimited && (
                   <div className="mt-2 text-orange-700 dark:text-orange-300 font-semibold">
