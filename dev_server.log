@@ -5,8 +5,11 @@
 ▲ Next.js 16.2.10 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-✓ Ready in 518ms
+✓ Ready in 520ms
 
 ○ Compiling / ...
- GET / 200 in 8.6s (next.js: 7.7s, application-code: 866ms)
- GET /about 200 in 805ms (next.js: 623ms, application-code: 181ms)
+ HEAD / 200 in 4.9s (next.js: 4.3s, application-code: 653ms)
+ GET / 200 in 157ms (next.js: 20ms, application-code: 137ms)
+ GET /about 200 in 1205ms (next.js: 1002ms, application-code: 203ms)
+ GET /faq 200 in 974ms (next.js: 825ms, application-code: 149ms)
+ GET /tools/word-counter 200 in 585ms (next.js: 485ms, application-code: 100ms)
