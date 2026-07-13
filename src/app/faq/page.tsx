@@ -7,8 +7,8 @@ import AccordionItem from '../components/AccordionItem';
 export default function FaqPage() {
   const faqItems = [
     {
-      question: "Is my document stored anywhere?",
-      answer: "No. Your documents are processed to generate a similarity score and immediately discarded. We never save your document content."
+      question: "Do I need an account, and is my document stored anywhere?",
+      answer: "No. The free tier works with no sign-up required. Your documents are processed in memory to generate a similarity score and immediately discarded — nothing is stored or saved."
     },
     {
       question: "How many comparisons can I run for free?",
@@ -20,19 +20,15 @@ export default function FaqPage() {
     },
     {
       question: "How is the similarity score calculated?",
-      answer: "We combine two methods: TF-IDF (word-overlap matching) and AI-powered semantic analysis (via Gemini), which can catch paraphrased or reworded similarities that simple word-matching would miss."
+      answer: "We combine TF-IDF (word-overlap matching) and AI semantic analysis (via Gemini) to catch exact matches and reworded/paraphrased similarities."
     },
     {
       question: "Why did I get a lower score than I expected?",
-      answer: "Semantic matching accounts for meaning, not just exact wording — two sentences that say similar things with different words may still score high, but scores are never a perfect 1:1 with human judgment. Use the score as a signal, not an absolute answer."
+      answer: "AI semantic matching accounts for meaning, not just wording. Use the overall score as a diagnostic signal rather than a perfect 1:1 human evaluation."
     },
     {
       question: "Is this the same as Turnitin?",
-      answer: "No. Turnitin (and similar tools) check your document against a massive database of academic papers, websites, and previously submitted work. DocSim Checker only compares the two documents you provide, directly against each other — it does not check against the internet or any external database."
-    },
-    {
-      question: "Do I need an account?",
-      answer: "No. The free tier works with no sign-up required. Your usage is tracked anonymously via your hashed IP address."
+      answer: "No. DocSim Checker only compares the two documents you provide directly against each other. It does not scan the public internet or external academic databases."
     },
     {
       question: "Is there a paid plan?",
@@ -40,7 +36,7 @@ export default function FaqPage() {
     },
     {
       question: "Something went wrong or the score looks incorrect?",
-      answer: "Contact us with details and we'll look into it."
+      answer: "Please contact us with any issue details and we will investigate it."
     }
   ];
 
@@ -77,8 +73,8 @@ export default function FaqPage() {
       </div>
 
       <div className="bg-card rounded-3xl border border-card-border shadow-sm px-8 overflow-hidden">
-        <AccordionItem question="Is my document stored anywhere?">
-          <PageP>No. Your documents are processed to generate a similarity score and immediately discarded. We never save your document content.</PageP>
+        <AccordionItem question="Do I need an account, and is my document stored anywhere?">
+          <PageP>No. The free tier works with no sign-up required. Your documents are processed in memory to generate a similarity score and immediately discarded — nothing is stored or saved.</PageP>
         </AccordionItem>
 
         <AccordionItem question="How many comparisons can I run for free?">
@@ -90,19 +86,15 @@ export default function FaqPage() {
         </AccordionItem>
 
         <AccordionItem question="How is the similarity score calculated?">
-          <PageP>We combine two methods: TF-IDF (word-overlap matching) and AI-powered semantic analysis (via Gemini), which can catch paraphrased or reworded similarities that simple word-matching would miss.</PageP>
+          <PageP>We combine TF-IDF (word-overlap matching) and AI semantic analysis (via Gemini) to catch exact matches and reworded/paraphrased similarities.</PageP>
         </AccordionItem>
 
         <AccordionItem question="Why did I get a lower score than I expected?">
-          <PageP>Semantic matching accounts for meaning, not just exact wording — two sentences that say similar things with different words may still score high, but scores are never a perfect 1:1 with human judgment. Use the score as a signal, not an absolute answer.</PageP>
+          <PageP>AI semantic matching accounts for meaning, not just wording. Use the overall score as a diagnostic signal rather than a perfect 1:1 human evaluation.</PageP>
         </AccordionItem>
 
         <AccordionItem question="Is this the same as Turnitin?">
-          <PageP>No. Turnitin (and similar tools) check your document against a massive database of academic papers, websites, and previously submitted work. DocSim Checker only compares the two documents you provide, directly against each other — it does not check against the internet or any external database.</PageP>
-        </AccordionItem>
-
-        <AccordionItem question="Do I need an account?">
-          <PageP>No. The free tier works with no sign-up required. Your usage is tracked anonymously via your hashed IP address.</PageP>
+          <PageP>No. DocSim Checker only compares the two documents you provide directly against each other. It does not scan the public internet or external academic databases.</PageP>
         </AccordionItem>
 
         <AccordionItem question="Is there a paid plan?">
@@ -110,7 +102,7 @@ export default function FaqPage() {
         </AccordionItem>
 
         <AccordionItem question="Something went wrong or the score looks incorrect?">
-          <PageP><PageLink href="/contact">Contact us</PageLink> with details and we&apos;ll look into it.</PageP>
+          <PageP>Please <PageLink href="/contact">contact us</PageLink> with any issue details and we will investigate it.</PageP>
         </AccordionItem>
       </div>
     </InfoPageLayout>

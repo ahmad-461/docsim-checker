@@ -255,54 +255,27 @@ export default function WordCounterPage() {
         </div>
 
         {/* SEO Content Section */}
-        <div className="mt-16 border-t border-gray-100 dark:border-stone-800/50 pt-16">
-          <PageH2>Why Word Count Matters</PageH2>
-          <PageP>
-            Word count is one of the most common constraints in writing — whether it&apos;s a strict essay limit set by a teacher, a word cap on a job application, a character limit for a social media post, or a target length for an article pitch. Going over or under a specified limit can mean the difference between a submission being accepted or rejected outright, which is why having an instant, accurate way to check is genuinely useful rather than a novelty.
-          </PageP>
-          <PageP>
-            DocSim Checker&apos;s Word Counter gives you real-time word count, character count (with and without spaces), sentence count, paragraph count, and an estimated reading time — all calculated instantly in your browser as you type or paste, with no need to submit anything to a server.
-          </PageP>
+        <div className="mt-16 border-t border-gray-100 dark:border-stone-800/50 pt-16 space-y-12">
+          <div>
+            <PageH2>Why Word Count Matters</PageH2>
+            <PageP>
+              Word count is a key constraint in writing — whether it&apos;s a strict essay limit, a character limit for a social media post, or a target length for a draft. Going over or under a limit can impact your submission&apos;s success. DocSim Checker&apos;s Word Counter gives you real-time counts, sentence checks, and a reading-time estimate instantly in your browser as you type. If you need to compare drafts side-by-side after counting, you can easily use our <PageLink href="/">document comparison tool</PageLink> to catch matching phrasing.
+            </PageP>
+          </div>
 
-          <PageH2>Who Uses an Online Word Counter</PageH2>
-          <PageP>
-            <PageStrong>Students and academics</PageStrong>{" "}rely on word counters constantly — essays, dissertations, and research papers almost always come with strict minimum or maximum word requirements, and manually counting is impractical for anything beyond a few sentences.
-          </PageP>
-          <PageP>
-            <PageStrong>Job seekers</PageStrong>{" "}writing cover letters or application responses often face character or word limits imposed by application portals, where going over the limit can cause a submission to be rejected or truncated.
-          </PageP>
-          <PageP>
-            <PageStrong>Bloggers, copywriters, and marketers</PageStrong>{" "}use word counters to hit target lengths for SEO-optimized content, social media captions with strict character limits, or client deliverables with agreed-upon word counts.
-          </PageP>
-          <PageP>
-            <PageStrong>Speakers and presenters</PageStrong>{" "}use the reading time estimate to gauge how long a script or speech will take to deliver, based on an average speaking/reading pace of roughly 200 words per minute.
-          </PageP>
+          <div>
+            <PageH2>What Gets Counted, and How</PageH2>
+            <PageP>
+              Word count is calculated by splitting text on whitespace, matching standard word processors. Character count is shown both including and excluding spaces to accommodate form limits. Sentence count splits on standard punctuation (periods, question marks, and exclamations), while paragraph count detects double line breaks. The tool also provides helpful metrics like average words per sentence to assist with readability analysis.
+            </PageP>
+          </div>
 
-          <PageH2>What Gets Counted, and How</PageH2>
-          <PageP>
-            Word count is calculated by splitting text on whitespace and counting resulting tokens — a straightforward, widely-used method that matches how most word processors calculate word count. Character count is shown both including and excluding spaces, since some limits (particularly on social platforms or form fields) count spaces toward the total and others don&apos;t.
-          </PageP>
-          <PageP>
-            Sentence count uses punctuation-based splitting on periods, question marks, and exclamation points. Paragraph count is based on double line breaks in the text, treating single line breaks as soft wraps within the same paragraph rather than a new one — the same convention most writing and publishing tools use.
-          </PageP>
-
-          <PageH2>Free, Private, and Instant</PageH2>
-          <PageP>
-            Everything in the Word Counter runs entirely in your browser. No text you type or paste is sent to a server, stored, or logged anywhere — calculations happen client-side using JavaScript, which is also why results update instantly with no loading delay. There&apos;s no file size limit, no sign-up requirement, and no daily usage cap, since the tool costs nothing to run at any scale.
-          </PageP>
-          <PageP>
-            This also means the Word Counter works with sensitive or unpublished writing without any privacy concern — drafts, personal essays, or confidential documents never leave your device.
-          </PageP>
-
-          <PageH2>Beyond Basic Counting</PageH2>
-          <PageP>
-            For text that needs more than a raw count, DocSim Checker&apos;s Word Counter also calculates average words per sentence (useful for gauging readability — shorter average sentence length generally reads as more accessible), and a punctuation breakdown showing how many periods, commas, question marks, and exclamation marks appear in the text, which can be a useful signal for editing tone or catching overused punctuation patterns.
-          </PageP>
-
-          <PageH2>When You Need More Than a Count</PageH2>
-          <PageP>
-            If you&apos;re comparing two versions of a document rather than just counting one, <PageLink href="/">DocSim Checker&apos;s full similarity comparison tool</PageLink> shows exactly which sentences match or differ between two pieces of writing, with a detailed similarity score powered by both keyword and AI-based semantic analysis. The Word Counter and the Comparison tool are built to work together — check your word count here, then compare drafts using the main tool when you need a deeper look at what&apos;s changed.
-          </PageP>
+          <div>
+            <PageH2>Free, Private, and Instant</PageH2>
+            <PageP>
+              Everything in the Word Counter runs entirely client-side in your browser. No text you type or paste is ever sent to a server, stored, or logged. Calculations happen locally in JavaScript, making it completely private and instantly responsive. There are no file size limits, no sign-up requirements, and no usage caps, so you can safely edit essays, logs, or confidential papers on your own terms.
+            </PageP>
+          </div>
         </div>
       </div>
     </InfoPageLayout>

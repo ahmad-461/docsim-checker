@@ -141,58 +141,27 @@ export default function CaseConverterPage() {
         </div>
 
         {/* SEO Content Section */}
-        <div className="mt-16 border-t border-gray-100 dark:border-stone-800/50 pt-16">
-          <PageH2>What Is a Text Case Converter</PageH2>
-          <PageP>
-            A case converter transforms text between different capitalization styles — UPPERCASE, lowercase, Title Case, Sentence case, camelCase, and snake_case — without requiring you to manually retype or reformat anything. This sounds like a small convenience, but it solves a genuinely common friction point: reformatting text by hand is tedious, error-prone, and slow, especially for longer passages.
-          </PageP>
-          <PageP>
-            DocSim Checker&apos;s Case Converter handles this instantly in your browser. Paste any text, choose a format, and the conversion happens immediately — no waiting, no submission, no account required.
-          </PageP>
+        <div className="mt-16 border-t border-gray-100 dark:border-stone-800/50 pt-16 space-y-12">
+          <div>
+            <PageH2>What Is a Text Case Converter</PageH2>
+            <PageP>
+              A case converter transforms text between capitalization styles — UPPERCASE, lowercase, Title Case, Sentence case, camelCase, and snake_case — without requiring manual retyping. Reformatting text by hand is tedious and error-prone, especially for longer passages or codebases. Paste your text, choose a format, and convert it instantly. If you are comparing edited drafts, use our <PageLink href="/">document similarity tool</PageLink> to analyze changes.
+            </PageP>
+          </div>
 
-          <PageH2>Common Uses for Case Conversion</PageH2>
-          <PageP>
-            <PageStrong>Writers and editors</PageStrong>{" "}often need to fix text that was accidentally typed in all caps (a common issue when Caps Lock is left on by mistake), or need to convert a heading into Title Case to match a style guide.
-          </PageP>
-          <PageP>
-            <PageStrong>Developers</PageStrong>{" "}frequently need to convert variable or function names between camelCase and snake_case depending on the programming language or style convention they&apos;re working in — JavaScript commonly uses camelCase, while Python and many database schemas favor snake_case.
-          </PageP>
-          <PageP>
-            <PageStrong>Social media managers and marketers</PageStrong>{" "}use case conversion to quickly reformat captions, headlines, or ad copy to match platform conventions or brand style guidelines, without retyping content from scratch.
-          </PageP>
-          <PageP>
-            <PageStrong>Students</PageStrong>{" "}converting headings or titles for papers into the correct capitalization style required by formatting guides like APA or MLA, which often specify Title Case for headings.
-          </PageP>
+          <div>
+            <PageH2>How Each Case Format Works</PageH2>
+            <PageP>
+              <PageStrong>UPPERCASE/lowercase:</PageStrong> Converts all characters to capitals or small letters — ideal for normalizing text layouts. <PageStrong>Title Case:</PageStrong> Capitalizes the first letter of each word, matching headlines. <PageStrong>Sentence case:</PageStrong> Capitalizes only sentence-starting words. <PageStrong>camelCase/snake_case:</PageStrong> Removes spaces and joins words with camel casing or underscores (e.g., &quot;hello_world&quot;) — the standard naming conventions used by developers in JavaScript, Python, and SQL databases.
+            </PageP>
+          </div>
 
-          <PageH2>How Each Case Format Works</PageH2>
-          <PageP>
-            <PageStrong>UPPERCASE</PageStrong>{" "}converts every letter in the text to capital letters — commonly used for emphasis, headers, or acronyms.
-          </PageP>
-          <PageP>
-            <PageStrong>lowercase</PageStrong>{" "}converts every letter to lowercase — useful for normalizing text before further processing, or for stylistic effect in casual writing and design.
-          </PageP>
-          <PageP>
-            <PageStrong>Title Case</PageStrong>{" "}capitalizes the first letter of every word, commonly used for headlines, titles, and headings across most style guides.
-          </PageP>
-          <PageP>
-            <PageStrong>Sentence case</PageStrong>{" "}capitalizes only the first letter of each sentence (and the first word of the text), matching normal prose writing conventions — useful for correcting text that was pasted from a source using different capitalization rules.
-          </PageP>
-          <PageP>
-            <PageStrong>camelCase</PageStrong>{" "}removes spaces and punctuation, joining words together with each word after the first capitalized (e.g., &quot;hello world&quot; becomes &quot;helloWorld&quot;) — the standard naming convention in many programming languages for variables and functions.
-          </PageP>
-          <PageP>
-            <PageStrong>snake_case</PageStrong>{" "}similarly removes spaces and punctuation but joins words with underscores in all lowercase (e.g., &quot;hello world&quot; becomes &quot;hello_world&quot;) — commonly used in Python, database column names, and file naming conventions.
-          </PageP>
-
-          <PageH2>Free and Instant, No Sign-Up Required</PageH2>
-          <PageP>
-            Like all of DocSim Checker&apos;s supporting tools, the Case Converter runs entirely client-side in your browser. Nothing you paste is sent to a server, stored, or logged — conversions happen instantly using JavaScript running locally on your device. There&apos;s no character limit, no daily usage cap, and no account needed.
-          </PageP>
-
-          <PageH2>A Companion to DocSim Checker&apos;s Full Toolset</PageH2>
-          <PageP>
-            The Case Converter is one of several free writing utilities available alongside DocSim Checker&apos;s main document comparison tool. If you&apos;re preparing text for formatting, cleaning up copy-pasted content, or standardizing naming conventions in code, this tool handles that instantly. For deeper analysis — comparing two full documents to see how similar they are — <PageLink href="/">DocSim Checker&apos;s primary comparison tool</PageLink> provides a detailed, sentence-by-sentence similarity breakdown using both keyword-based and AI-powered semantic matching.
-          </PageP>
+          <div>
+            <PageH2>Free and Instant, No Sign-Up Required</PageH2>
+            <PageP>
+              Like all supporting tools on DocSim Checker, the Case Converter runs entirely client-side in your browser. Nothing you paste is uploaded, stored, or processed on external servers. Conversions happen locally in JavaScript, ensuring zero lag and maximum privacy for essays, scripts, or confidential variable lists.
+            </PageP>
+          </div>
         </div>
       </div>
     </InfoPageLayout>

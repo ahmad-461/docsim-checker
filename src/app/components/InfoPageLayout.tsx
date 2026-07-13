@@ -11,7 +11,7 @@ interface InfoPageLayoutProps {
 }
 
 export const PageH2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-2xl font-bold text-foreground mt-16 mb-6 tracking-tight">{children}</h2>
+  <h2 className="text-2xl font-bold text-foreground mt-20 mb-8 tracking-tight">{children}</h2>
 );
 
 export const PageP = ({ children }: { children: React.ReactNode }) => (
