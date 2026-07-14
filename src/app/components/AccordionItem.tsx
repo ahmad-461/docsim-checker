@@ -16,7 +16,7 @@ const AccordionItem = ({ question, children }: AccordionItemProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-6 flex justify-between items-center text-left focus:outline-none group"
       >
-        <h3 className={`text-xl font-bold transition-colors ${isOpen ? 'text-orange-600' : 'text-foreground group-hover:text-orange-600'}`}>
+        <h3 className={`text-xl font-bold font-editorial transition-colors ${isOpen ? 'text-orange-600' : 'text-foreground group-hover:text-orange-600'}`}>
           {question}
         </h3>
         <span className={`ml-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180 text-orange-600' : 'text-gray-400 dark:text-stone-500'}`}>
