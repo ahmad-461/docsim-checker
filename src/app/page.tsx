@@ -325,6 +325,8 @@ export default function Home() {
             sentencesA={result.sentences_a}
             sentencesB={result.sentences_b}
             isSample={isSample}
+            docAName={docA.filename}
+            docBName={docB.filename}
           />
         </div>
       )}
